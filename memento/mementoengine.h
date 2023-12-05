@@ -16,7 +16,6 @@
 #ifndef MEMENTOENGINE_H
 #define MEMENTOENGINE_H
 #include "memento.h"
-#include <cassert>
 #include <string_view>
 #include <xxhash.h>
 
@@ -116,12 +115,11 @@ MementoEngine<MementoMap, Args...>::MementoEngine(uint32_t, uint32_t size)
 template <template <typename...> class MementoMap, typename... Args>
 uint32_t MementoEngine<MementoMap, Args...>::getBucket(
     std::string_view key) const noexcept {
-  assert(m_bArraySize > 0);
   /*
    * We invoke JumpHash to get a bucket
    * in the range [0,bArraySize-1].
    */
-  auto hash{XXH64(key.data(), key.size(), 0)};
+  const auto hash{XXH64(key.data(), key.size(), 0)};
   auto b = JumpConsistentHash(hash, m_bArraySize);
 
   /*
@@ -129,7 +127,7 @@ uint32_t MementoEngine<MementoMap, Args...>::getBucket(
    * If the bucket was removed the replacing bucket is >= 0,
    * otherwise it is -1.
    */
-  auto replacer = m_memento.replacer(b).value_or(-1);
+  auto replacer = m_memento.replacer(b);
   while (replacer >= 0) {
 
     /*
@@ -139,7 +137,7 @@ uint32_t MementoEngine<MementoMap, Args...>::getBucket(
      * represents the size of the working set when the bucket
      * was removed and get a new bucket in [0,replacer-1].
      */
-    auto h = XXH64(key.data(), key.size(), b);
+    const auto h = XXH64(key.data(), key.size(), b);
     b = h % replacer;
 
     /*
@@ -147,10 +145,10 @@ uint32_t MementoEngine<MementoMap, Args...>::getBucket(
      * until we get a working bucket or a bucket in the range
      * [0,replacer-1]
      */
-    auto r = m_memento.replacer(b).value_or(-1);
+    auto r = m_memento.replacer(b);
     while (r >= replacer) {
       b = r;
-      r = m_memento.replacer(b).value_or(-1);
+      r = m_memento.replacer(b);
     }
 
     /* Finally we update the entry of the external loop. */
@@ -163,9 +161,7 @@ uint32_t MementoEngine<MementoMap, Args...>::getBucket(
 template <template <typename...> class MementoMap, typename... Args>
 uint32_t MementoEngine<MementoMap, Args...>::getBucketCRC32c(
     uint64_t key, uint64_t seed) const noexcept {
-  assert(m_bArraySize > 0);
-
-  uint32_t hash = crc32c_sse42_u64(key, seed);
+  const auto hash = crc32c_sse42_u64(key, seed);
   /*
    * We invoke JumpHash to get a bucket
    * in the range [0,bArraySize-1].
@@ -177,7 +173,7 @@ uint32_t MementoEngine<MementoMap, Args...>::getBucketCRC32c(
    * If the bucket was removed the replacing bucket is >= 0,
    * otherwise it is -1.
    */
-  auto replacer = m_memento.replacer(b).value_or(-1);
+  auto replacer = m_memento.replacer(b);
   while (replacer >= 0) {
 
     /*
@@ -187,7 +183,7 @@ uint32_t MementoEngine<MementoMap, Args...>::getBucketCRC32c(
      * represents the size of the working set when the bucket
      * was removed and get a new bucket in [0,replacer-1].
      */
-    auto h = crc32c_sse42_u64(key, b);
+    const auto h = crc32c_sse42_u64(key, b);
     b = h % replacer;
 
     /*
@@ -195,10 +191,10 @@ uint32_t MementoEngine<MementoMap, Args...>::getBucketCRC32c(
      * until we get a working bucket or a bucket in the range
      * [0,replacer-1]
      */
-    auto r = m_memento.replacer(b).value_or(-1);
+    auto r = m_memento.replacer(b);
     while (r >= replacer) {
       b = r;
-      r = m_memento.replacer(b).value_or(-1);
+        r = m_memento.replacer(b);
     }
 
     /* Finally we update the entry of the external loop. */

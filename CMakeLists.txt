@@ -32,6 +32,7 @@ add_executable(speed_test speed_test.cpp
     anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp  anchor/misc/crc32c_sse42_u64.h
     anchor/anchorengine.h
     memento/mashtable.h
+    jump/jumpengine.h
     )
 
 add_executable(balance balance.cpp
@@ -41,12 +42,15 @@ add_executable(balance balance.cpp
     anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp  anchor/misc/crc32c_sse42_u64.h
     anchor/anchorengine.h
     memento/mashtable.h
+    jump/jumpengine.h
     )
 
 add_executable(mashtable_test mashtable_test.cpp memento/mashtable.h)
 
-target_include_directories(speed_test PRIVATE ${PCG_INCLUDE_DIRS})
-target_include_directories(balance PRIVATE ${PCG_INCLUDE_DIRS})
+if(WITH_PCG32)
+    target_include_directories(speed_test PRIVATE ${PCG_INCLUDE_DIRS})
+    target_include_directories(balance PRIVATE ${PCG_INCLUDE_DIRS})
+endif()
 target_link_libraries(speed_test PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts)
 target_link_libraries(balance PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts)
 

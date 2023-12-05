@@ -24,6 +24,7 @@
 #include "anchor/anchorengine.h"
 #include "memento/mashtable.h"
 #include "memento/mementoengine.h"
+#include "jump/jumpengine.h"
 #include <fmt/core.h>
 #include <fstream>
 #include <unordered_map>
@@ -124,7 +125,7 @@ int main(int argc, char *argv[]) {
   cxxopts::Options options("speed_test", "MementoHash vs AnchorHash benchmark");
   options.add_options()(
       "Algorithm",
-      "Algorithm (null|baseline|anchor|memento|mementoboost|mementomash)",
+      "Algorithm (null|baseline|anchor|memento|mementoboost|mementomash|jump)",
       cxxopts::value<std::string>())(
       "AnchorSet", "Size of the AnchorSet (ignored by Memento)",
       cxxopts::value<int>())("WorkingSet", "Size of the WorkingSet",
@@ -195,6 +196,10 @@ int main(int argc, char *argv[]) {
     return bench<MementoEngine<MashTable>>("Memento<MashTable>", filename,
                                            anchor_set, working_set,
                                            num_removals, num_keys);
+  } else if (algorithm == "jump") {
+      return bench<JumpEngine>("JumpEngine", filename,
+                               anchor_set, working_set,
+                               num_removals, num_keys);
   } else {
     fmt::println("Unknown algorithm {}", algorithm);
     return 2;
