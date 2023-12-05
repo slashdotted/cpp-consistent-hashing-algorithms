@@ -68,6 +68,6 @@ Memento<boost::unordered_flat_map>: LB is 8.82
 ## Java implementation
 For a Java implementation of these and additional algorithms please refer to [this repository](https://github.com/SUPSI-DTI-ISIN/java-consistent-hashing-algorithms)
 
-# Credits
+## Credits
 The AnchorHash implementation is based on code Copyright (c) 2020 anchorhash released under the MIT License
 MementoHash is based on the Java implementation found on [this repository](https://github.com/SUPSI-DTI-ISIN/java-consistent-hashing-algorithms), released under the GNU GPL-3.0 license 
