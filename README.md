@@ -27,7 +27,7 @@ cd vcpkg
 Generate the build file (for [Ninja](https://ninja-build.org/)):
 ```bash
 cd ..
-cmake -B build/ -S . -GNinja -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake ninja
+cmake -B build/ -S . -GNinja -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release
 ```
 Move into the **build** directory and start building:
 ```bash
