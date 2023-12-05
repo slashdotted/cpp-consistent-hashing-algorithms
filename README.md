@@ -1,5 +1,5 @@
 # cpp-consistent-hashing-algorithms
-This project collects C++ implementations and benchmarking tools of two of the most prominent consistent hashing algorithms for non-peer-to-peer contexts.
+This project collects C++ implementations and benchmarking tools of some of the most prominent consistent hashing algorithms for non-peer-to-peer contexts.
 
 The implemented algorithms are:
 * [2014] __jump hash__ by [Lamping and Veach](https://arxiv.org/pdf/1406.2294.pdf)
