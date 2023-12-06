@@ -150,12 +150,13 @@ int bench(const std::string_view name, const std::string &filename,
   print_memory_stats("AfterRemovals");
 #endif
 
+  int64_t sum{0};
   auto start{clock()};
   for (uint32_t i = 0; i < num_keys; ++i) {
 #ifdef USE_PCG32
-    engine.getBucketCRC32c(rng(), rng());
+    sum += engine.getBucketCRC32c(rng(), rng());
 #else
-    engine.getBucketCRC32c(rand(), rand());
+    sum += engine.getBucketCRC32c(rand(), rand());
 #endif
   }
   auto end{clock()};
@@ -167,7 +168,7 @@ int bench(const std::string_view name, const std::string &filename,
   auto elapsed{static_cast<double>(end - start) / CLOCKS_PER_SEC};
 #ifdef USE_HEAPSTATS
   auto maxheap{maximum};
-  fmt::println("{} Elapsed time is {} seconds, maximum heap allocated memory is {} bytes, sizeof({}) is {}", name, elapsed, maxheap, name, sizeof(Algorithm));
+  fmt::println("{} Elapsed time is {} seconds, maximum heap allocated memory is {} bytes, sizeof({}) is {}, sum is {}", name, elapsed, maxheap, name, sizeof(Algorithm), sum);
   results_file << name << ":\tAnchor\t" << anchor_set << "\tWorking\t"
                << working_set << "\tRemovals\t" << num_removals << "\tRate\t"
                << norm_keys_rate / elapsed << "\tMaxHeap\t" << maxheap << "\tAlgoSizeof\t" << sizeof(Algorithm)<< "\n";
