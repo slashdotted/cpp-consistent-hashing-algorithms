@@ -40,6 +40,8 @@ int bench(const std::string_view name, const std::string &filename,
 #ifdef USE_PCG32
   pcg_extras::seed_seq_from<std::random_device> seed;
   pcg32 rng{seed};
+#else
+    srand(time(NULL));
 #endif
   Algorithm engine(anchor_set, working_set);
 

@@ -108,6 +108,8 @@ int bench(const std::string_view name, const std::string &filename,
 #ifdef USE_PCG32
   pcg_extras::seed_seq_from<std::random_device> seed;
   pcg32 rng{seed};
+#else
+  srand(time(NULL));
 #endif
 
   std::ofstream results_file;
@@ -236,6 +238,8 @@ int main(int argc, char *argv[]) {
 #ifdef USE_PCG32
     pcg_extras::seed_seq_from<std::random_device> seed;
     pcg32 rng(seed);
+#else
+    srand(time(NULL));
 #endif
     fmt::println("Allocating {} buckets of size {} bytes...", anchor_set,
                  sizeof(uint32_t));
