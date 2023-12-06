@@ -28,6 +28,7 @@
 #include <fmt/core.h>
 #include <fstream>
 #include <unordered_map>
+#include <gtl/phmap.hpp>
 
 /*
  * Benchmark routine
@@ -125,7 +126,7 @@ int main(int argc, char *argv[]) {
   cxxopts::Options options("speed_test", "MementoHash vs AnchorHash benchmark");
   options.add_options()(
       "Algorithm",
-      "Algorithm (null|baseline|anchor|memento|mementoboost|mementomash|jump)",
+      "Algorithm (null|baseline|anchor|memento|mementoboost|mementomash|mementostd|mementogtl|jump)",
       cxxopts::value<std::string>())(
       "AnchorSet", "Size of the AnchorSet (ignored by Memento)",
       cxxopts::value<int>())("WorkingSet", "Size of the WorkingSet",
@@ -192,6 +193,10 @@ int main(int argc, char *argv[]) {
     return bench<MementoEngine<std::unordered_map>>(
         "Memento<std::unordered_map>", filename, anchor_set, working_set,
         num_removals, num_keys);
+  } else if (algorithm == "mementogtl") {
+      return bench<MementoEngine<gtl::flat_hash_map>>(
+          "Memento<std::gtl::flat_hash_map>", filename, anchor_set, working_set,
+          num_removals, num_keys);
   } else if (algorithm == "mementomash") {
     return bench<MementoEngine<MashTable>>("Memento<MashTable>", filename,
                                            anchor_set, working_set,

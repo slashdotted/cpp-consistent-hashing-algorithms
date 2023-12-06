@@ -15,6 +15,7 @@ find_package(Boost REQUIRED)
 find_package(xxHash REQUIRED)
 find_package(fmt REQUIRED)
 find_package(cxxopts REQUIRED)
+find_path(GTL_INCLUDE_DIRS "gtl/adv_utils.hpp")
 
 if(WITH_PCG32)
     find_path(PCG_INCLUDE_DIRS "pcg_extras.hpp")
@@ -51,9 +52,10 @@ if(WITH_PCG32)
     target_include_directories(speed_test PRIVATE ${PCG_INCLUDE_DIRS})
     target_include_directories(balance PRIVATE ${PCG_INCLUDE_DIRS})
 endif()
+target_include_directories(speed_test PRIVATE ${GTL_INCLUDE_DIRS})
+target_include_directories(balance PRIVATE ${GTL_INCLUDE_DIRS})
 target_link_libraries(speed_test PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts)
 target_link_libraries(balance PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts)
-
 include(GNUInstallDirs)
 install(TARGETS speed_test
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

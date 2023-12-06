@@ -41,7 +41,7 @@ The **speed_test** benchmark performs several random key lookups, the syntax is:
 ./speed_test Algorithm AnchorSet WorkingSet NumRemovals Numkeys ResFilename
 ```
 where
- * **Algorithm** can be *memento* (for MementoHash using *boost::unordered_flat_map* for the removal set), *mementoboost* (for MementoHash using *boost::unordered_map* for the removal set), *mementostd* (for MementoHash using *std::unordered_map* for the removal set), *mementomash* (for MementoHash using a hash table similar to Java's HashMap), *anchor* (for AnchorHash), *jump* (for JumpHash)
+ * **Algorithm** can be *memento* (for MementoHash using *boost::unordered_flat_map* for the removal set), *mementoboost* (for MementoHash using *boost::unordered_map* for the removal set), *mementostd* (for MementoHash using *std::unordered_map* for the removal set), *mementomash* (for MementoHash using a hash table similar to Java's HashMap), *anchor* (for AnchorHash), *mementogtl* (for Memento with gtl hash map), *jump* (for JumpHash)
  * **AnchorSet** is the size of the Anchor set (**a**): this parameter is used only by *anchor* but must be set to a value *at least equal to WorkingSet* even with *MementoHash*;
  * **WorkingSet** is the size of the initial Working set (**w**);
  * **NumRemovals** is the number of nodes that should be removed (randomly, except for *Jump*) before starting the benchmark;
