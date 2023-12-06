@@ -34,7 +34,6 @@ class Memento final
     };
 
     MementoMap<uint32_t, Entry> m_table;
-    uint32_t m_table_size;
 
 public:
     Memento() {}
@@ -44,14 +43,14 @@ public:
      *
      * @return the size of the replacement set
      */
-    int32_t size() const noexcept { return m_table_size; }
+    int32_t size() const noexcept { return m_table.size(); }
 
     /**
      * Returns {@code true} if the replacement set is empty.
      *
      * @return {@code true} if empty, {@code false} otherwise
      */
-    bool isEmpty() const noexcept { return m_table_size == 0; }
+    bool isEmpty() const noexcept { return m_table.empty(); }
 
     /**
      * Remembers that the given bucket has been removed
@@ -68,7 +67,6 @@ public:
      */
     int32_t remember(uint32_t bucket, uint32_t replacer, uint32_t prevRemoved ) noexcept {
         m_table.emplace(bucket, Entry{replacer, prevRemoved});
-        ++m_table_size;
         return bucket;
     }
 
@@ -83,12 +81,11 @@ public:
      * @return the new last removed bucket
      */
     int32_t restore(uint32_t bucket) noexcept {
-        if (m_table_size == 0) {
+        if (m_table.empty()) {
             return bucket + 1;
         }
         auto e = m_table.find(bucket);
         m_table.erase(e);
-        --m_table_size;
         return e->second.prevRemoved;
     }
 
@@ -105,9 +102,6 @@ public:
      * @return the replacing bucket if any, {@code std::nullopt} otherwise
      */
     int32_t replacer(int32_t bucket ) const noexcept {
-        if (m_table_size == 0) {
-            return -1;
-        }
         auto e = m_table.find(bucket);
         if (e != m_table.end()) {
             return e->second.replacer;
