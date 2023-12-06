@@ -46,13 +46,6 @@ public:
     int32_t size() const noexcept { return m_table.size(); }
 
     /**
-     * Returns {@code true} if the replacement set is empty.
-     *
-     * @return {@code true} if empty, {@code false} otherwise
-     */
-    bool isEmpty() const noexcept { return m_table.empty(); }
-
-    /**
      * Remembers that the given bucket has been removed
      * and that was replaced by the given replacer.
      * <p>

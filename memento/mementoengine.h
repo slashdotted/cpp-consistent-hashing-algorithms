@@ -51,6 +51,7 @@ public:
    * If the bucket was removed the replacing bucket is >= 0,
    * otherwise it is -1.
    */
+        if (m_lastRemoved == m_bArraySize) return b;
         auto replacer = m_memento.replacer(b);
         while (replacer >= 0) {
 
@@ -103,6 +104,7 @@ public:
    * If the bucket was removed the replacing bucket is >= 0,
    * otherwise it is -1.
    */
+      if (m_lastRemoved == m_bArraySize) return b;
       auto replacer = m_memento.replacer(b);
       while (replacer >= 0) {
 
@@ -170,7 +172,7 @@ public:
    * we are in the same use case as JumpHash. In this case we don't need
    * to remember the bucket, we just need to reduce the size of the b-array.
    */
-      if (m_memento.isEmpty() && bucket == m_bArraySize - 1) {
+      if ((m_lastRemoved == m_bArraySize) && bucket == m_bArraySize - 1) {
           m_lastRemoved = m_bArraySize = bucket;
           return bucket;
       }
