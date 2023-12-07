@@ -38,12 +38,6 @@ public:
    */
   uint32_t getBucket(std::string_view key) const noexcept {
     const auto hash{XXH64(key.data(), key.size(), 0)};
-
-    /* If there are no removed nodes, just perform Jump */
-    if (m_lastRemoved == m_bArraySize) {
-      return JumpConsistentHash(hash, m_bArraySize);
-    }
-
     /*
      * We invoke JumpHash to get a bucket
      * in the range [0,bArraySize-1].
@@ -96,12 +90,6 @@ public:
    */
   uint32_t getBucketCRC32c(uint64_t key, uint64_t seed) const noexcept {
     const auto hash = crc32c_sse42_u64(key, seed);
-
-    /* If there are no removed nodes, just perform Jump */
-    if (m_lastRemoved == m_bArraySize) {
-      return JumpConsistentHash(hash, m_bArraySize);
-    }
-
     /*
      * We invoke JumpHash to get a bucket
      * in the range [0,bArraySize-1].
