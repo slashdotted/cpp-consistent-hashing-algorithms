@@ -36,7 +36,7 @@ public:
    * This implementations is the same as provided by Jump authors
    *
    * @param key the key to map
-   * @param key the initial seed for CRC32c
+   * @param seed the initial seed for CRC32c
    * @return the related bucket
    */
     uint32_t getBucketCRC32c(uint64_t key, uint64_t seed) noexcept

@@ -25,6 +25,8 @@
 #include "memento/mashtable.h"
 #include "memento/mementoengine.h"
 #include "jump/jumpengine.h"
+#include "power/powerengine.h"
+#include "memento/mementoneengine.h"
 #include <fmt/core.h>
 #include <fstream>
 #include <unordered_map>
@@ -63,8 +65,8 @@ int bench(const std::string_view name, const std::string &filename,
       uint32_t removed = rand() % working_set;
 #endif
     if (bucket_status[removed] == 1) {
-      engine.removeBucket(removed);
-      bucket_status[removed] = 0;
+      auto rnode = engine.removeBucket(removed);
+      bucket_status[rnode] = 0; // Remove the actually removed node
       i++;
     }
   }
@@ -128,7 +130,7 @@ int main(int argc, char *argv[]) {
   cxxopts::Options options("speed_test", "MementoHash vs AnchorHash benchmark");
   options.add_options()(
       "Algorithm",
-      "Algorithm (null|baseline|anchor|memento|mementoboost|mementomash|mementostd|mementogtl|jump)",
+      "Algorithm (null|baseline|anchor|memento|mementoboost|mementomash|mementostd|mementogtl|jump|power|mementone)",
       cxxopts::value<std::string>())(
       "AnchorSet", "Size of the AnchorSet (ignored by Memento)",
       cxxopts::value<int>())("WorkingSet", "Size of the WorkingSet",
@@ -207,6 +209,14 @@ int main(int argc, char *argv[]) {
       return bench<JumpEngine>("JumpEngine", filename,
                                anchor_set, working_set,
                                num_removals, num_keys);
+  } else if (algorithm == "power") {
+      return bench<PowerEngine>("PowerEngine", filename,
+                               anchor_set, working_set,
+                               num_removals, num_keys);
+  } else if (algorithm == "mementone") {
+      return bench<MementoneEngine<boost::unordered_flat_map>>(
+          "Mementone<boost::unordered_flat_map>", filename, anchor_set, working_set,
+          num_removals, num_keys);
   } else {
     fmt::println("Unknown algorithm {}", algorithm);
     return 2;
