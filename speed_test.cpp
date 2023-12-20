@@ -20,6 +20,7 @@
 #include "jump/jumpengine.h"
 #include "power/powerengine.h"
 #include "memento/mementoneengine.h"
+#include "memento/mementoneshortcutengine.h"
 #ifdef USE_PCG32
 #include "pcg_random.hpp"
 #include <random>
@@ -297,7 +298,11 @@ int main(int argc, char *argv[]) {
       return bench<MementoneEngine<boost::unordered_flat_map>>(
           "Mementone<boost::unordered_flat_map>", filename, anchor_set, working_set,
           num_removals, num_keys);
-  } else {
+  }  else if (algorithm == "mementoneshortcut") {
+      return bench<MementoneShortcutEngine>(
+          "MementoneShortcutEngine", filename, anchor_set, working_set,
+          num_removals, num_keys);
+  }else {
     fmt::println("Unknown algorithm {}", algorithm);
     return 2;
   }

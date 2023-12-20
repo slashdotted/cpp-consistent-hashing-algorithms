@@ -27,6 +27,7 @@
 #include "jump/jumpengine.h"
 #include "power/powerengine.h"
 #include "memento/mementoneengine.h"
+#include "memento/mementoneshortcutengine.h"
 #include <fmt/core.h>
 #include <fstream>
 #include <unordered_map>
@@ -216,6 +217,10 @@ int main(int argc, char *argv[]) {
   } else if (algorithm == "mementone") {
       return bench<MementoneEngine<boost::unordered_flat_map>>(
           "Mementone<boost::unordered_flat_map>", filename, anchor_set, working_set,
+          num_removals, num_keys);
+  } else if (algorithm == "mementoneshortcut") {
+      return bench<MementoneShortcutEngine>(
+          "MementoneShortcutEngine", filename, anchor_set, working_set,
           num_removals, num_keys);
   } else {
     fmt::println("Unknown algorithm {}", algorithm);

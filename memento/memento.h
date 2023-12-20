@@ -92,7 +92,7 @@ public:
      * the given bucket.
      *
      * @param bucket the bucket to search for
-     * @return the replacing bucket if any, {@code std::nullopt} otherwise
+     * @return the replacing bucket if any, {@code -1} otherwise
      */
     int32_t replacer(int32_t bucket ) const noexcept {
         auto e = m_table.find(bucket);

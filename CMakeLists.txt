@@ -36,6 +36,7 @@ add_executable(speed_test speed_test.cpp
     memento/mashtable.h
     jump/jumpengine.h
     power/powerengine.h
+    memento/mementoneshortcutengine.h
     )
 
 add_executable(balance balance.cpp
@@ -48,6 +49,7 @@ add_executable(balance balance.cpp
     memento/mashtable.h
     jump/jumpengine.h
     power/powerengine.h
+    memento/mementoneshortcutengine.h
     )
 
 add_executable(mashtable_test mashtable_test.cpp memento/mashtable.h)
