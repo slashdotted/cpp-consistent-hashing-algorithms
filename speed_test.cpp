@@ -19,8 +19,6 @@
 #include "memento/mementoengine.h"
 #include "jump/jumpengine.h"
 #include "power/powerengine.h"
-#include "memento/mementoneengine.h"
-#include "memento/mementoneshortcutengine.h"
 #ifdef USE_PCG32
 #include "pcg_random.hpp"
 #include <random>
@@ -197,7 +195,7 @@ int main(int argc, char *argv[]) {
   cxxopts::Options options("speed_test", "MementoHash vs AnchorHash benchmark");
   options.add_options()(
       "Algorithm",
-      "Algorithm (null|baseline|anchor|memento|mementoboost|mementomash|mementostd|mementogtl|jump|power|mementone)",
+      "Algorithm (null|baseline|anchor|memento|mementoboost|mementomash|mementostd|mementogtl|jump|power)",
       cxxopts::value<std::string>())(
       "AnchorSet", "Size of the AnchorSet (ignored by Memento)",
       cxxopts::value<int>())("WorkingSet", "Size of the WorkingSet",
@@ -294,15 +292,7 @@ int main(int argc, char *argv[]) {
       return bench<PowerEngine>("PowerEngine", filename,
                                anchor_set, working_set,
                                num_removals, num_keys);
-  } else if (algorithm == "mementone") {
-      return bench<MementoneEngine<boost::unordered_flat_map>>(
-          "Mementone<boost::unordered_flat_map>", filename, anchor_set, working_set,
-          num_removals, num_keys);
-  }  else if (algorithm == "mementoneshortcut") {
-      return bench<MementoneShortcutEngine>(
-          "MementoneShortcutEngine", filename, anchor_set, working_set,
-          num_removals, num_keys);
-  }else {
+  } else {
     fmt::println("Unknown algorithm {}", algorithm);
     return 2;
   }

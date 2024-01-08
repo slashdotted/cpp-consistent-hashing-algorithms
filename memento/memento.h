@@ -78,8 +78,9 @@ public:
             return bucket + 1;
         }
         auto e = m_table.find(bucket);
+        auto ret{e->second.prevRemoved};
         m_table.erase(e);
-        return e->second.prevRemoved;
+        return ret;
     }
 
     /**

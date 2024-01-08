@@ -27,20 +27,20 @@ template <Integral K, typename V> class MashTable final {
   static constexpr uint32_t MIN_TABLE_SIZE = 1 << 4;
   static constexpr uint32_t MAX_TABLE_SIZE = 1 << 30;
 
-  struct Entry final {
+  struct Item final {
     K m_key;
     V m_value;
-    Entry *m_next;
+    Item *m_next;
 
-    Entry(K key, V value, Entry *next = nullptr)
+    Item(K key, V value, Item *next = nullptr)
         : m_key{key}, m_value{value}, m_next{next} {}
   };
 
-  Entry **m_table;
+  Item **m_table;
   uint32_t m_length;
   uint32_t m_size;
 
-  void add(Entry *entry, Entry **table, uint32_t table_length) {
+  void add(Item *entry, Item **table, uint32_t table_length) {
     auto kint{static_cast<unsigned int>(entry->m_key)};
     unsigned int hash = kint ^ kint >> 16;
     unsigned int index = (table_length - 1) & hash;
@@ -53,7 +53,7 @@ template <Integral K, typename V> class MashTable final {
       return;
     if (newTableSize > m_length && m_length >= MAX_TABLE_SIZE)
       return;
-    auto newTable{new Entry *[newTableSize]()};
+    auto newTable{new Item *[newTableSize]()};
     for (unsigned int i{0}; i < m_length; ++i) {
       auto entry{m_table[i]};
       while (entry) {
@@ -78,7 +78,7 @@ template <Integral K, typename V> class MashTable final {
     if (!entry) {
       return;
     }
-    Entry *prev{nullptr};
+    Item *prev{nullptr};
     while (entry && entry->m_key != key) {
       prev = entry;
       entry = entry->m_next;
@@ -96,7 +96,7 @@ template <Integral K, typename V> class MashTable final {
     delete entry;
   }
 
-  void doFree(Entry** t, uint32_t s) {
+  void doFree(Item** t, uint32_t s) {
       for(unsigned int i{0}; i<s; ++i) {
           auto e{t[i]};
           while(e) {
@@ -111,11 +111,11 @@ template <Integral K, typename V> class MashTable final {
 public:
   struct iterator final {
       iterator() : m_pair{nullptr, V()} {}
-    iterator(Entry *e) : m_pair{e, e->m_value} {}
-    std::pair<Entry *, V> m_pair;
+    iterator(Item *e) : m_pair{e, e->m_value} {}
+    std::pair<Item *, V> m_pair;
 
-    const std::pair<Entry *, V> &operator*() const noexcept { return m_pair; }
-    std::pair<Entry *, V> *operator->() noexcept { return &m_pair; }
+    const std::pair<Item *, V> &operator*() const noexcept { return m_pair; }
+    std::pair<Item *, V> *operator->() noexcept { return &m_pair; }
     bool operator==(const iterator &o) const noexcept {
       return m_pair.first == o.m_pair.first;
     }
@@ -125,7 +125,7 @@ public:
   };
 
   MashTable()
-      : m_table{new Entry *[MIN_TABLE_SIZE]()}, m_length{MIN_TABLE_SIZE},
+      : m_table{new Item *[MIN_TABLE_SIZE]()}, m_length{MIN_TABLE_SIZE},
         m_size{0} {}
 
   ~MashTable() noexcept {
@@ -136,7 +136,7 @@ public:
   MashTable& operator=(const MashTable&) = delete;
 
   int emplace(const K &key, V &&value) noexcept {
-    Entry *entry{new Entry{key, std::move(value)}};
+    Item *entry{new Item{key, std::move(value)}};
     add(entry, m_table, m_length);
     ++m_size;
     if (m_size > capacity()) {
@@ -164,8 +164,8 @@ public:
   }
 
   void erase(const iterator &it) {
-    if (it.e) {
-      remove(it.e->m_key);
+    if (it.m_pair.first) {
+          remove(it.m_pair.first->m_key);
       --m_size;
       if (m_size <= capacity() >> 2)
         resizeTable(m_length >> 1);

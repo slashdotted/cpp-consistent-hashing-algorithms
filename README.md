@@ -4,11 +4,12 @@ This project collects C++ implementations and benchmarking tools of some of the 
 The implemented algorithms are:
 * [2014] __jump hash__ by [Lamping and Veach](https://arxiv.org/pdf/1406.2294.pdf)
 * [2020] __anchor hash__ by [Gal Mendelson et al.](https://arxiv.org/pdf/1812.09674.pdf), using the implementation found on [Github](https://github.com/anchorhash/cpp-anchorhash)
+* [2023] __power consistent hash__ by [Eric Leu](https://arxiv.org/pdf/2307.12448.pdf)
 * [2023] __memento hash__ by [M. Coluzzi et al.](https://arxiv.org/pdf/2306.09783.pdf)
 
 ## Benchmarks
 
-The project includes a two benchmarking tools **speed_test** and **balance**, derived from the same tools provided by [Anchorhash](https://github.com/anchorhash/cpp-anchorhash)
+The project includes three benchmarking tools **speed_test**, **balance**, and **monotonicity** derived from the same tools provided by [Anchorhash](https://github.com/anchorhash/cpp-anchorhash)
 
 **speed_test** also records **heap allocations** and the maximum allocated heap space.
 
@@ -41,7 +42,7 @@ The **speed_test** benchmark performs several random key lookups, the syntax is:
 ./speed_test Algorithm AnchorSet WorkingSet NumRemovals Numkeys ResFilename
 ```
 where
- * **Algorithm** can be *memento* (for MementoHash using *boost::unordered_flat_map* for the removal set), *mementoboost* (for MementoHash using *boost::unordered_map* for the removal set), *mementostd* (for MementoHash using *std::unordered_map* for the removal set), *mementomash* (for MementoHash using a hash table similar to Java's HashMap), *anchor* (for AnchorHash), *mementogtl* (for Memento with gtl hash map), *jump* (for JumpHash)
+ * **Algorithm** can be *memento* (for MementoHash using *boost::unordered_flat_map* for the removal set), *mementoboost* (for MementoHash using *boost::unordered_map* for the removal set), *mementostd* (for MementoHash using *std::unordered_map* for the removal set), *mementomash* (for MementoHash using a hash table similar to Java's HashMap), *anchor* (for AnchorHash), *mementogtl* (for Memento with gtl hash map), *jump* (for JumpHash), *power* (for Power Consistent Hashing)
  * **AnchorSet** is the size of the Anchor set (**a**): this parameter is used only by *anchor* but must be set to a value *at least equal to WorkingSet* even with *MementoHash*;
  * **WorkingSet** is the size of the initial Working set (**w**);
  * **NumRemovals** is the number of nodes that should be removed (randomly, except for *Jump*) before starting the benchmark;
@@ -64,6 +65,17 @@ The **balance** benchmark performs a balance test and accepts the same parameter
 ./balance memento 1000000 1000000 20000 1000000 memento.txt
 Algorithm: memento, AnchorSet: 1000000, WorkingSet: 1000000, NumRemovals: 20000, NumKeys: 1000000, ResFileName: memento.txt
 Memento<boost::unordered_flat_map>: LB is 8.82
+```
+The **monotonicity** benchmark performs a monotonicity test and accepts the same parameters as **speed_test**. Example:
+
+```bash
+./monotonicity memento 1000000 1000000 1000 1000000 memento.txt
+Algorithm: memento, AnchorSet: 1000000, WorkingSet: 1000000, NumRemovals: 1000, NumKeys: 1000000, ResFileName: memento.txt
+Done determining initial assignment of 1000000 unique keys
+Removed node 424868
+Memento<boost::unordered_flat_map>: after removal misplaced keys are 0% (0 keys out of 1000000)
+Added node 424868
+Memento<boost::unordered_flat_map>: after adding back misplaced keys are 0% (0 keys out of 1000000)
 ```
 
 ## Java implementation
