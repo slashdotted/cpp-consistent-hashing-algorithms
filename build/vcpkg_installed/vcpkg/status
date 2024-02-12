@@ -1,0 +1,203 @@
+Package: boost-uninstall
+Version: 1.83.0
+Architecture: x64-linux
+Multi-Arch: same
+Abi: c69c7abeb4505137cac27c4083b641cd805410e3ef32d85b42068ec431460ca9
+Description: Internal vcpkg port used to uninstall Boost
+Status: install ok installed
+
+Package: boost-vcpkg-helpers
+Version: 1.83.0
+Depends: boost-uninstall
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 71c3884de5dec1658285ed5225be8588d0c1ed883450e1bf69ff612fd9624c22
+Description: Internal vcpkg port used to modularize Boost
+Status: install ok installed
+
+Package: boost-config
+Version: 1.83.0
+Depends: boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 40fa236cfc12240fa781df9806be9fa52e2e2a2b19520fc1106ed7c440bc812f
+Description: Boost config module
+Status: install ok installed
+
+Package: boost-static-assert
+Version: 1.83.0
+Depends: boost-config, boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 1fdac6578bc866673bbeb220c876912b17c6af0785b0b4a03ec56379574df6d4
+Description: Boost static_assert module
+Status: install ok installed
+
+Package: boost-type-traits
+Version: 1.83.0
+Depends: boost-config, boost-static-assert, boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: cb4cdb8a20bf933ffb50d19ae334b910642cee203a8403f9b413a91b31426f95
+Description: Boost type_traits module
+Status: install ok installed
+
+Package: boost-assert
+Version: 1.83.0
+Depends: boost-config, boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 39e1c3c415e94a5467d48cca610e2d14bdb5e615d20e303ffee301b926382d51
+Description: Boost assert module
+Status: install ok installed
+
+Package: boost-throw-exception
+Version: 1.83.0
+Depends: boost-assert, boost-config, boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 702add53b3e070ab788875612a0d6d55e3d413d40454bef4d59e3d6aa6baf1ea
+Description: Boost throw_exception module
+Status: install ok installed
+
+Package: boost-core
+Version: 1.83.0
+Depends: boost-assert, boost-config, boost-static-assert, boost-throw-exception, boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 7c1911749013bda57191c2aa5f1e45592423d487bd2184a37597313c287f1b2d
+Description: Boost core module
+Status: install ok installed
+
+Package: boost-tuple
+Version: 1.83.0
+Depends: boost-config, boost-core, boost-static-assert, boost-type-traits, boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: ede779adb71ce137ea4f9704171f76bb71541471c8bca4a580efe720d2ecca81
+Description: Boost tuple module
+Status: install ok installed
+
+Package: boost-preprocessor
+Version: 1.83.0
+Depends: boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 8645c9d03c7349f2ec7becdcccaf8b7beb111e0901bdea33497412956ba70419
+Description: Boost preprocessor module
+Status: install ok installed
+
+Package: boost-predef
+Version: 1.83.0
+Depends: boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 4f886a78691bc06195a672b5846a76ec047eaafe77b15a763a26bd00e9799d5b
+Description: Boost predef module
+Status: install ok installed
+
+Package: boost-mp11
+Version: 1.83.0
+Depends: boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: a371a54aa019c57bd717d7c7f2e06d3b8d38f341347b89359a2e9441c602379a
+Description: Boost mp11 module
+Status: install ok installed
+
+Package: boost-move
+Version: 1.83.0
+Depends: boost-config, boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 1c730ea03cbfe5e6654b46f128e3e2e9adbd1dce47b1eaedb4170c3929b574b4
+Description: Boost move module
+Status: install ok installed
+
+Package: boost-describe
+Version: 1.83.0
+Depends: boost-mp11, boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: dbac8a13347a5350fb85333e8d754f11d0dd7a49317a26e7fe7aa172ac5a1880
+Description: Boost describe module
+Status: install ok installed
+
+Package: boost-container-hash
+Version: 1.83.0
+Depends: boost-config, boost-describe, boost-mp11, boost-type-traits, boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 09df84532ae56d2ef6d8a18a75ba341c094d2d657b921deaddd404483e39c0fb
+Description: Boost container_hash module
+Status: install ok installed
+
+Package: boost-unordered
+Version: 1.83.0
+Depends: boost-assert, boost-config, boost-container-hash, boost-core, boost-move, boost-mp11, boost-predef, boost-preprocessor, boost-static-assert, boost-throw-exception, boost-tuple, boost-type-traits, boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 635a76d0fbb51d5f6c6c8cd0ba35b9d0423f9e0f269813e69982240675a0e53a
+Description: Boost unordered module
+Status: install ok installed
+
+Package: vcpkg-cmake-config
+Version: 2022-02-06
+Port-Version: 1
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 3a732944d5c700f33b247431fd65346e977aad87f27caf167c0cd33d8183df76
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2023-05-04
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 2e2aef902fec02d1b42aa85bef5d43a10b93eb0b7d2e6b5b0a13b2f50b27c138
+Status: install ok installed
+
+Package: cxxopts
+Version: 3.1.1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 86db088d0c08686b89936fa6dff1c0278bb255e348391b7ff81330b24df2e2ef
+Description: This is a lightweight C++ option parser library, supporting the standard GNU style syntax for options
+Status: install ok installed
+
+Package: fmt
+Version: 10.1.1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 1e766d36660d9546425be15a5c3ad914ce7fcdb47514b1eab7fffecbd48504a0
+Description: Formatting library for C++. It can be used as a safe alternative to printf or as a fast alternative to IOStreams.
+Status: install ok installed
+
+Package: gtl
+Version: 1.1.8
+Depends: vcpkg-cmake
+Architecture: x64-linux
+Multi-Arch: same
+Abi: c80470190be3c6f861d4782d2f11dcc4b45db3661887e1669f10539c37c04064
+Description: Greg's Template Library of useful classes.
+Status: install ok installed
+
+Package: pcg
+Version: 2021-04-06
+Port-Version: 2
+Architecture: x64-linux
+Multi-Arch: same
+Abi: f533c13b0a3712b268cbaab68ec456c953be50c5a1f16bee853fd5c6343e05b7
+Description: Permuted Congruential Generator
+Status: install ok installed
+
+Package: xxhash
+Version: 0.8.2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 4faab5c1ca579ac0892529867733974af4ac2b479dbc8f4bf2f0bb89a2af4f7b
+Description: Extremely fast hash algorithm
+Status: install ok installed
+
