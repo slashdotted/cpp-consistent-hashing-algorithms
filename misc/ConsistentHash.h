@@ -21,4 +21,4 @@ public:
     virtual ~ConsistentHash() {}
 };
 
-#endif CONSISTENTHASH_H
+#endif

@@ -23,4 +23,4 @@ static uint32_t gen32bitRandNumber(uint32_t K) {
 	return (K * 421757ULL + 1);
 }
 
-#endif CRC32C_SSE42_U64_H
+#endif
