@@ -131,6 +131,7 @@ uint32_t DxHash::getNodeID(uint32_t key, uint32_t* numHash){
 		}
 	};
 	*numHash = i;
+	
 	return index;
 }
 

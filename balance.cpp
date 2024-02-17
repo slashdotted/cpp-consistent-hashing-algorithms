@@ -30,7 +30,7 @@
 #include <fstream>
 #include <unordered_map>
 #include <gtl/phmap.hpp>
-#include "dx/DxHash.h"
+#include "dx/DxEngine.h"
 
 /*
  * Benchmark routine
@@ -214,7 +214,7 @@ int main(int argc, char *argv[]) {
                                anchor_set, working_set,
                                num_removals, num_keys);
   } else if (algorithm == "dx") {
-    return bench<DxHash>("DxHash", filename,
+    return bench<DxEngine>("DxEngine", filename,
                                anchor_set, working_set,
                                num_removals, num_keys);
   } else {

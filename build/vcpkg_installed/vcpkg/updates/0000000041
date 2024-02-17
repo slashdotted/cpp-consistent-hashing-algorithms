@@ -1,0 +1,8 @@
+Package: gtl
+Version: 1.1.8
+Depends: vcpkg-cmake
+Architecture: x64-linux
+Multi-Arch: same
+Abi: c80470190be3c6f861d4782d2f11dcc4b45db3661887e1669f10539c37c04064
+Description: Greg's Template Library of useful classes.
+Status: install ok installed

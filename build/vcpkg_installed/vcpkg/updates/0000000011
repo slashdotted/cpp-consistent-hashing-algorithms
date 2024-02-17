@@ -1,0 +1,8 @@
+Package: boost-assert
+Version: 1.83.0
+Depends: boost-config, boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 39e1c3c415e94a5467d48cca610e2d14bdb5e615d20e303ffee301b926382d51
+Description: Boost assert module
+Status: install ok installed

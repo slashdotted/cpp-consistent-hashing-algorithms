@@ -8,7 +8,9 @@ public:
         : dx{anchor_set, working_set}
     {}
 
-    uint32_t getBucketCRC32c(uint32_t key, uint32_t* seed) noexcept { return dx.getNodeID(key, seed); }
+    uint32_t getBucketCRC32c(uint32_t key, int seed) noexcept {
+        return dx.getNodeID(key, reinterpret_cast<uint32_t*>(&seed));
+    }
 
     uint32_t addBucket() noexcept { return dx.updateAddition(); }
 
