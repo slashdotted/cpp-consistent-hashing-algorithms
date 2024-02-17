@@ -9,7 +9,7 @@
 using namespace std;
 
 
-class DxHash:public ConsistentHash{
+class DxHash:public CH{
 private:
 	// The node array contains every nodes info.
 	// boost::dynamic_bitset<> nodes;
@@ -46,7 +46,7 @@ public:
 };
 
 
-class DxHash_TO1:public ConsistentHash{
+class DxHash_TO1:public CH{
 private:
 	uint8_t* nodes;
 	uint32_t size;
@@ -73,7 +73,7 @@ public:
 	}
 };
 
-class DxHash_TO2:public ConsistentHash{
+class DxHash_TO2:public CH{
 private:
 	uint8_t* nodes;
 	uint32_t* IQueue;
