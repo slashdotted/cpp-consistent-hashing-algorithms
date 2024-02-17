@@ -1,6 +1,5 @@
 *.a
 *.app
-*build
 *.dll
 *.DS_Store
 *.dylib

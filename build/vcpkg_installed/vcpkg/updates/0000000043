@@ -1,0 +1,8 @@
+Package: pcg
+Version: 2021-04-06
+Port-Version: 2
+Architecture: x64-linux
+Multi-Arch: same
+Abi: f533c13b0a3712b268cbaab68ec456c953be50c5a1f16bee853fd5c6343e05b7
+Description: Permuted Congruential Generator
+Status: install ok installed

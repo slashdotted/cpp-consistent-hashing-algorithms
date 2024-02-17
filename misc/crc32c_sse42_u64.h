@@ -17,7 +17,7 @@ static inline uint32_t crc32c_sse42_u64(uint64_t key, uint64_t seed) {
     return seed;
 }
 
-static uint32_t generateRandomNumber(const uint32_t K){
+static uint32_t generate32RandomNumber(const uint32_t K){
     return (K * 421757ULL + 1);
 }
 

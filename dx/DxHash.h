@@ -1,3 +1,9 @@
+/**
+ * @author Roberto Vicario @ SUPSI
+ * 
+ * @cite https://github.com/ChaosD/DxHash.git
+*/
+
 #include <vector>
 #include <stack>
 // #include <boost/dynamic_bitset.hpp>
@@ -9,7 +15,7 @@
 using namespace std;
 
 
-class DxHash:public CH{
+class DxHash:public ConsistentHash {
 private:
 	// The node array contains every nodes info.
 	// boost::dynamic_bitset<> nodes;
@@ -46,7 +52,7 @@ public:
 };
 
 
-class DxHash_TO1:public CH{
+class DxHash_TO1:public ConsistentHash {
 private:
 	uint8_t* nodes;
 	uint32_t size;
@@ -73,7 +79,7 @@ public:
 	}
 };
 
-class DxHash_TO2:public CH{
+class DxHash_TO2:public ConsistentHash {
 private:
 	uint8_t* nodes;
 	uint32_t* IQueue;

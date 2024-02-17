@@ -1,3 +1,9 @@
+/**
+ * @author Roberto Vicario @ SUPSI
+ * 
+ * @cite https://github.com/ChaosD/DxHash.git
+*/
+
 #include "DxHash.h"
 #include "../misc/crc32c_sse42_u64.h"
 #include <cstdio>
@@ -102,7 +108,7 @@ uint32_t DxHash::updateAddition(){
 }
 
 uint32_t DxHash::getInactiveNodeID(uint32_t key){
-	uint32_t key2 = gen32bitRandNumber(key);	
+	uint32_t key2 = generate32RandomNumber(key);	
 	uint32_t bs = crc32c_sse42_u64(key, key2);
 	uint32_t index = bs % size;	
 	uint32_t i = 1;
@@ -118,7 +124,7 @@ uint32_t DxHash::getInactiveNodeID(uint32_t key){
 }
 
 uint32_t DxHash::getNodeID(uint32_t key, uint32_t* numHash){
-	uint32_t key2 = gen32bitRandNumber(key);	
+	uint32_t key2 = generate32RandomNumber(key);	
 	uint32_t bs = crc32c_sse42_u64(key, key2);
 	uint32_t index = bs % size;	
 	uint32_t i = 1;
@@ -131,6 +137,7 @@ uint32_t DxHash::getNodeID(uint32_t key, uint32_t* numHash){
 		}
 	};
 	*numHash = i;
+	
 	return index;
 }
 
@@ -243,7 +250,7 @@ uint32_t DxHash_TO1::updateAddition(){
 }
 
 uint32_t DxHash_TO1::getInactiveNodeID(uint32_t key){
-	uint32_t key2 = gen32bitRandNumber(key);	
+	uint32_t key2 = generate32RandomNumber(key);	
 	uint32_t bs = crc32c_sse42_u64(key, key2);
 	uint32_t index = bs % size;	
 	uint32_t i = 1;
@@ -259,7 +266,7 @@ uint32_t DxHash_TO1::getInactiveNodeID(uint32_t key){
 }
 
 uint32_t DxHash_TO1::getNodeID(uint32_t key, uint32_t* numHash){
-	uint32_t key2 = gen32bitRandNumber(key);
+	uint32_t key2 = generate32RandomNumber(key);
 	uint32_t bs = crc32c_sse42_u64(key, key2);
 	uint32_t index = bs % size;	
 	uint32_t i = 1;
@@ -398,7 +405,7 @@ uint32_t DxHash_TO2::updateAddition(){
 }
 
 uint32_t DxHash_TO2::getNodeID(uint32_t key, uint32_t* numHash){
-	uint32_t key2 = gen32bitRandNumber(key);
+	uint32_t key2 = generate32RandomNumber(key);
 	uint32_t bs = crc32c_sse42_u64(key, key2);
 	uint32_t index = bs % size;	
 	uint32_t i = 1;
