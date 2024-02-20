@@ -8,9 +8,9 @@
 #include <cstdint>
 #include "MaglevHash.cpp"
 
-class DxEngine final {
+class MaglevEngine final {
 public:
-    DxEngine(uint32_t anchor_set, uint32_t working_set)
+    MaglevEngine(uint32_t anchor_set, uint32_t working_set)
     : maglev{anchor_set, working_set}
     {}
 
