@@ -8,9 +8,9 @@
 #include <cstdint>
 #include "RingHash.cpp"
 
-class DxEngine final {
+class RingEngine final {
 public:
-    DxEngine(uint32_t anchor_set, uint32_t working_set)
+    RingEngine(uint32_t anchor_set, uint32_t working_set)
     : ring{anchor_set, working_set}
     {}
 
