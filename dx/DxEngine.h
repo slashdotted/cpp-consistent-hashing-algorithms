@@ -1,7 +1,5 @@
 /**
  * @author Roberto Vicario @ SUPSI
- * 
- * @cite https://github.com/ChaosD/DxHash.git
 */
 
 #ifndef DXENGINE_H
