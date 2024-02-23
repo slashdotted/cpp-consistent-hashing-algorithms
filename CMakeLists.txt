@@ -30,33 +30,42 @@ add_executable(speed_test speed_test.cpp
     vcpkg.json
     memento/memento.h
     memento/mementoengine.h
-    anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp  anchor/misc/crc32c_sse42_u64.h
+    anchor/AnchorHashQre.cpp
     anchor/anchorengine.h
     memento/mashtable.h
     jump/jumpengine.h
     power/powerengine.h
+    dx/DxEngine.h
+    maglev/MaglevEngine.h
+    ring/RingEngine.h
     )
 
 add_executable(balance balance.cpp
     vcpkg.json
     memento/memento.h
     memento/mementoengine.h
-    anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp  anchor/misc/crc32c_sse42_u64.h
+    anchor/AnchorHashQre.cpp
     anchor/anchorengine.h
     memento/mashtable.h
     jump/jumpengine.h
     power/powerengine.h
+    dx/DxEngine.h
+    maglev/MaglevEngine.h
+    ring/RingEngine.h
     )
 
 add_executable(monotonicity monotonicity.cpp
     vcpkg.json
     memento/memento.h
     memento/mementoengine.h
-    anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp  anchor/misc/crc32c_sse42_u64.h
+    anchor/AnchorHashQre.cpp
     anchor/anchorengine.h
     memento/mashtable.h
     jump/jumpengine.h
     power/powerengine.h
+    dx/DxEngine.h
+    maglev/MaglevEngine.h
+    ring/RingEngine.h
     )
 
 add_executable(mashtable_test mashtable_test.cpp memento/mashtable.h)
