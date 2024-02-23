@@ -17,6 +17,7 @@
 #define POWERENGINE_H
 #include <cmath>
 #include <cstdint>
+#include "../utils.h"
 #include "pcg_random.hpp"
 
 class PowerEngine final {
@@ -24,14 +25,6 @@ public:
     PowerEngine(uint32_t, uint32_t working_nodes)
         : m_n{working_nodes}, m_m{smallestPow2(m_n)}, m_mH{m_m >> 1}, m_mHm1{m_mH - 1}, m_mm1{m_m - 1}
     {}
-
-    // From AnchorHash
-    static uint32_t crc32c_sse42_u64(uint64_t key, uint64_t seed) {
-        __asm__ volatile("crc32q %[key], %[seed];"
-                         : [seed] "+r"(seed)
-                         : [key] "rm"(key));
-        return seed;
-    }
 
     /**
    * Returns the bucket where the given key should be mapped.
@@ -142,6 +135,7 @@ private:
             //          U denotes the next random number from a generator U (0, 1)
             //          that generates random numbers
             //          uniformly over range (0, 1) and deterministically based on the given key.
+            rng.seed(key);
             auto u = (static_cast<double>(rng())/static_cast<double>(rng.max()));
             // (...) 2. Compute r = min{j: U>(x+1)/(j+1)
             auto r = (uint32_t) ceil((static_cast<uint64_t>(x) + 1) / u) - 1;
