@@ -31,8 +31,8 @@
 #include <gtl/phmap.hpp>
 #include <unordered_map>
 #include "dx/DxEngine.h"
-#include "ring/RingEngine.h"
-#include "maglev/MaglevEngine.h"
+// #include "ring/RingEngine.h"
+// #include "maglev/MaglevEngine.h"
 
 /*
  * Benchmark routine
