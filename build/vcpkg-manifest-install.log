@@ -1,0 +1,39 @@
+Detecting compiler hash for triplet x64-linux...
+All requested packages are currently installed.
+Total install time: 567 ns
+The package boost is compatible with built-in CMake targets:
+
+    find_package(Boost REQUIRED [COMPONENTS <libs>...])
+    target_link_libraries(main PRIVATE Boost::boost Boost::<lib1> Boost::<lib2> ...)
+
+cxxopts provides CMake targets:
+
+  # this is heuristically generated, and may not be correct
+  find_package(cxxopts CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE cxxopts::cxxopts)
+
+The package fmt provides CMake targets:
+
+    find_package(fmt CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE fmt::fmt)
+
+    # Or use the header-only version
+    find_package(fmt CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE fmt::fmt-header-only)
+
+gtl is header-only and can be used from CMake via:
+
+    find_path(GTL_INCLUDE_DIRS "gtl/adv_utils.hpp")
+    target_include_directories(main PRIVATE ${GTL_INCLUDE_DIRS})
+
+pcg is header-only and can be used from CMake via:
+
+    find_path(PCG_INCLUDE_DIRS "pcg_extras.hpp")
+    target_include_directories(main PRIVATE ${PCG_INCLUDE_DIRS})
+
+xxhash provides CMake targets:
+
+  # this is heuristically generated, and may not be correct
+  find_package(xxHash CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE xxHash::xxhash)
+

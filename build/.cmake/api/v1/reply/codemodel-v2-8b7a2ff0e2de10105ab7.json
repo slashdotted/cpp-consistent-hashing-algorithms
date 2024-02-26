@@ -1,0 +1,88 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-873fd1b669b46821f524.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "cpp-consistent-hashing",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "balance::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-balance-Release-23f899b88f552451ae44.json",
+					"name" : "balance",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "mashtable_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-mashtable_test-Release-9bfd95649e22e356c3d3.json",
+					"name" : "mashtable_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "monotonicity::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-monotonicity-Release-0ead4cfc01c23415cfdc.json",
+					"name" : "monotonicity",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "speed_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-speed_test-Release-424ce3eb6f152eb505a8.json",
+					"name" : "speed_test",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/robertovicario/Scrivania/cpp-consistent-hashing-algorithms/build",
+		"source" : "/home/robertovicario/Scrivania/cpp-consistent-hashing-algorithms"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

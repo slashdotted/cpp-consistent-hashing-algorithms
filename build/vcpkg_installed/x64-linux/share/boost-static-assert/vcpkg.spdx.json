@@ -1,0 +1,110 @@
+{
+  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.2.1/schemas/spdx-schema.json",
+  "spdxVersion": "SPDX-2.2",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "documentNamespace": "https://spdx.org/spdxdocs/boost-static-assert-x64-linux-1.83.0-407a78f0-5372-4b6f-b935-d560992633f9",
+  "name": "boost-static-assert:x64-linux@1.83.0 1fdac6578bc866673bbeb220c876912b17c6af0785b0b4a03ec56379574df6d4",
+  "creationInfo": {
+    "creators": [
+      "Tool: vcpkg-4c1df40a3c5c5e18de299a99e9accb03c2a82e1e"
+    ],
+    "created": "2024-02-12T00:49:46Z"
+  },
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "GENERATES",
+      "relatedSpdxElement": "SPDXRef-binary"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-0"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-1"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "GENERATED_FROM",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-0",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-1",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    }
+  ],
+  "packages": [
+    {
+      "name": "boost-static-assert",
+      "SPDXID": "SPDXRef-port",
+      "versionInfo": "1.83.0",
+      "downloadLocation": "NOASSERTION",
+      "homepage": "https://github.com/boostorg/static_assert",
+      "licenseConcluded": "BSL-1.0",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "description": "Boost static_assert module",
+      "comment": "This is the port (recipe) consumed by vcpkg."
+    },
+    {
+      "name": "boost-static-assert:x64-linux",
+      "SPDXID": "SPDXRef-binary",
+      "versionInfo": "1fdac6578bc866673bbeb220c876912b17c6af0785b0b4a03ec56379574df6d4",
+      "downloadLocation": "NONE",
+      "licenseConcluded": "BSL-1.0",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "comment": "This is a binary package built by vcpkg."
+    },
+    {
+      "SPDXID": "SPDXRef-resource-1",
+      "name": "boostorg/static_assert",
+      "downloadLocation": "git+https://github.com/boostorg/static_assert@boost-1.83.0",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "60c126c60f435b3fe0f11d23e05df5836c6f6c7630f383818777931684599fc26ba0d801f714d74e24419699842abb915c350637118e036bfa26d5ae6180e82a"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "fileName": ".//home/robertovicario/Documenti/Projects/cpp-consistent-hashing-algorithms/vcpkg/ports/boost-static-assert/portfile.cmake",
+      "SPDXID": "SPDXRef-file-0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "b2acd9c87206889b3eccfe15a78102f01183c462a08c803b3a27aeac32b2e3f6"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": ".//home/robertovicario/Documenti/Projects/cpp-consistent-hashing-algorithms/vcpkg/ports/boost-static-assert/vcpkg.json",
+      "SPDXID": "SPDXRef-file-1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "b05ab2bac006ae34a3ba03191fcbc776ada5d1bf5b158e8fbc3999f531275cf5"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    }
+  ]
+}

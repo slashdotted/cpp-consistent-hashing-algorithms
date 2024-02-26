@@ -1,0 +1,110 @@
+{
+  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.2.1/schemas/spdx-schema.json",
+  "spdxVersion": "SPDX-2.2",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "documentNamespace": "https://spdx.org/spdxdocs/boost-tuple-x64-linux-1.83.0-c3ef16d6-44f7-41bf-889a-1b18cf88cb80",
+  "name": "boost-tuple:x64-linux@1.83.0 ede779adb71ce137ea4f9704171f76bb71541471c8bca4a580efe720d2ecca81",
+  "creationInfo": {
+    "creators": [
+      "Tool: vcpkg-4c1df40a3c5c5e18de299a99e9accb03c2a82e1e"
+    ],
+    "created": "2024-02-12T00:50:04Z"
+  },
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "GENERATES",
+      "relatedSpdxElement": "SPDXRef-binary"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-0"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-1"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "GENERATED_FROM",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-0",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-1",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    }
+  ],
+  "packages": [
+    {
+      "name": "boost-tuple",
+      "SPDXID": "SPDXRef-port",
+      "versionInfo": "1.83.0",
+      "downloadLocation": "NOASSERTION",
+      "homepage": "https://github.com/boostorg/tuple",
+      "licenseConcluded": "BSL-1.0",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "description": "Boost tuple module",
+      "comment": "This is the port (recipe) consumed by vcpkg."
+    },
+    {
+      "name": "boost-tuple:x64-linux",
+      "SPDXID": "SPDXRef-binary",
+      "versionInfo": "ede779adb71ce137ea4f9704171f76bb71541471c8bca4a580efe720d2ecca81",
+      "downloadLocation": "NONE",
+      "licenseConcluded": "BSL-1.0",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "comment": "This is a binary package built by vcpkg."
+    },
+    {
+      "SPDXID": "SPDXRef-resource-1",
+      "name": "boostorg/tuple",
+      "downloadLocation": "git+https://github.com/boostorg/tuple@boost-1.83.0",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "0f963643da633b4fda913d98703fb865349ba12063202defeb6d0fce82d8b06b9e3c12decef0ab866ddfb689ea85e112c32b52bb669a353fca64d0257aeef9a8"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "fileName": ".//home/robertovicario/Documenti/Projects/cpp-consistent-hashing-algorithms/vcpkg/ports/boost-tuple/portfile.cmake",
+      "SPDXID": "SPDXRef-file-0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "c3867a584e967582e3c35b71e5fcc294d361b213ab3fd3c2d61b533ec95ac049"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": ".//home/robertovicario/Documenti/Projects/cpp-consistent-hashing-algorithms/vcpkg/ports/boost-tuple/vcpkg.json",
+      "SPDXID": "SPDXRef-file-1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "d5ebbc1720f42603ec1b001f199df4c17dcc3dca517fd3ee0797cb2ba65322e7"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    }
+  ]
+}
