@@ -14,7 +14,7 @@ public:
     : maglev{anchor_set, working_set}
     {}
 
-    uint32_t getBucketCRC32c(uint32_t key, uint32_t* seed) noexcept { return maglev.getNodeID(key, seed); }
+    uint32_t getBucketCRC32c(uint32_t key, uint32_t seed) noexcept { return maglev.getNodeID(key, &seed); }
 
     uint32_t addBucket() noexcept { return maglev.updateAddition(); }
 
