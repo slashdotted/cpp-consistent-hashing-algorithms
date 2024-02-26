@@ -34,7 +34,6 @@ MaglevHash::~MaglevHash(){
     }
 }
 
-/*
 void MaglevHash::updatePermutation(){
     uint32_t i, size;
     if(permutationOffset != nullptr){
@@ -54,9 +53,7 @@ void MaglevHash::updatePermutation(){
         permutationSkip[i] = crc32c_sse42_u64(*iter, permutationOffset[i]) % (M - 1) + 1;
     }
 }
-*/
 
-/*
 void MaglevHash::updateLookupTable(){
     uint32_t i, j, size, pos, num;
     size = workSet.size();
@@ -86,7 +83,6 @@ void MaglevHash::updateLookupTable(){
         }
     }
 }
-*/
 
 uint32_t MaglevHash::getSize(){
     return workSet.size();
