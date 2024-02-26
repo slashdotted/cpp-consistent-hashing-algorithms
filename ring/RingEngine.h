@@ -14,7 +14,7 @@ public:
     : ring{anchor_set, working_set}
     {}
 
-    uint32_t getBucketCRC32c(uint32_t key, uint32_t* seed) noexcept { return ring.getNodeID(key, seed); }
+    uint32_t getBucketCRC32c(uint32_t key, uint32_t seed) noexcept { return ring.getNodeID(key, &seed); }
 
     uint32_t addBucket() noexcept { return ring.updateAddition(); }
 
