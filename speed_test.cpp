@@ -31,8 +31,8 @@
 #include <unordered_map>
 #include <gtl/phmap.hpp>
 #include "dx/DxEngine.h"
-// #include "ring/RingEngine.h"
-// #include "maglev/MaglevEngine.h"
+#include "ring/RingEngine.h"
+#include "maglev/MaglevEngine.h"
 
 /*
  * ******************************************
@@ -297,13 +297,11 @@ int main(int argc, char *argv[]) {
                                num_removals, num_keys);
   } else if (algorithm == "dx") {
     return bench<DxEngine>("DxEngine", filename, anchor_set, working_set, num_removals, num_keys);
-  /*
   } else if (algorithm == "ring") {
     return bench<RingEngine>("RingEngine", filename, anchor_set, working_set, num_removals, num_keys);
   } else if (algorithm == "maglev") {
     return bench<MaglevEngine>("MaglevEngine", filename, anchor_set, working_set, num_removals, num_keys);
   } else {
-  */
     fmt::println("Unknown algorithm {}", algorithm);
     return 2;
   }
