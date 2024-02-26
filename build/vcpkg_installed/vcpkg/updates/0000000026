@@ -1,0 +1,8 @@
+Package: boost-describe
+Version: 1.83.0
+Depends: boost-mp11, boost-vcpkg-helpers
+Architecture: x64-linux
+Multi-Arch: same
+Abi: dbac8a13347a5350fb85333e8d754f11d0dd7a49317a26e7fe7aa172ac5a1880
+Description: Boost describe module
+Status: install ok half-installed

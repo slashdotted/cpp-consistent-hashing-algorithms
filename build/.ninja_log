@@ -1,3 +1,15 @@
 # ninja log v5
-1	1430	1708951398117319674	CMakeFiles/speed_test.dir/anchor/AnchorHashQre.cpp.o	1c1230104346eb28
-1431	3026	1708951399713295375	CMakeFiles/balance.dir/anchor/AnchorHashQre.cpp.o	65f98ad7a1d189f6
+0	7250	1708951918385594751	CMakeFiles/speed_test.dir/anchor/AnchorHashQre.cpp.o	1c1230104346eb28
+7253	10236	1708951921377551140	CMakeFiles/balance.dir/anchor/AnchorHashQre.cpp.o	65f98ad7a1d189f6
+3	32016	1708953560073457134	CMakeFiles/balance.dir/balance.cpp.o	f29bced80eb376da
+2	32895	1708953560973436492	CMakeFiles/speed_test.dir/speed_test.cpp.o	1b00d16441838275
+4	37293	1708953565369335745	CMakeFiles/monotonicity.dir/monotonicity.cpp.o	aafc6b0debd54a38
+37293	44581	1708953572661168905	CMakeFiles/monotonicity.dir/anchor/AnchorHashQre.cpp.o	9a08fe28c1850ac6
+3	54861	1708953775492634755	CMakeFiles/speed_test.dir/speed_test.cpp.o	1b00d16441838275
+4	57944	1708953778592566669	CMakeFiles/balance.dir/balance.cpp.o	f29bced80eb376da
+54936	60363	1708953781004513713	speed_test	b66ad863c4471514
+57945	60437	1708953781072512221	balance	5406ef9d3f688979
+4	61686	1708953782332484564	CMakeFiles/monotonicity.dir/monotonicity.cpp.o	aafc6b0debd54a38
+61686	62522	1708953783168466216	monotonicity	dac86a88b67a4f0e
+60363	63644	1708953784296441463	CMakeFiles/mashtable_test.dir/mashtable_test.cpp.o	548e9f9e5db35d3f
+63644	63937	1708953784584435144	mashtable_test	6591c7a145dc054
