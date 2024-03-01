@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(BUILD_SHARED_LIBS OFF)
-set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 option(WITH_PCG32 "Use PCG32 random number generator" OFF)
 option(WITH_HEAPSTATS "Enable heap allocation statistics" ON)
@@ -30,42 +29,39 @@ add_executable(speed_test speed_test.cpp
     vcpkg.json
     memento/memento.h
     memento/mementoengine.h
-    anchor/AnchorHashQre.cpp
+    anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp  anchor/misc/crc32c_sse42_u64.h
     anchor/anchorengine.h
     memento/mashtable.h
     jump/jumpengine.h
     power/powerengine.h
-    dx/DxEngine.h
-    maglev/MaglevEngine.h
-    ring/RingEngine.h
+    utils.h
+    utils.cpp
     )
 
 add_executable(balance balance.cpp
     vcpkg.json
     memento/memento.h
     memento/mementoengine.h
-    anchor/AnchorHashQre.cpp
+    anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp  anchor/misc/crc32c_sse42_u64.h
     anchor/anchorengine.h
     memento/mashtable.h
     jump/jumpengine.h
     power/powerengine.h
-    dx/DxEngine.h
-    maglev/MaglevEngine.h
-    ring/RingEngine.h
+    utils.h
+    utils.cpp
     )
 
 add_executable(monotonicity monotonicity.cpp
     vcpkg.json
     memento/memento.h
     memento/mementoengine.h
-    anchor/AnchorHashQre.cpp
+    anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp  anchor/misc/crc32c_sse42_u64.h
     anchor/anchorengine.h
     memento/mashtable.h
     jump/jumpengine.h
     power/powerengine.h
-    dx/DxEngine.h
-    maglev/MaglevEngine.h
-    ring/RingEngine.h
+    utils.h
+    utils.cpp
     )
 
 add_executable(mashtable_test mashtable_test.cpp memento/mashtable.h)
