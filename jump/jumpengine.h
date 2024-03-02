@@ -16,20 +16,13 @@
 #ifndef JUMPENGINE_H
 #define JUMPENGINE_H
 #include <cstdint>
+#include "../utils.h"
 
 class JumpEngine final {
 public:
     JumpEngine(uint32_t, uint32_t working_set)
         : m_num_buckets{working_set}
     {}
-
-    // From AnchorHash
-    static uint32_t crc32c_sse42_u64(uint64_t key, uint64_t seed) {
-        __asm__ volatile("crc32q %[key], %[seed];"
-                         : [seed] "+r"(seed)
-                         : [key] "rm"(key));
-        return seed;
-    }
 
     /**
    * Returns the bucket where the given key should be mapped.

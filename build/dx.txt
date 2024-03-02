@@ -1,4 +1,0 @@
-DxEngine:	Anchor	1000000	Working	1000000	Removals	20000	Rate	18.4332	MaxHeap	125000	AlgoSizeof	64
-DxEngine: Balance: 8.82	rand()
-DxEngine: MisplacedRem: 0	1000000	0	0	rand()
-DxEngine: MisplacedAdd: 3	1000000	3e-06	3e-06	rand()

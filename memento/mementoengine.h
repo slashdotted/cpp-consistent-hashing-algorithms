@@ -16,6 +16,7 @@
 #ifndef MEMENTOENGINE_H
 #define MEMENTOENGINE_H
 #include "memento.h"
+#include "../utils.h"
 #include <string_view>
 #include <xxhash.h>
 
@@ -195,13 +196,6 @@ public:
   uint32_t bArraySize() const noexcept { return m_bArraySize; }
 
 private:
-  // From AnchorHash
-  static uint32_t crc32c_sse42_u64(uint64_t key, uint64_t seed) {
-    __asm__ volatile("crc32q %[key], %[seed];"
-                     : [seed] "+r"(seed)
-                     : [key] "rm"(key));
-    return seed;
-  }
 
   // From Jump paper
   static int32_t JumpConsistentHash(uint64_t key, int32_t num_buckets) {
