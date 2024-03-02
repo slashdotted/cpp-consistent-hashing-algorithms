@@ -1,0 +1,7 @@
+Algorithm: ring, AnchorSet: 1000000, WorkingSet: 1000000, NumRemovals: 1000, NumKeys: 1000000, ResFileName: ring_monotonicity.log
+Done determining initial assignment of 1000000 unique keys
+Removed node 343459
+RingEngine: after removal misplaced keys are 0% (0 keys out of 1000000)
+Added node 131404
+(After Add) Misplaced key 1926807098,1940982973: before in bucket 495873, now in bucket 131404 (status? old bucket 1, new bucket 1)
+RingEngine: after adding back misplaced keys are 9.999999999999999e-05% (1 keys out of 1000000)

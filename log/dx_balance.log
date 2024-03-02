@@ -1,0 +1,2 @@
+Algorithm: dx, AnchorSet: 1000000, WorkingSet: 1000000, NumRemovals: 20000, NumKeys: 1000000, ResFileName: dx_balance.log
+DxEngine: LB is 8.82

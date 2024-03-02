@@ -1,0 +1,8 @@
+Algorithm: dx, AnchorSet: 1000000, WorkingSet: 1000000, NumRemovals: 1000, NumKeys: 1000000, ResFileName: dx_monotonocity.log
+Done determining initial assignment of 1000000 unique keys
+Removed node 10967
+DxEngine: after removal misplaced keys are 0% (0 keys out of 1000000)
+Added node 809295
+(After Add) Misplaced key 2107828903,1390131809: before in bucket 275979, now in bucket 809295 (status? old bucket 1, new bucket 1)
+(After Add) Misplaced key 1978930111,1799134488: before in bucket 10967, now in bucket 538814 (status? old bucket 0, new bucket 1)
+DxEngine: after adding back misplaced keys are 0.00019999999999999998% (2 keys out of 1000000)
