@@ -296,11 +296,17 @@ int main(int argc, char *argv[]) {
                                anchor_set, working_set,
                                num_removals, num_keys);
   } else if (algorithm == "dx") {
-    return bench<DxEngine>("DxEngine", filename, anchor_set, working_set, num_removals, num_keys);
+    return bench<DxEngine>("DxEngine", filename,
+                          anchor_set, working_set,
+                          num_removals, num_keys);
   } else if (algorithm == "maglev") {
-    return bench<DxEngine>("MaglevEngine", filename, anchor_set, working_set, num_removals, num_keys);
+    return bench<DxEngine>("MaglevEngine", filename,
+                          anchor_set, working_set,
+                          num_removals, num_keys);
   } else if (algorithm == "ring") {
-    return bench<DxEngine>("RingEngine", filename, anchor_set, working_set, num_removals, num_keys);
+    return bench<DxEngine>("RingEngine", filename,
+                          anchor_set, working_set,
+                          num_removals, num_keys);
   } else {
     fmt::println("Unknown algorithm {}", algorithm);
     return 2;
