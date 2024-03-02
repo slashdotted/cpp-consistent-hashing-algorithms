@@ -1,0 +1,1 @@
+Anchor:	Anchor	1000000	Working	1000000	Removals	20000	Rate	36.8487	MaxHeap	16082424	AlgoSizeof	88
