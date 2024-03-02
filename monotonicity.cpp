@@ -288,7 +288,7 @@ int main(int argc, char *argv[]) {
   } else if (algorithm == "ring") {
     return bench<DxEngine>("RingEngine", filename,
                           anchor_set, working_set,
-                          num_removals, num_keys);
+                          num_removals, num_keys);   
   } else {
     fmt::println("Unknown algorithm {}", algorithm);
     return 2;
