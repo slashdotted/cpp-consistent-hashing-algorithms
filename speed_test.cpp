@@ -19,6 +19,9 @@
 #include "memento/mementoengine.h"
 #include "jump/jumpengine.h"
 #include "power/powerengine.h"
+#include "dx/DxEngine.h"
+#include "maglev/MaglevEngine.h"
+#include "ring/RingEngine.h"
 #ifdef USE_PCG32
 #include "pcg_random.hpp"
 #include <random>
@@ -292,6 +295,12 @@ int main(int argc, char *argv[]) {
       return bench<PowerEngine>("PowerEngine", filename,
                                anchor_set, working_set,
                                num_removals, num_keys);
+  } else if (algorithm == "dx") {
+    return bench<DxEngine>("DxEngine", filename, anchor_set, working_set, num_removals, num_keys);
+  } else if (algorithm == "maglev") {
+    return bench<DxEngine>("MaglevEngine", filename, anchor_set, working_set, num_removals, num_keys);
+  } else if (algorithm == "ring") {
+    return bench<DxEngine>("RingEngine", filename, anchor_set, working_set, num_removals, num_keys);
   } else {
     fmt::println("Unknown algorithm {}", algorithm);
     return 2;

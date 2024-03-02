@@ -2,3 +2,4 @@ Memento<boost::unordered_flat_map>:	Anchor	1000000	Working	1000000	Removals	2000
 Memento<boost::unordered_flat_map>: MisplacedRem: 0	1000000	0	0	rand()
 Memento<boost::unordered_flat_map>: MisplacedAdd: 0	1000000	0	0	rand()
 Memento<boost::unordered_flat_map>:	Anchor	1000000	Working	1000000	Removals	20000	Rate	4.96174	MaxHeap	802488	AlgoSizeof	56
+Memento<boost::unordered_flat_map>:	Anchor	1000000	Working	1000000	Removals	20000	Rate	4.87817	MaxHeap	802488	AlgoSizeof	56
