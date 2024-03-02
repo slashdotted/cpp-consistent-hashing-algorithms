@@ -1,6 +1,0 @@
-Algorithm: dx, AnchorSet: 1000000, WorkingSet: 1000000, NumRemovals: 20000, NumKeys: 1000000, ResFileName: dx.log, Random: rand()
-   @StartBenchmark: Allocations: 0, Allocated: 0, Deallocations: 0, Deallocated: 0, Maximum: 0
-   @AfterAlgorithmInit: Allocations: 1, Allocated: 125000, Deallocations: 0, Deallocated: 0, Maximum: 125000
-   @AfterRemovals: Allocations: 1, Allocated: 125000, Deallocations: 0, Deallocated: 0, Maximum: 125000
-   @EndBenchmark: Allocations: 1, Allocated: 125000, Deallocations: 0, Deallocated: 0, Maximum: 125000
-DxEngine Elapsed time is 0.025428 seconds, maximum heap allocated memory is 125000 bytes, sizeof(DxEngine) is 48
