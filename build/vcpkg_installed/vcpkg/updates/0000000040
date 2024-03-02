@@ -1,0 +1,8 @@
+Package: gtl
+Version: 1.1.8
+Depends: vcpkg-cmake
+Architecture: arm64-osx
+Multi-Arch: same
+Abi: 9ec24f6907542ab646cb60a259d9db2c30eff88217fbdb8fa088992d6910bf7f
+Description: Greg's Template Library of useful classes.
+Status: install ok half-installed

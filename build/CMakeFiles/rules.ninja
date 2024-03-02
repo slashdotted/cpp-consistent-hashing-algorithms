@@ -99,7 +99,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake --regenerate-during-build -S/Users/robertovicario/Desktop/cpp-consistent-hashing-algorithms -B/Users/robertovicario/Desktop/cpp-consistent-hashing-algorithms/build
+  command = /opt/homebrew/Cellar/cmake/3.28.2/bin/cmake --regenerate-during-build -S/Users/robertovicario/Documents/SUPSI/MP_PROJECT_1/cpp-consistent-hashing-algorithms -B/Users/robertovicario/Documents/SUPSI/MP_PROJECT_1/cpp-consistent-hashing-algorithms/build
   description = Re-running CMake...
   generator = 1
 

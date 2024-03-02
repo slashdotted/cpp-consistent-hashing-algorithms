@@ -1,0 +1,7 @@
+Package: boost-uninstall
+Version: 1.83.0
+Architecture: arm64-osx
+Multi-Arch: same
+Abi: ada59e7f2388b17286c768b92dce6eec7b42143e68dd732a3f22d0fab8228cd4
+Description: Internal vcpkg port used to uninstall Boost
+Status: install ok half-installed

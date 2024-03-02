@@ -1,4 +1,4 @@
-# Install script for directory: /Users/robertovicario/Desktop/cpp-consistent-hashing-algorithms
+# Install script for directory: /Users/robertovicario/Documents/SUPSI/MP_PROJECT_1/cpp-consistent-hashing-algorithms
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,7 +38,7 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/Users/robertovicario/Desktop/cpp-consistent-hashing-algorithms/build/speed_test")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/Users/robertovicario/Documents/SUPSI/MP_PROJECT_1/cpp-consistent-hashing-algorithms/build/speed_test")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/speed_test" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/speed_test")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -48,7 +48,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/Users/robertovicario/Desktop/cpp-consistent-hashing-algorithms/build/balance")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/Users/robertovicario/Documents/SUPSI/MP_PROJECT_1/cpp-consistent-hashing-algorithms/build/balance")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/balance" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/balance")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -58,7 +58,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/Users/robertovicario/Desktop/cpp-consistent-hashing-algorithms/build/monotonicity")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/Users/robertovicario/Documents/SUPSI/MP_PROJECT_1/cpp-consistent-hashing-algorithms/build/monotonicity")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/monotonicity" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/monotonicity")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -75,5 +75,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/robertovicario/Desktop/cpp-consistent-hashing-algorithms/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/robertovicario/Documents/SUPSI/MP_PROJECT_1/cpp-consistent-hashing-algorithms/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
