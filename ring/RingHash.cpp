@@ -9,11 +9,11 @@
 #include "RingHash.h"
 
 void RingHash::insert(uint32_t nodeID) {
-    for (uint32_t i = 0; i < V; i++) {
-        uint32_t key2 = generate32RandomNumber(i);
+    //for (uint32_t i = 0; i < V; i++) {
+        uint32_t key2 = generate32RandomNumber(0);
         uint32_t hashValue = crc32c_sse42_u64(nodeID, key2);
         workSet[hashValue] = nodeID;
-    }
+    //}
 }
 
 RingHash::RingHash(uint32_t numNodes, uint32_t numHashFunctions) : V(numHashFunctions), failedSet(), workSet() {
@@ -23,11 +23,11 @@ RingHash::RingHash(uint32_t numNodes, uint32_t numHashFunctions) : V(numHashFunc
 }
 
 void RingHash::updateRemoval(uint32_t nodeID) {
-    for (uint32_t i = 0; i < V; i++) {
-        uint32_t key2 = generate32RandomNumber(i);
+    //for (uint32_t i = 0; i < V; i++) {
+        uint32_t key2 = generate32RandomNumber(0);
         uint32_t hashValue = crc32c_sse42_u64(nodeID, key2);
         workSet.erase(hashValue);
-    }
+    //}
     failedSet.push(nodeID);
 }
 
