@@ -15,9 +15,9 @@
 MaglevHash::MaglevHash(uint32_t w, uint32_t t): M(t), workSet(), lookupTable(new uint32_t [t]()), 
   permutationOffset(nullptr), permutationSkip(nullptr){
     uint32_t i = 0; 
-    for(i = 0; i < w; ++i){
-        workSet.insert(i);
-    }
+    // for(i = 0; i < w; ++i){
+        workSet.insert(0);
+    //}
     updatePermutation();
     updateLookupTable();
 }
@@ -65,7 +65,7 @@ void MaglevHash::updateLookupTable(){
     for(i = 0; i < size; i++){
         next[i] = 0;
     }
-    while(1){
+    //while(1){
         for(i = 0, iter = workSet.begin(); iter != workSet.end(); iter++, i++){
             for (j = next[i]; j < M; j++){
                 pos = (permutationOffset[i] + j * permutationSkip[i]) % M;
@@ -81,7 +81,7 @@ void MaglevHash::updateLookupTable(){
                 }
             }
         }
-    }
+    //}
 }
 
 uint32_t MaglevHash::getSize(){

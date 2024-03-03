@@ -1,1 +1,0 @@
-RingEngine:	Anchor	1000000	Working	1000000	Removals	20000	Rate	42.5206	MaxHeap	125000	AlgoSizeof	48
