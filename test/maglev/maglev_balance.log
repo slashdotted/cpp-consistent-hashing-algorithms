@@ -1,3 +1,0 @@
-Algorithm: ring, AnchorSet: 1000000, WorkingSet: 1000000, NumRemovals: 20000, NumKeys: 1000000, ResFileName: 0.log
-RingEngine: LB is 7.84
-

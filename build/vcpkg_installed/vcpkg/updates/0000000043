@@ -1,0 +1,8 @@
+Package: pcg
+Version: 2021-04-06
+Port-Version: 2
+Architecture: arm64-osx
+Multi-Arch: same
+Abi: 3ec977f273d0ddce14ef5fbf43017c1466718de28efd435c97a16790657090bb
+Description: Permuted Congruential Generator
+Status: install ok installed

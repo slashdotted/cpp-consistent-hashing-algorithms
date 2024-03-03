@@ -1,2 +1,0 @@
-Algorithm: ring, AnchorSet: 1000000, WorkingSet: 1000000, NumRemovals: 20000, NumKeys: 1000000, ResFileName: ring_balance.log
-RingEngine: LB is 8.82
