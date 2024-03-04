@@ -5,3 +5,17 @@ balance:
     num_removals: 20000
     working_set: 1000000
     
+monotonocity:
+  default:
+    anchor_set: 1000000
+    num_keys: 1000000
+    num_removals: 1000
+    working_set: 1000000
+
+speed_test:
+  default:
+    anchor_set: 1000000
+    num_keys: 1000000
+    num_removals: 20000
+    working_set: 1000000
+    
