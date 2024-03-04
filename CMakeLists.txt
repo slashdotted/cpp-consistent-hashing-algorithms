@@ -10,6 +10,19 @@ set(BUILD_SHARED_LIBS OFF)
 option(WITH_PCG32 "Use PCG32 random number generator" OFF)
 option(WITH_HEAPSTATS "Enable heap allocation statistics" ON)
 
+##### ##### YAML CONFIGS ##### #####
+
+# pkg
+find_package(yaml-cpp REQUIRED)
+
+# exe
+add_executable(balance balance.cpp)
+
+# lib
+target_link_libraries(balance PRIVATE yaml-cpp)
+
+##### ##### ############ ##### #####
+
 find_package(Boost REQUIRED)
 find_package(xxHash REQUIRED)
 find_package(fmt REQUIRED)
