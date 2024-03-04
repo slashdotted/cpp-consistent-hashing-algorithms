@@ -15,12 +15,6 @@ option(WITH_HEAPSTATS "Enable heap allocation statistics" ON)
 # pkg
 find_package(yaml-cpp REQUIRED)
 
-# exe
-add_executable(balance balance.cpp)
-
-# lib
-target_link_libraries(balance PRIVATE yaml-cpp)
-
 ##### ##### ############ ##### #####
 
 find_package(Boost REQUIRED)
@@ -85,7 +79,7 @@ target_include_directories(speed_test PRIVATE ${GTL_INCLUDE_DIRS})
 target_include_directories(balance PRIVATE ${GTL_INCLUDE_DIRS})
 target_include_directories(monotonicity PRIVATE ${GTL_INCLUDE_DIRS})
 target_link_libraries(speed_test PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts)
-target_link_libraries(balance PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts)
+target_link_libraries(balance PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts yaml-cpp)
 target_link_libraries(monotonicity PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts)
 include(GNUInstallDirs)
 install(TARGETS speed_test
