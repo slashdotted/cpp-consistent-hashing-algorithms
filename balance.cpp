@@ -142,9 +142,9 @@ int main(int argc, char* argv[]) {
 
     try {
         YAML::Node yaml_file = YAML::LoadFile("../configs/config.yaml");
-        if (yaml_file["balance"][config]) {
-            YAML::Node yaml_config = yaml_file["balance"][config];
+        YAML::Node yaml_config = yaml_file["balance"][config];
 
+        if (yaml_config) {
             int anchor_set = yaml_config["anchor_set"].as<int>();
             int num_keys = yaml_config["num_keys"].as<int>();
             int num_removals = yaml_config["num_removals"].as<int>();
