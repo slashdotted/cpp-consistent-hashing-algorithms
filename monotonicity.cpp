@@ -205,7 +205,7 @@ int main(int argc, char* argv[]) {
 
     try {
         YAML::Node yaml_file = YAML::LoadFile("../configs/config.yaml");
-        YAML::Node yaml_config = yaml_file["balance"][config];
+        YAML::Node yaml_config = yaml_file["monotonocity"][config];
 
         if (yaml_config) {
             int anchor_set = yaml_config["anchor_set"].as<int>();
@@ -214,19 +214,19 @@ int main(int argc, char* argv[]) {
             int working_set = yaml_config["working_set"].as<int>();
 
             if (algo == "anchor") {
-                return bench<AnchorEngine>("AnchorEngine", "anchor_balance.log", anchor_set, working_set, num_removals, num_keys);
+                return bench<AnchorEngine>("AnchorEngine", "anchor_monotonocity.log", anchor_set, working_set, num_removals, num_keys);
             } else if (algo == "dx") {
-                return bench<DxEngine>("DxEngine", "dx_balance.log", anchor_set, working_set, num_removals, num_keys);
+                return bench<DxEngine>("DxEngine", "dx_monotonocity.log", anchor_set, working_set, num_removals, num_keys);
             } else if (algo == "jump") {
-                return bench<JumpEngine>("JumpEngine", "jump_balance.log", anchor_set, working_set, num_removals, num_keys);
+                return bench<JumpEngine>("JumpEngine", "jump_monotonocity.log", anchor_set, working_set, num_removals, num_keys);
             } else if (algo == "maglev") {
-                return bench<MaglevEngine>("MaglevEngine", "maglev_balance.log", anchor_set, working_set, num_removals, num_keys);
+                return bench<MaglevEngine>("MaglevEngine", "maglev_monotonocity.log", anchor_set, working_set, num_removals, num_keys);
             } else if (algo == "memento") {
                 return bench<MementoEngine<boost::unordered_flat_map>>("MementoEngine<boost::unordered_flat_map>", "memento.log", anchor_set, working_set, num_removals, num_keys);
             } else if (algo == "power") {
-                return bench<PowerEngine>("PowerEngine", "power_balance.log", anchor_set, working_set, num_removals, num_keys);
+                return bench<PowerEngine>("PowerEngine", "power_monotonocity.log", anchor_set, working_set, num_removals, num_keys);
             } else if (algo == "ring") {
-                return bench<RingEngine>("RingEngine", "ring_balance.log", anchor_set, working_set, num_removals, num_keys);
+                return bench<RingEngine>("RingEngine", "ring_monotonocity.log", anchor_set, working_set, num_removals, num_keys);
             } else {
                 std::cerr << "Algorithm <" << algo << "> not found." << std::endl;
                 return 1;
