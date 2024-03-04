@@ -159,7 +159,7 @@ int main(int argc, char* argv[]) {
             } else if (algo == "maglev") {
                 return bench<MaglevEngine>("MaglevEngine", "maglev_balance.log", anchor_set, working_set, num_removals, num_keys);
             } else if (algo == "memento") {
-                return bench<MementoEngine<boost::unordered_flat_map>>("MementoEngine<boost::unordered_flat_map>", "memento.log", anchor_set, working_set, num_removals, num_keys);
+                return bench<MementoEngine<boost::unordered_flat_map>>("MementoEngine<boost::unordered_flat_map>", "memento_balance.log", anchor_set, working_set, num_removals, num_keys);
             } else if (algo == "power") {
                 return bench<PowerEngine>("PowerEngine", "power_balance.log", anchor_set, working_set, num_removals, num_keys);
             } else if (algo == "ring") {
