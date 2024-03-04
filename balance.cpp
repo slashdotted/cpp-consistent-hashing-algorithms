@@ -133,7 +133,7 @@ int bench(const std::string_view name, const std::string &filename,
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
-        std::cerr << "Usage: " << argv[0] << " <name> <configuration>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <algorithm> <configuration>" << std::endl;
         return 1;
     }
 
