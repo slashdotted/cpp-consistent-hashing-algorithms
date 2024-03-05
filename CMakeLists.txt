@@ -76,17 +76,25 @@ add_executable(mashtable_test mashtable_test.cpp memento/mashtable.h)
 ##### ##### ########## ##### #####
 
 if(WITH_PCG32)
+    target_include_directories(main PRIVATE ${PCG_INCLUDE_DIRS})
     target_include_directories(speed_test PRIVATE ${PCG_INCLUDE_DIRS})
     target_include_directories(balance PRIVATE ${PCG_INCLUDE_DIRS})
     target_include_directories(monotonicity PRIVATE ${PCG_INCLUDE_DIRS})
 endif()
+target_include_directories(main PRIVATE ${GTL_INCLUDE_DIRS})
 target_include_directories(speed_test PRIVATE ${GTL_INCLUDE_DIRS})
 target_include_directories(balance PRIVATE ${GTL_INCLUDE_DIRS})
 target_include_directories(monotonicity PRIVATE ${GTL_INCLUDE_DIRS})
+
+target_link_libraries(main PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts yaml-cpp)
 target_link_libraries(speed_test PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts yaml-cpp)
 target_link_libraries(balance PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts yaml-cpp)
 target_link_libraries(monotonicity PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts yaml-cpp)
 include(GNUInstallDirs)
+install(TARGETS main
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
 install(TARGETS speed_test
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
