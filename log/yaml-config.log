@@ -1,0 +1,30 @@
+##### ##### BALANCE ##### #####
+
+(base) robertovicario@MacBook-Pro-di-Roberto build % ./balance dx default
+DxEngine: LB is 7.84
+
+##### ##### ####### ##### #####
+
+##### ##### MONOTONICITY ##### #####
+
+(base) robertovicario@MacBook-Pro-di-Roberto build % ./monotonicity dx default
+Done determining initial assignment of 1000000 unique keys
+Removed node 746359
+DxEngine: after removal misplaced keys are 0% (0 keys out of 1000000)
+Added node 368447
+(After Add) Misplaced key 2127303868,140870573: before in bucket 746359, now in bucket 192898 (status? old bucket 0, new bucket 1)
+(After Add) Misplaced key 1022442788,31794622: before in bucket 746359, now in bucket 20905 (status? old bucket 0, new bucket 1)
+DxEngine: after adding back misplaced keys are 0.00019999999999999998% (2 keys out of 1000000)
+
+##### ##### ############ ##### #####
+
+##### ##### SPEED_TEST ##### #####
+
+(base) robertovicario@MacBook-Pro-di-Roberto build % ./speed_test dx default
+   @StartBenchmark: Allocations: 0, Allocated: 0, Deallocations: 0, Deallocated: 0, Maximum: 0
+   @AfterAlgorithmInit: Allocations: 1, Allocated: 125000, Deallocations: 0, Deallocated: 0, Maximum: 125000
+   @AfterRemovals: Allocations: 1, Allocated: 125000, Deallocations: 0, Deallocated: 0, Maximum: 125000
+   @EndBenchmark: Allocations: 1, Allocated: 125000, Deallocations: 0, Deallocated: 0, Maximum: 125000
+DxEngine Elapsed time is 0.024409 seconds, maximum heap allocated memory is 125000 bytes, sizeof(DxEngine) is 48
+
+##### ##### ########## ##### #####
