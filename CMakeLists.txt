@@ -10,17 +10,19 @@ set(BUILD_SHARED_LIBS OFF)
 option(WITH_PCG32 "Use PCG32 random number generator" OFF)
 option(WITH_HEAPSTATS "Enable heap allocation statistics" ON)
 
-##### ##### YAML CONFIGS ##### #####
+##### ##### PACKAGE ##### #####
 
-# pkg
-find_package(yaml-cpp REQUIRED)
 
-##### ##### ############ ##### #####
+##### ##### ####### ##### #####
 
 find_package(Boost REQUIRED)
 find_package(xxHash REQUIRED)
 find_package(fmt REQUIRED)
 find_package(cxxopts REQUIRED)
+find_package(yaml-cpp REQUIRED)
+
+##### ##### ############ ##### #####
+
 find_path(GTL_INCLUDE_DIRS "gtl/adv_utils.hpp")
 
 if(WITH_PCG32)
@@ -78,9 +80,9 @@ endif()
 target_include_directories(speed_test PRIVATE ${GTL_INCLUDE_DIRS})
 target_include_directories(balance PRIVATE ${GTL_INCLUDE_DIRS})
 target_include_directories(monotonicity PRIVATE ${GTL_INCLUDE_DIRS})
-target_link_libraries(speed_test PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts)
+target_link_libraries(speed_test PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts yaml-cpp)
 target_link_libraries(balance PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts yaml-cpp)
-target_link_libraries(monotonicity PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts)
+target_link_libraries(monotonicity PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts yaml-cpp)
 include(GNUInstallDirs)
 install(TARGETS speed_test
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
