@@ -12,16 +12,13 @@ option(WITH_HEAPSTATS "Enable heap allocation statistics" ON)
 
 ##### ##### PACKAGE ##### #####
 
-
-##### ##### ####### ##### #####
-
 find_package(Boost REQUIRED)
 find_package(xxHash REQUIRED)
 find_package(fmt REQUIRED)
 find_package(cxxopts REQUIRED)
 find_package(yaml-cpp REQUIRED)
 
-##### ##### ############ ##### #####
+##### ##### ####### ##### #####
 
 find_path(GTL_INCLUDE_DIRS "gtl/adv_utils.hpp")
 
@@ -33,6 +30,10 @@ endif()
 if(WITH_HEAPSTATS)
     add_definitions(-DUSE_HEAPSTATS)
 endif()
+
+##### ##### EXECUTABLE ##### #####
+
+add_executable(main main.cpp)
 
 add_executable(speed_test speed_test.cpp
     vcpkg.json
@@ -71,6 +72,8 @@ add_executable(monotonicity monotonicity.cpp
     )
 
 add_executable(mashtable_test mashtable_test.cpp memento/mashtable.h)
+
+##### ##### ########## ##### #####
 
 if(WITH_PCG32)
     target_include_directories(speed_test PRIVATE ${PCG_INCLUDE_DIRS})
