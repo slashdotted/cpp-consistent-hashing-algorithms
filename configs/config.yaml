@@ -5,7 +5,7 @@ balance:
     num_removals: 20000
     working_set: 1000000
     
-monotonocity:
+monotonicity:
   default:
     anchor_set: 1000000
     num_keys: 1000000
