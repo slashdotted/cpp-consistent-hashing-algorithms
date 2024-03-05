@@ -194,109 +194,54 @@ int bench(const std::string_view name, const std::string &filename,
   return 0;
 }
 
-int main(int argc, char *argv[]) {
-  cxxopts::Options options("speed_test", "MementoHash vs AnchorHash benchmark");
-  options.add_options()(
-      "Algorithm",
-      "Algorithm (null|baseline|anchor|memento|mementoboost|mementomash|mementostd|mementogtl|jump|power)",
-      cxxopts::value<std::string>())(
-      "AnchorSet", "Size of the AnchorSet (ignored by Memento)",
-      cxxopts::value<int>())("WorkingSet", "Size of the WorkingSet",
-                             cxxopts::value<int>())(
-      "NumRemovals", "Number of random removals", cxxopts::value<int>())(
-      "NumKeys", "Number of keys to lookup for",
-      cxxopts::value<int>())("ResFileName", "Number of keys to lookup for",
-                             cxxopts::value<std::string>());
-  options.positional_help(
-      "Algorithm AnchorSet WorkingSet NumRemovals Numkeys ResFilename");
-  options.parse_positional({"Algorithm", "AnchorSet", "WorkingSet",
-                            "NumRemovals", "NumKeys", "ResFileName"});
-  auto result = options.parse(argc, argv);
-  if (argc != 7) {
-    fmt::println("{}", options.help());
-    exit(1);
-  }
+#include <iostream>
+#include <yaml-cpp/yaml.h>
 
-  auto algorithm = result["Algorithm"].as<std::string>();
-  auto anchor_set = static_cast<uint32_t>(result["AnchorSet"].as<int>());
-  auto working_set = static_cast<uint32_t>(result["WorkingSet"].as<int>());
-  auto num_removals = static_cast<uint32_t>(result["NumRemovals"].as<int>());
-  auto num_keys = static_cast<uint32_t>(result["NumKeys"].as<int>());
-  auto filename = result["ResFileName"].as<std::string>();
-
-#ifdef USE_PCG32
-  fmt::println("Algorithm: {}, AnchorSet: {}, WorkingSet: {}, NumRemovals: {}, "
-               "NumKeys: {}, ResFileName: {}, Random: PCG32",
-               algorithm, anchor_set, working_set, num_removals, num_keys,
-               filename);
-#else
-  fmt::println("Algorithm: {}, AnchorSet: {}, WorkingSet: {}, NumRemovals: {}, "
-               "NumKeys: {}, ResFileName: {}, Random: rand()",
-               algorithm, anchor_set, working_set, num_removals, num_keys,
-               filename);
-#endif
-
-  if (algorithm == "null") {
-    // do nothing
-  } else if (algorithm == "baseline") {
-#ifdef USE_PCG32
-    pcg_extras::seed_seq_from<std::random_device> seed;
-    pcg32 rng(seed);
-#else
-    srand(time(NULL));
-#endif
-    fmt::println("Allocating {} buckets of size {} bytes...", anchor_set,
-                 sizeof(uint32_t));
-    uint32_t *bucket_status = new uint32_t[anchor_set]();
-    for (uint32_t i = 0; i < working_set; i++) {
-      bucket_status[i] = 1;
+int main(int argc, char* argv[]) {
+    if (argc != 3) {
+        std::cerr << "Usage: " << argv[0] << " <algorithm> <configuration>" << std::endl;
+        return 1;
     }
-    uint32_t i = 0;
-    while (i < num_removals) {
-#ifdef USE_PCG32
-      uint32_t removed = rng() % working_set;
-#else
-        uint32_t removed = rand() % working_set;
-#endif
-      if (bucket_status[removed] == 1) {
-        bucket_status[removed] = 0;
-        i++;
-      }
+
+    std::string algo = argv[1];
+    std::string config = argv[2];
+
+    try {
+        YAML::Node yaml_file = YAML::LoadFile("../configs/config.yaml");
+        YAML::Node yaml_config = yaml_file["speed_test"][config];
+
+        if (yaml_config) {
+            int anchor_set = yaml_config["anchor_set"].as<int>();
+            int num_keys = yaml_config["num_keys"].as<int>();
+            int num_removals = yaml_config["num_removals"].as<int>();
+            int working_set = yaml_config["working_set"].as<int>();
+
+            if (algo == "anchor") {
+                return bench<AnchorEngine>("AnchorEngine", "anchor_speed_test.log", anchor_set, working_set, num_removals, num_keys);
+            } else if (algo == "dx") {
+                return bench<DxEngine>("DxEngine", "dx_speed_test.log", anchor_set, working_set, num_removals, num_keys);
+            } else if (algo == "jump") {
+                return bench<JumpEngine>("JumpEngine", "jump_speed_test.log", anchor_set, working_set, num_removals, num_keys);
+            } else if (algo == "maglev") {
+                return bench<MaglevEngine>("MaglevEngine", "maglev_speed_test.log", anchor_set, working_set, num_removals, num_keys);
+            } else if (algo == "memento") {
+                return bench<MementoEngine<boost::unordered_flat_map>>("MementoEngine<boost::unordered_flat_map>", "memento_speed_test.log", anchor_set, working_set, num_removals, num_keys);
+            } else if (algo == "power") {
+                return bench<PowerEngine>("PowerEngine", "power_speed_test.log", anchor_set, working_set, num_removals, num_keys);
+            } else if (algo == "ring") {
+                return bench<RingEngine>("RingEngine", "ring_speed_test.log", anchor_set, working_set, num_removals, num_keys);
+            } else {
+                std::cerr << "Algorithm <" << algo << "> not found." << std::endl;
+                return 1;
+            }
+        } else {
+            std::cerr << "Configuration <" << config << "> not found." << std::endl;
+            return 1;
+        }
+    } catch(const YAML::Exception& e) {
+        std::cerr << "Error reading YAML file: " << e.what() << std::endl;
+        return 1;
     }
-    delete[] bucket_status;
-  } else if (algorithm == "anchor") {
-    return bench<AnchorEngine>("Anchor", filename, anchor_set, working_set,
-                               num_removals, num_keys);
-  } else if (algorithm == "memento") {
-    return bench<MementoEngine<boost::unordered_flat_map>>(
-        "Memento<boost::unordered_flat_map>", filename, anchor_set, working_set,
-        num_removals, num_keys);
-  } else if (algorithm == "mementoboost") {
-    return bench<MementoEngine<boost::unordered_map>>(
-        "Memento<boost::unordered_map>", filename, anchor_set, working_set,
-        num_removals, num_keys);
-  } else if (algorithm == "mementostd") {
-    return bench<MementoEngine<std::unordered_map>>(
-        "Memento<std::unordered_map>", filename, anchor_set, working_set,
-        num_removals, num_keys);
-  } else if (algorithm == "mementogtl") {
-      return bench<MementoEngine<gtl::flat_hash_map>>(
-          "Memento<std::gtl::flat_hash_map>", filename, anchor_set, working_set,
-          num_removals, num_keys);
-  } else if (algorithm == "mementomash") {
-    return bench<MementoEngine<MashTable>>("Memento<MashTable>", filename,
-                                           anchor_set, working_set,
-                                           num_removals, num_keys);
-  } else if (algorithm == "jump") {
-      return bench<JumpEngine>("JumpEngine", filename,
-                                             anchor_set, working_set,
-                                             num_removals, num_keys);
-  } else if (algorithm == "power") {
-      return bench<PowerEngine>("PowerEngine", filename,
-                               anchor_set, working_set,
-                               num_removals, num_keys);
-  } else {
-    fmt::println("Unknown algorithm {}", algorithm);
-    return 2;
-  }
+
+    return 0;
 }
