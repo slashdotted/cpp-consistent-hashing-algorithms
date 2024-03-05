@@ -1,0 +1,40 @@
+common:
+    output-folder: /tmp
+
+    iterations:
+        warmup: 1
+        run: 1
+
+    time:
+        warmup: 1
+        run: 1
+
+    init-nodes: [10]
+
+    hash-functions:
+        - xx
+
+algorithms:
+    - name: anchor
+    - name: dx
+    - name: jump
+    - name: maglev
+    - name: memento
+    - name: multi-probe
+    - name: power
+    - name: rendezvous
+    - name: ring
+
+benchmarks: 
+    - name: init-time
+    - name: lookup-time
+      args:
+          distributions:
+            - uniform
+    - name: resize-time
+    - name: memory-usage
+    - name: balance
+    - name: resize-balance
+    - name: monotonicity
+      args:
+          fractions: [0.1]
