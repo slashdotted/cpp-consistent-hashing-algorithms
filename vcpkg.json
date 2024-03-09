@@ -4,10 +4,10 @@
   "version-string": "0.0.1",
   "dependencies": [
     "boost-unordered",
-    "fmt",
     "cxxopts",
-    "xxhash",
+    "fmt",
+    "gtl",
     "pcg",
-    "gtl"
+    "xxhash"
   ]
 }

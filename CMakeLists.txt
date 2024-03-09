@@ -11,13 +11,13 @@ option(WITH_PCG32 "Use PCG32 random number generator" OFF)
 option(WITH_HEAPSTATS "Enable heap allocation statistics" ON)
 
 #############################
-########## PACKAGE ##########
+########## PACKAGES #########
 #############################
 
 find_package(Boost REQUIRED)
-find_package(xxHash REQUIRED)
-find_package(fmt REQUIRED)
 find_package(cxxopts REQUIRED)
+find_package(fmt REQUIRED)
+find_package(xxHash REQUIRED)
 find_package(yaml-cpp REQUIRED)
 
 find_path(GTL_INCLUDE_DIRS "gtl/adv_utils.hpp")
@@ -31,9 +31,17 @@ if(WITH_HEAPSTATS)
     add_definitions(-DUSE_HEAPSTATS)
 endif()
 
-##### ##### EXECUTABLE ##### #####
+################################
+########## EXECUTABLES #########
+################################
 
-add_executable(main main.cpp)
+set(MAIN_SOURCES
+    balance.cpp
+    dx/DxEngine.h
+    main.cpp
+    vcpkg.json
+)
+add_executable(main ${MAIN_SOURCES})
 
 add_executable(speed_test speed_test.cpp
     vcpkg.json
@@ -47,17 +55,7 @@ add_executable(speed_test speed_test.cpp
     ../misc/crc32c_sse42_u64.h
     )
 
-add_executable(balance balance.cpp
-    vcpkg.json
-    memento/memento.h
-    memento/mementoengine.h
-    anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp
-    anchor/anchorengine.h
-    memento/mashtable.h
-    jump/jumpengine.h
-    power/powerengine.h
-    ../misc/crc32c_sse42_u64.h
-    )
+
 
 add_executable(monotonicity monotonicity.cpp
     vcpkg.json
@@ -73,22 +71,17 @@ add_executable(monotonicity monotonicity.cpp
 
 add_executable(mashtable_test mashtable_test.cpp memento/mashtable.h)
 
-##### ##### ########## ##### #####
-
 if(WITH_PCG32)
     target_include_directories(main PRIVATE ${PCG_INCLUDE_DIRS})
     target_include_directories(speed_test PRIVATE ${PCG_INCLUDE_DIRS})
-    target_include_directories(balance PRIVATE ${PCG_INCLUDE_DIRS})
     target_include_directories(monotonicity PRIVATE ${PCG_INCLUDE_DIRS})
 endif()
 target_include_directories(main PRIVATE ${GTL_INCLUDE_DIRS})
 target_include_directories(speed_test PRIVATE ${GTL_INCLUDE_DIRS})
-target_include_directories(balance PRIVATE ${GTL_INCLUDE_DIRS})
 target_include_directories(monotonicity PRIVATE ${GTL_INCLUDE_DIRS})
 
 target_link_libraries(main PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts yaml-cpp)
 target_link_libraries(speed_test PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts yaml-cpp)
-target_link_libraries(balance PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts yaml-cpp)
 target_link_libraries(monotonicity PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts yaml-cpp)
 include(GNUInstallDirs)
 install(TARGETS main
@@ -100,10 +93,7 @@ install(TARGETS speed_test
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-install(TARGETS balance
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+
 
 install(TARGETS monotonicity
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

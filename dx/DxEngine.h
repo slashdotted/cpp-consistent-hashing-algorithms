@@ -1,9 +1,9 @@
 /**
- * @author Roberto Vicario @ SUPSI
+ * @author Roberto Vicario (C) 2024
 */
 
-#ifndef DXENGINE_H
-#define DXENGINE_H
+#ifndef DX_ENGINE_H
+#define DX_ENGINE_H
 
 #include <cstdint>
 #include "DxHash.cpp"
@@ -27,4 +27,4 @@ private:
     DxHash dx;
 };
 
-#endif // DXENGINE_H
+#endif // DX_ENGINE_H
