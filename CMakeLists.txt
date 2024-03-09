@@ -10,15 +10,15 @@ set(BUILD_SHARED_LIBS OFF)
 option(WITH_PCG32 "Use PCG32 random number generator" OFF)
 option(WITH_HEAPSTATS "Enable heap allocation statistics" ON)
 
-##### ##### PACKAGE ##### #####
+#############################
+########## PACKAGE ##########
+#############################
 
 find_package(Boost REQUIRED)
 find_package(xxHash REQUIRED)
 find_package(fmt REQUIRED)
 find_package(cxxopts REQUIRED)
 find_package(yaml-cpp REQUIRED)
-
-##### ##### ####### ##### #####
 
 find_path(GTL_INCLUDE_DIRS "gtl/adv_utils.hpp")
 

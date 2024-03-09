@@ -6,6 +6,7 @@ build
 *.dylib
 *.exe
 *.gch
+*.idea
 *.la
 *.lai
 *.lib
