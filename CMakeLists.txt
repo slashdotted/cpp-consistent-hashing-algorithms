@@ -36,9 +36,10 @@ endif()
 ################################
 
 set(MAIN_SOURCES
-    balance.cpp
+    benchmark/Benchmark.cpp
     dx/DxEngine.h
     main.cpp
+    ring/RingEngine.h
     vcpkg.json
 )
 add_executable(main ${MAIN_SOURCES})
