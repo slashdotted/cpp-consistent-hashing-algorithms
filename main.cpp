@@ -1,10 +1,17 @@
+/**
+ * @author Amos Brocco
+ * @author Roberto Vicario
+ * @date 2024
+*/
 
+#include "ring/RingEngine.h"
 #include "dx/DxEngine.h"
-#include "balance.cpp"
+#include "benchmark/Benchmark.cpp"
 
 #include <filesystem>
 #include <iostream>
 #include <yaml-cpp/yaml.h>
+
 using namespace std;
 
 int main(int argc, char* argv[]) {
@@ -14,6 +21,9 @@ int main(int argc, char* argv[]) {
             return 1;
         }
 
+        /**
+         * YAML configuration
+        */
         string filename = "../configs/" + string(argv[1]);
         YAML::Node config = YAML::LoadFile(filename);
 
@@ -22,20 +32,31 @@ int main(int argc, char* argv[]) {
         */
         for (const auto& algorithm : config["algorithms"]) {
             string name = algorithm["name"].as<string>();
-
             if (name == "dx") {
-                return bench<DxEngine>(
-                    name, "dx.log",
-                    1000000, 1000000,
-                    20000, 1000000
-                );
+                Benchmark::bench<DxEngine>(name, "balance.log", 1000000, 1000000, 20000, 1000000);
+            } else if (name == "ring") {
+                Benchmark::bench<RingEngine>(name, "balance.log", 1000000, 1000000, 20000, 1000000);
             }
         }
 
-    } catch (const YAML::Exception& e) {
+
+            /*
+            - name: anchor
+            - name: dx
+            - name: jump
+            - name: maglev
+            - name: memento
+            - name: multi-probe
+            - name: power
+            - name: rendezvous
+            - name: ring
+            */
+    } catch (const YAML::Exception& e)
+    {
         cerr << "YAML Exception: " << e.what() << endl;
         return 1;
-    } catch (const exception& e) {
+    } catch (const exception& e)
+    {
         cerr << "Exception: " << e.what() << endl;
         return 1;
     }
