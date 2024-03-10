@@ -21,15 +21,16 @@
 #include "pcg_random.hpp"
 #include <random>
 #endif
-#include "anchor/anchorengine.h"
-#include "memento/mashtable.h"
-#include "memento/mementoengine.h"
-#include "jump/jumpengine.h"
-#include "power/powerengine.h"
+#include "../anchor/anchorengine.h"
+#include "../memento/mashtable.h"
+#include "../memento/mementoengine.h"
+#include "../jump/jumpengine.h"
+#include "../power/powerengine.h"
+
 #include <fmt/core.h>
 #include <fstream>
-#include <unordered_map>
 #include <gtl/phmap.hpp>
+#include <unordered_map>
 
 /*
  * Benchmark routine
@@ -38,30 +39,24 @@ template <typename Algorithm>
 int bench(const std::string_view name, const std::string &filename,
           uint32_t anchor_set, uint32_t working_set, uint32_t num_removals,
           uint32_t num_keys) {
-#ifdef USE_PCG32
-  pcg_extras::seed_seq_from<std::random_device> seed;
-  pcg32 rng{seed};
-#else
-    srand(time(NULL));
-#endif
-  Algorithm engine(anchor_set, working_set);
 
-  // for lb
-  uint32_t *anchor_ansorbed_keys = new uint32_t[anchor_set]();
+  Algorithm engine(anchor_set, working_set);
 
   // random removals
   uint32_t *bucket_status = new uint32_t[anchor_set]();
 
+  // all nodes are working
   for (uint32_t i = 0; i < working_set; i++) {
     bucket_status[i] = 1;
   }
 
+  // simulate num_removals removals
   uint32_t i = 0;
   while (i < num_removals) {
-#ifdef  USE_PCG32
-      uint32_t removed = rng() % working_set;
+#ifdef USE_PCG32
+    uint32_t removed = rng() % working_set;
 #else
-      uint32_t removed = rand() % working_set;
+    uint32_t removed = rand() % working_set;
 #endif
     if (bucket_status[removed] == 1) {
       auto rnode = engine.removeBucket(removed);
@@ -70,49 +65,119 @@ int bench(const std::string_view name, const std::string &filename,
     }
   }
 
+  boost::unordered_flat_map<std::pair<uint32_t, uint32_t>, uint32_t> bucket;
   std::ofstream results_file;
   results_file.open(filename, std::ofstream::out | std::ofstream::app);
 
-  ////////////////////////////////////////////////////////////////////
-  for (uint32_t i = 0; i < num_keys; ++i) {
+  // Determine the current key bucket assigment
+  for (uint32_t i = 0; i < num_keys;) {
 #ifdef USE_PCG32
-    anchor_ansorbed_keys[engine.getBucketCRC32c(rng(), rng())] += 1;
+    auto a{rng()};
+    auto b{rng()};
 #else
-    anchor_ansorbed_keys[engine.getBucketCRC32c(rand(), rand())] += 1;
+    auto a{rand()};
+    auto b{rand()};
 #endif
-  }
-
-  // check load balancing
-  double mean = (double)num_keys / (working_set - num_removals);
-
-  double lb = 0;
-  for (uint32_t i = 0; i < anchor_set; i++) {
-
-    if (bucket_status[i]) {
-
-      if (anchor_ansorbed_keys[i] / mean > lb) {
-        lb = anchor_ansorbed_keys[i] / mean;
-      }
-
+    if (bucket.contains({a, b}))
+      continue;
+    auto target = engine.getBucketCRC32c(a, b);
+    bucket[{a, b}] = target;
+    // Verify that we got a working bucket
+    if (!bucket_status[target]) {
+      throw "Crazy bug";
     }
-
-    else {
-      if (anchor_ansorbed_keys[i] > 0) {
-        fmt::println("{}: crazy bug!", name);
-      }
-    }
+    ++i;
   }
+  fmt::println("Done determining initial assignment of {} unique keys",
+               num_keys);
 
-
-  // print lb res
+  // Remove a random working node
+  uint32_t removed{0};
+  uint32_t rnode{0};
+  for (;;) {
 #ifdef USE_PCG32
-  fmt::println("{}: LB is {}\n", name, lb);
-  results_file << name << ": "
-               << "Balance: " << lb << "\tPCG32\n";
+    removed = rng() % working_set;
 #else
-  fmt::println("{}: LB is {}\n", name, lb);
+    removed = rand() % working_set;
+#endif
+    if (bucket_status[removed] == 1) {
+      rnode = engine.removeBucket(removed);
+      fmt::println("Removed node {}", rnode);
+      if (!bucket_status[rnode]) {
+        throw "Crazy bug";
+      }
+      bucket_status[rnode] = 0; // Remove the actually removed node
+      break;
+    }
+  }
+
+  uint32_t misplaced{0};
+  for (const auto &i : bucket) {
+    auto oldbucket = i.second;
+    auto a{i.first.first};
+    auto b{i.first.second};
+    auto newbucket = engine.getBucketCRC32c(a, b);
+    if (oldbucket != newbucket && (oldbucket != rnode)) {
+      fmt::println("(After Removal) Misplaced key {},{}: before in bucket {}, "
+                   "now in bucket {} (status? old bucket {}, new bucket {})",
+                   a, b, oldbucket, newbucket, bucket_status[oldbucket],
+                   bucket_status[newbucket]);
+      ++misplaced;
+    }
+  }
+
+  double m = (double)misplaced / (num_keys);
+#ifdef USE_PCG32
+  fmt::println(
+      "{}: after removal % misplaced keys are {}% ({} keys out of {})\n", name,
+      m * 100, misplaced, num_keys);
   results_file << name << ": "
-               << "Balance: " << lb << "\trand()\n";
+               << "MisplacedRem: " << misplaced << "\t" << num_keys << "\t" << m
+               << "\t" << m << "\tPCG32\n";
+#else
+  fmt::println("{}: after removal misplaced keys are {}% ({} keys out of {})",
+               name, m * 100, misplaced, num_keys);
+  results_file << name << ": "
+               << "MisplacedRem: " << misplaced << "\t" << num_keys << "\t" << m
+               << "\t" << m << "\trand()\n";
+#endif
+
+  misplaced = 0;
+  // Add back a node
+  auto anode = engine.addBucket();
+  bucket_status[anode] = 1;
+  fmt::println("Added node {}", anode);
+
+  for (const auto &i : bucket) {
+    auto oldbucket = i.second;
+    auto a{i.first.first};
+    auto b{i.first.second};
+    auto newbucket = engine.getBucketCRC32c(a, b);
+    if (oldbucket != newbucket) {
+      fmt::println("(After Add) Misplaced key {},{}: before in bucket {}, now "
+                   "in bucket {} (status? old bucket {}, new bucket {})",
+                   a, b, oldbucket, newbucket, bucket_status[oldbucket],
+                   bucket_status[newbucket]);
+      ++misplaced;
+    }
+  }
+
+  m = (double)misplaced / (num_keys);
+
+#ifdef USE_PCG32
+  fmt::println(
+      "{}: after adding back % misplaced keys are {}% ({} keys out of {})\n",
+      name, m * 100, misplaced, num_keys);
+  results_file << name << ": "
+               << "MisplacedAdd: " << misplaced << "\t" << num_keys << "\t" << m
+               << "\t" << m << "\tPCG32\n";
+#else
+  fmt::println(
+      "{}: after adding back misplaced keys are {}% ({} keys out of {})", name,
+      m * 100, misplaced, num_keys);
+  results_file << name << ": "
+               << "MisplacedAdd: " << misplaced << "\t" << num_keys << "\t" << m
+               << "\t" << m << "\trand()\n";
 #endif
 
   ////////////////////////////////////////////////////////////////////
@@ -120,17 +185,17 @@ int bench(const std::string_view name, const std::string &filename,
   results_file.close();
 
   delete[] bucket_status;
-  delete[] anchor_ansorbed_keys;
 
   return 0;
 }
 
 int main(int argc, char *argv[]) {
   cxxopts::Options options("speed_test", "MementoHash vs AnchorHash benchmark");
-  options.add_options()(
-      "Algorithm",
-      "Algorithm (null|baseline|anchor|memento|mementoboost|mementomash|mementostd|mementogtl|jump|power)",
-      cxxopts::value<std::string>())(
+  options.add_options()("Algorithm",
+                        "Algorithm "
+                        "(null|baseline|anchor|memento|mementoboost|"
+                        "mementomash|mementostd|mementogtl|jump|power)",
+                        cxxopts::value<std::string>())(
       "AnchorSet", "Size of the AnchorSet (ignored by Memento)",
       cxxopts::value<int>())("WorkingSet", "Size of the WorkingSet",
                              cxxopts::value<int>())(
@@ -197,21 +262,19 @@ int main(int argc, char *argv[]) {
         "Memento<std::unordered_map>", filename, anchor_set, working_set,
         num_removals, num_keys);
   } else if (algorithm == "mementogtl") {
-      return bench<MementoEngine<gtl::flat_hash_map>>(
-          "Memento<std::gtl::flat_hash_map>", filename, anchor_set, working_set,
-          num_removals, num_keys);
+    return bench<MementoEngine<gtl::flat_hash_map>>(
+        "Memento<std::gtl::flat_hash_map>", filename, anchor_set, working_set,
+        num_removals, num_keys);
   } else if (algorithm == "mementomash") {
     return bench<MementoEngine<MashTable>>("Memento<MashTable>", filename,
                                            anchor_set, working_set,
                                            num_removals, num_keys);
   } else if (algorithm == "jump") {
-      return bench<JumpEngine>("JumpEngine", filename,
-                               anchor_set, working_set,
-                               num_removals, num_keys);
+    return bench<JumpEngine>("JumpEngine", filename, anchor_set, working_set,
+                             num_removals, num_keys);
   } else if (algorithm == "power") {
-      return bench<PowerEngine>("PowerEngine", filename,
-                               anchor_set, working_set,
-                               num_removals, num_keys);
+    return bench<PowerEngine>("PowerEngine", filename, anchor_set, working_set,
+                              num_removals, num_keys);
   } else {
     fmt::println("Unknown algorithm {}", algorithm);
     return 2;

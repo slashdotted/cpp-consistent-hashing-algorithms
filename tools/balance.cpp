@@ -14,94 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "anchor/anchorengine.h"
-#include "memento/mashtable.h"
-#include "memento/mementoengine.h"
-#include "jump/jumpengine.h"
-#include "power/powerengine.h"
-
+#include <boost/unordered/unordered_flat_map.hpp>
+#include <boost/unordered_map.hpp>
+#include <cxxopts.hpp>
 #ifdef USE_PCG32
 #include "pcg_random.hpp"
 #include <random>
 #endif
-#include <boost/unordered/unordered_flat_map.hpp>
-#include <boost/unordered_map.hpp>
-#include <cxxopts.hpp>
+#include "../anchor/anchorengine.h"
+#include "../memento/mashtable.h"
+#include "../memento/mementoengine.h"
+#include "../jump/jumpengine.h"
+#include "../power/powerengine.h"
 #include <fmt/core.h>
 #include <fstream>
 #include <unordered_map>
 #include <gtl/phmap.hpp>
 
 /*
- * ******************************************
- * Heap allocation measurement
- * ******************************************
- */
-
-#ifdef USE_HEAPSTATS
-static unsigned long allocations{0};
-static unsigned long deallocations{0};
-static unsigned long allocated{0};
-static unsigned long deallocated{0};
-static unsigned long maximum{0};
-
-void *operator new(size_t size) {
-  void *p = malloc(size);
-  allocations += 1;
-  allocated += size;
-  maximum = allocated > maximum ? allocated : maximum;
-  return p;
-}
-
-void *operator new[](size_t size) {
-  void *p = malloc(size);
-  allocations += 1;
-  allocated += size;
-  maximum = allocated > maximum ? allocated : maximum;
-  return p;
-}
-
-void operator delete(void *ptr, std::size_t size) noexcept {
-  deallocations += 1;
-  deallocated += size;
-  free(ptr);
-}
-
-void operator delete[](void *ptr, std::size_t size) noexcept {
-  deallocations += 1;
-  deallocated += size;
-  free(ptr);
-}
-
-void reset_memory_stats() noexcept {
-  allocations = 0;
-  allocated = 0;
-  deallocations = 0;
-  deallocated = 0;
-  maximum = 0;
-}
-
-void print_memory_stats(std::string_view label) noexcept {
-  auto alloc{allocations};
-  auto dealloc{deallocations};
-  auto asize{allocated};
-  auto dsize{deallocated};
-  auto max{maximum};
-  fmt::println("   @{}: Allocations: {}, Allocated: {}, Deallocations: {}, "
-               "Deallocated: {}, Maximum: {}",
-               label, alloc, asize, dealloc, dsize, max);
-  allocations = alloc;
-  deallocations = dealloc;
-  allocated = asize;
-  deallocated = dsize;
-  maximum = max;
-}
-#endif
-
-/*
- * ******************************************
  * Benchmark routine
- * ******************************************
  */
 template <typename Algorithm>
 int bench(const std::string_view name, const std::string &filename,
@@ -111,83 +42,85 @@ int bench(const std::string_view name, const std::string &filename,
   pcg_extras::seed_seq_from<std::random_device> seed;
   pcg32 rng{seed};
 #else
-  srand(time(NULL));
+    srand(time(NULL));
 #endif
+  Algorithm engine(anchor_set, working_set);
 
-  std::ofstream results_file;
-  results_file.open(filename, std::ofstream::out | std::ofstream::app);
+  // for lb
+  uint32_t *anchor_ansorbed_keys = new uint32_t[anchor_set]();
 
-  double norm_keys_rate = (double)num_keys / 1000000.0;
-
+  // random removals
   uint32_t *bucket_status = new uint32_t[anchor_set]();
 
   for (uint32_t i = 0; i < working_set; i++) {
-      bucket_status[i] = 1;
+    bucket_status[i] = 1;
   }
-
-#ifdef USE_HEAPSTATS
-  reset_memory_stats();
-  print_memory_stats("StartBenchmark");
-#endif
-
-  Algorithm engine(anchor_set, working_set);
-
-#ifdef USE_HEAPSTATS
-  print_memory_stats("AfterAlgorithmInit");
-#endif
 
   uint32_t i = 0;
   while (i < num_removals) {
-#ifdef USE_PCG32
-    uint32_t removed = rng() % working_set;
+#ifdef  USE_PCG32
+      uint32_t removed = rng() % working_set;
 #else
-    uint32_t removed = rand() % working_set;
+      uint32_t removed = rand() % working_set;
 #endif
     if (bucket_status[removed] == 1) {
-      engine.removeBucket(removed);
-      bucket_status[removed] = 0;
+      auto rnode = engine.removeBucket(removed);
+      bucket_status[rnode] = 0; // Remove the actually removed node
       i++;
     }
   }
 
-#ifdef USE_HEAPSTATS
-  print_memory_stats("AfterRemovals");
-#endif
+  std::ofstream results_file;
+  results_file.open(filename, std::ofstream::out | std::ofstream::app);
 
-  volatile int64_t bucket{0};
-  auto start{clock()};
+  ////////////////////////////////////////////////////////////////////
   for (uint32_t i = 0; i < num_keys; ++i) {
 #ifdef USE_PCG32
-    bucket = engine.getBucketCRC32c(rng(), rng());
+    anchor_ansorbed_keys[engine.getBucketCRC32c(rng(), rng())] += 1;
 #else
-    bucket = engine.getBucketCRC32c(rand(), rand());
+    anchor_ansorbed_keys[engine.getBucketCRC32c(rand(), rand())] += 1;
 #endif
   }
-  auto end{clock()};
 
-#ifdef USE_HEAPSTATS
-  print_memory_stats("EndBenchmark");
-#endif
+  // check load balancing
+  double mean = (double)num_keys / (working_set - num_removals);
 
-  auto elapsed{static_cast<double>(end - start) / CLOCKS_PER_SEC};
-#ifdef USE_HEAPSTATS
-  auto maxheap{maximum};
-  fmt::println("{} Elapsed time is {} seconds, maximum heap allocated memory is {} bytes, sizeof({}) is {}", name, elapsed, maxheap, name, sizeof(Algorithm));
-  results_file << name << ":\tAnchor\t" << anchor_set << "\tWorking\t"
-               << working_set << "\tRemovals\t" << num_removals << "\tRate\t"
-               << norm_keys_rate / elapsed << "\tMaxHeap\t" << maxheap << "\tAlgoSizeof\t" << sizeof(Algorithm)<< "\n";
+  double lb = 0;
+  for (uint32_t i = 0; i < anchor_set; i++) {
+
+    if (bucket_status[i]) {
+
+      if (anchor_ansorbed_keys[i] / mean > lb) {
+        lb = anchor_ansorbed_keys[i] / mean;
+      }
+
+    }
+
+    else {
+      if (anchor_ansorbed_keys[i] > 0) {
+        fmt::println("{}: crazy bug!", name);
+      }
+    }
+  }
+
+
+  // print lb res
+#ifdef USE_PCG32
+  fmt::println("{}: LB is {}\n", name, lb);
+  results_file << name << ": "
+               << "Balance: " << lb << "\tPCG32\n";
 #else
-  fmt::println("{} Elapsed time is {} seconds", name, elapsed);
-  results_file << name << ":\tAnchor\t" << anchor_set << "\tWorking\t"
-               << working_set << "\tRemovals\t" << num_removals << "\tRate\t"
-               << norm_keys_rate / elapsed << "\n";
+  fmt::println("{}: LB is {}\n", name, lb);
+  results_file << name << ": "
+               << "Balance: " << lb << "\trand()\n";
 #endif
 
-
+  ////////////////////////////////////////////////////////////////////
 
   results_file.close();
 
   delete[] bucket_status;
+  delete[] anchor_ansorbed_keys;
 
   return 0;
 }
@@ -205,6 +138,7 @@ int main(int argc, char *argv[]) {
       "NumKeys", "Number of keys to lookup for",
       cxxopts::value<int>())("ResFileName", "Number of keys to lookup for",
                              cxxopts::value<std::string>());
+
   options.positional_help(
       "Algorithm AnchorSet WorkingSet NumRemovals Numkeys ResFilename");
   options.parse_positional({"Algorithm", "AnchorSet", "WorkingSet",
@@ -222,27 +156,16 @@ int main(int argc, char *argv[]) {
   auto num_keys = static_cast<uint32_t>(result["NumKeys"].as<int>());
   auto filename = result["ResFileName"].as<std::string>();
 
-#ifdef USE_PCG32
   fmt::println("Algorithm: {}, AnchorSet: {}, WorkingSet: {}, NumRemovals: {}, "
-               "NumKeys: {}, ResFileName: {}, Random: PCG32",
+               "NumKeys: {}, ResFileName: {}",
                algorithm, anchor_set, working_set, num_removals, num_keys,
                filename);
-#else
-  fmt::println("Algorithm: {}, AnchorSet: {}, WorkingSet: {}, NumRemovals: {}, "
-               "NumKeys: {}, ResFileName: {}, Random: rand()",
-               algorithm, anchor_set, working_set, num_removals, num_keys,
-               filename);
-#endif
+
+  srand(time(NULL));
 
   if (algorithm == "null") {
     // do nothing
   } else if (algorithm == "baseline") {
-#ifdef USE_PCG32
-    pcg_extras::seed_seq_from<std::random_device> seed;
-    pcg32 rng(seed);
-#else
-    srand(time(NULL));
-#endif
     fmt::println("Allocating {} buckets of size {} bytes...", anchor_set,
                  sizeof(uint32_t));
     uint32_t *bucket_status = new uint32_t[anchor_set]();
@@ -251,11 +174,7 @@ int main(int argc, char *argv[]) {
     }
     uint32_t i = 0;
     while (i < num_removals) {
-#ifdef USE_PCG32
-      uint32_t removed = rng() % working_set;
-#else
-        uint32_t removed = rand() % working_set;
-#endif
+      uint32_t removed = rand() % working_set;
       if (bucket_status[removed] == 1) {
         bucket_status[removed] = 0;
         i++;
@@ -287,8 +206,8 @@ int main(int argc, char *argv[]) {
                                            num_removals, num_keys);
   } else if (algorithm == "jump") {
       return bench<JumpEngine>("JumpEngine", filename,
-                                             anchor_set, working_set,
-                                             num_removals, num_keys);
+                               anchor_set, working_set,
+                               num_removals, num_keys);
   } else if (algorithm == "power") {
       return bench<PowerEngine>("PowerEngine", filename,
                                anchor_set, working_set,

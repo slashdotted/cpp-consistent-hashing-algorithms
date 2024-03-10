@@ -14,7 +14,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <string>
-#include "memento/mashtable.h"
+#include "../memento/mashtable.h"
 #include "cassert"
 
 int main() {
@@ -26,5 +26,4 @@ int main() {
         auto i{table.find(z)};
         assert(i->second == std::to_string(z));
     }
-
 }
