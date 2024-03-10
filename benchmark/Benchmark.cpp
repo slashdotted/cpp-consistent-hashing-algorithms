@@ -21,7 +21,7 @@ using namespace std;
 class Benchmark {
 public:
     template <typename Algorithm>
-    static int bench(const string_view name, const string &filename,
+    static int balance(const string_view name, const string &filename,
         uint32_t anchor_set, uint32_t working_set, uint32_t num_removals,
         uint32_t num_keys) {
     #ifdef USE_PCG32

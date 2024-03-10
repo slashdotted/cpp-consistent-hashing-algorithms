@@ -4,11 +4,13 @@
  * @date 2024
 */
 
-#include "ring/RingEngine.h"
-#include "dx/DxEngine.h"
+#include "anchor/anchorengine.h"
 #include "benchmark/Benchmark.cpp"
+#include "dx/DxEngine.h"
+#include "ring/RingEngine.h"
 
 #include <filesystem>
+#include <fmt/core.h>
 #include <iostream>
 #include <yaml-cpp/yaml.h>
 
@@ -32,10 +34,24 @@ int main(int argc, char* argv[]) {
         */
         for (const auto& algorithm : config["algorithms"]) {
             string name = algorithm["name"].as<string>();
-            if (name == "dx") {
-                Benchmark::bench<DxEngine>(name, "balance.log", 1000000, 1000000, 20000, 1000000);
+            if (name == "anchor") {
+                Benchmark::balance<AnchorEngine>(name, "balance.log", 1000000, 1000000, 20000, 1000000);
+            } else if (name == "dx") {
+                Benchmark::balance<DxEngine>(name, "balance.log", 1000000, 1000000, 20000, 1000000);
+            } else if (name == "jump") {
+                /* code */
+            } else if (name == "maglev") {
+                /* code */
+            } else if (name == "memento") {
+                /* code */
+            } else if (name == "multi-probe") {
+                /* code */
+            } else if (name == "power") {
+                /* code */
+            } else if (name == "rendezvous") {
+                /* code */
             } else if (name == "ring") {
-                Benchmark::bench<RingEngine>(name, "balance.log", 1000000, 1000000, 20000, 1000000);
+                Benchmark::balance<RingEngine>(name, "balance.log", 1000000, 1000000, 20000, 1000000);
             }
         }
 
