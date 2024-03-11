@@ -2,7 +2,9 @@
  * @author Amos Brocco
  * @author Roberto Vicario
  * 
- * @copyright (c) 2023 Amos Brocco.
+ * @copyright Amos Brocco
+ * 
+ * Copyright (c) 2023 Amos Brocco.
  * Adapted from cpp-anchorhash Copyright (c) 2020 anchorhash (MIT License)
  *
  * This program is free software: you can redistribute it and/or modify
@@ -47,11 +49,11 @@ int main(int argc, char* argv[]) {
         YAML::Node config = YAML::LoadFile(filename);
 
         /**
-         * Running benchmark routing
+         * Running benchmark routine
          */
-        cout << "#######################################\n" << endl;
-        cout << "########## BENCHMARK ROUTINE ##########\n" << endl;
-        cout << "#######################################\n" << endl;
+        cout << "#######################################" << endl;
+        cout << "########## BENCHMARK ROUTINE ##########" << endl;
+        cout << "#######################################" << endl;
 
         for (const auto& algorithm : config["algorithms"]) {
             string name = algorithm["name"].as<string>();
