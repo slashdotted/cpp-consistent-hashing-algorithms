@@ -36,13 +36,22 @@ endif()
 ################################
 
 set(MAIN_SOURCES
+    ../misc/crc32c_sse42_u64.h
     anchor/AnchorHashQre.cpp
     anchor/AnchorHashQre.hpp
     anchor/anchorengine.h
     benchmarks/Benchmark.cpp
     dx/DxEngine.h
+    jump/jumpengine.h
     main.cpp
-    ring/RingEngine.h
+    # maglev/MaglevEngine.h
+    memento/mashtable.h
+    memento/memento.h
+    memento/mementoengine.h
+    # multiprobe/MultiprobeEngine.h
+    power/powerengine.h
+    # rendezvous/RendezvousEngine
+    # ring/RingEngine.h
     vcpkg.json
 )
 add_executable(main ${MAIN_SOURCES})
