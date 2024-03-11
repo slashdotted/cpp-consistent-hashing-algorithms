@@ -39,7 +39,7 @@ set(MAIN_SOURCES
     anchor/AnchorHashQre.cpp
     anchor/AnchorHashQre.hpp
     anchor/anchorengine.h
-    benchmark/Benchmark.cpp
+    benchmarks/Benchmark.cpp
     dx/DxEngine.h
     main.cpp
     ring/RingEngine.h
