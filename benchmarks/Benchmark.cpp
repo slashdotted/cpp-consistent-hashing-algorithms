@@ -1,17 +1,27 @@
-/**
- * @author Amos Brocco
- * @author Roberto Vicario
- * @date 2024
-*/
-
 #include "Balance.cpp"
 #include "Monotonicity.cpp"
+#include <iostream>
 // #include "SpeedTest.cpp"
 
 using namespace std;
 
 class Benchmark {
 public:
+    /**
+     * BENCHMARK ROUTINE
+    */
+    template <typename Algorithm>
+    static void runBenchmarkRoutine(const string_view name, uint32_t anchor_set,
+        uint32_t working_set, uint32_t num_removals, uint32_t num_keys) {
+        cout << "@" << string(name) << " BALANCE:\n" << endl;
+        Benchmark::balance<Algorithm>(name, "balance.log", anchor_set, working_set, num_removals, num_keys);
+        cout << "@" << string(name) << " MONOTONICITY:\n" << endl;
+        Benchmark::monotonicity<Algorithm>(name, "monotonicity.log", anchor_set, working_set, num_removals, num_keys);
+        cout << "@" << string(name) << " SPEED_TEST:\n" << endl;
+        // Benchmark::speed_test<Algorithm>(name, "speed_test.log", anchor_set, working_set, num_removals, num_keys);
+        cout << "\n#############################\n" << endl;
+    }
+
     /**
      * BALANCE
     */

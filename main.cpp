@@ -1,13 +1,26 @@
 /**
  * @author Amos Brocco
  * @author Roberto Vicario
- * @date 2024
-*/
+ * 
+ * @copyright (c) 2023 Amos Brocco.
+ * Adapted from cpp-anchorhash Copyright (c) 2020 anchorhash (MIT License)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "anchor/anchorengine.h"
-#include "benchmark/Benchmark.cpp"
+#include "benchmarks/Benchmark.cpp"
 #include "dx/DxEngine.h"
-
 #include <filesystem>
 #include <fmt/core.h>
 #include <iostream>
@@ -31,16 +44,14 @@ int main(int argc, char* argv[]) {
         /**
          * Here starts the benchmark routine
         */
+        cout << "#############################\n##### BENCHMARK ROUTINE #####\n#############################\n" << endl;
+
         for (const auto& algorithm : config["algorithms"]) {
             string name = algorithm["name"].as<string>();
             if (name == "anchor") {
-                Benchmark::balance<AnchorEngine>(name, "balance.log", 1000000, 1000000, 20000, 1000000);
-                Benchmark::monotonicity<AnchorEngine>(name, "monotonicity.log", 1000000, 1000000, 1000, 1000000);
-                Benchmark::speed_test<AnchorEngine>(name, "speed_test.log", 1000000, 1000000, 20000, 1000000);
+                Benchmark::runBenchmarkRoutine<AnchorEngine>(name, 1000000, 1000000, 20000, 1000000);
             } else if (name == "dx") {
-                Benchmark::balance<DxEngine>(name, "balance.log", 1000000, 1000000, 20000, 1000000);
-                Benchmark::monotonicity<DxEngine>(name, "monotonicity.log", 1000000, 1000000, 1000, 1000000);
-                Benchmark::speed_test<DxEngine>(name, "speed_test.log", 1000000, 1000000, 20000, 1000000);
+                Benchmark::runBenchmarkRoutine<DxEngine>(name, 1000000, 1000000, 20000, 1000000);
             } else if (name == "jump") {
                 /* code */
             } else if (name == "maglev") {
