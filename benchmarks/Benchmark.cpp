@@ -19,7 +19,7 @@ public:
         Benchmark::monotonicity<Algorithm>(name, "monotonicity.log", anchor_set, working_set, num_removals, num_keys);
         cout << "@" << string(name) << " SPEED_TEST:\n" << endl;
         Benchmark::speed_test<Algorithm>(name, "speed_test.log", anchor_set, working_set, num_removals, num_keys);
-        cout << "\n#############################\n" << endl;
+        cout << "\n#######################################\n" << endl;
     }
 
     /**
