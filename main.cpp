@@ -21,9 +21,14 @@
 #include "anchor/anchorengine.h"
 #include "benchmarks/Benchmark.cpp"
 #include "dx/DxEngine.h"
-#include <filesystem>
-#include <fmt/core.h>
 #include <iostream>
+#include "jump/jumpengine.h"
+// #include "maglev/MaglevEngine.h"
+#include "memento/mementoengine.h"
+// #include "multiprobe/MultiprobeEngine.h"
+#include "power/powerengine.h"
+// #include "multiprobe/MultiprobeEngine.h"
+// #include "ring/RingEngine.h"
 #include <yaml-cpp/yaml.h>
 
 using namespace std;
@@ -36,36 +41,38 @@ int main(int argc, char* argv[]) {
         }
 
         /**
-         * YAML configuration
+         * Loading YAML file
         */
         string filename = "../configs/" + string(argv[1]);
         YAML::Node config = YAML::LoadFile(filename);
 
         /**
-         * Here starts the benchmark routine
-        */
-        cout << "#############################\n##### BENCHMARK ROUTINE #####\n#############################\n" << endl;
+         * Running benchmark routing
+         */
+        cout << "#######################################\n" << endl;
+        cout << "########## BENCHMARK ROUTINE ##########\n" << endl;
+        cout << "#######################################\n" << endl;
 
         for (const auto& algorithm : config["algorithms"]) {
             string name = algorithm["name"].as<string>();
             if (name == "anchor") {
-                Benchmark::runBenchmarkRoutine<AnchorEngine>(name, 1000000, 1000000, 20000, 1000000);
+                Benchmark::runBenchmarkRoutine<AnchorEngine>("anchor", 1000000, 1000000, 20000, 1000000);
             } else if (name == "dx") {
-                Benchmark::runBenchmarkRoutine<DxEngine>(name, 1000000, 1000000, 20000, 1000000);
+                Benchmark::runBenchmarkRoutine<DxEngine>("dx", 1000000, 1000000, 20000, 1000000);
             } else if (name == "jump") {
-                /* code */
+                Benchmark::runBenchmarkRoutine<JumpEngine>("jump", 1000000, 1000000, 20000, 1000000);
             } else if (name == "maglev") {
-                /* code */
+                // Benchmark::runBenchmarkRoutine<MaglevEngine>("maglev", 1000000, 1000000, 20000, 1000000);
             } else if (name == "memento") {
-                /* code */
+                Benchmark::runBenchmarkRoutine<MementoEngine<boost::unordered_flat_map>>("memento", 1000000, 1000000, 20000, 1000000);
             } else if (name == "multi-probe") {
-                /* code */
+                // Benchmark::runBenchmarkRoutine<Multiprobe>("multi-probe", 1000000, 1000000, 20000, 1000000);
             } else if (name == "power") {
-                /* code */
+                Benchmark::runBenchmarkRoutine<PowerEngine>("power", 1000000, 1000000, 20000, 1000000);
             } else if (name == "rendezvous") {
-                /* code */
+                // Benchmark::runBenchmarkRoutine<RendezvousEngine>("rendezvous", 1000000, 1000000, 20000, 1000000);
             } else if (name == "ring") {
-                /* code */
+                // Benchmark::runBenchmarkRoutine<RingEngine>("ring", 1000000, 1000000, 20000, 1000000);
             }
         }
     } catch (const YAML::Exception& e) {
