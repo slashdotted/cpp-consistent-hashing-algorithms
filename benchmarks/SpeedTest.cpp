@@ -1,3 +1,7 @@
+/**
+ * @author Roberto Vicario
+*/
+
 #include <boost/unordered/unordered_flat_map.hpp>
 #include <boost/unordered_map.hpp>
 #include <cxxopts.hpp>
@@ -13,166 +17,129 @@
 using namespace std;
 
 class SpeedTest {
-
-public:
-
-/*
- * ******************************************
- * Heap allocation measurement
- * ******************************************
- */
-
-#ifdef USE_HEAPSTATS
-static unsigned long allocations{0};
-static unsigned long deallocations{0};
-static unsigned long allocated{0};
-static unsigned long deallocated{0};
-static unsigned long maximum{0};
-
-void *operator new(size_t size) {
-  void *p = malloc(size);
-  allocations += 1;
-  allocated += size;
-  maximum = allocated > maximum ? allocated : maximum;
-  return p;
-}
-
-void *operator new[](size_t size) {
-  void *p = malloc(size);
-  allocations += 1;
-  allocated += size;
-  maximum = allocated > maximum ? allocated : maximum;
-  return p;
-}
-
-void operator delete(void *ptr, std::size_t size) noexcept {
-  deallocations += 1;
-  deallocated += size;
-  free(ptr);
-}
-
-void operator delete[](void *ptr, std::size_t size) noexcept {
-  deallocations += 1;
-  deallocated += size;
-  free(ptr);
-}
-
-void reset_memory_stats() noexcept {
-  allocations = 0;
-  allocated = 0;
-  deallocations = 0;
-  deallocated = 0;
-  maximum = 0;
-}
-
-void print_memory_stats(std::string_view label) noexcept {
-  auto alloc{allocations};
-  auto dealloc{deallocations};
-  auto asize{allocated};
-  auto dsize{deallocated};
-  auto max{maximum};
-  fmt::println("   @{}: Allocations: {}, Allocated: {}, Deallocations: {}, "
-               "Deallocated: {}, Maximum: {}",
-               label, alloc, asize, dealloc, dsize, max);
-  allocations = alloc;
-  deallocations = dealloc;
-  allocated = asize;
-  deallocated = dsize;
-  maximum = max;
-}
-#endif
-
-/*
- * ******************************************
- * Benchmark routine
- * ******************************************
- */
-template <typename Algorithm>
-static int bench(const std::string_view name, const std::string &filename,
+    public:
+    template <typename Algorithm>
+    static int bench(const std::string_view name, const std::string &filename,
           uint32_t anchor_set, uint32_t working_set, uint32_t num_removals,
           uint32_t num_keys) {
-#ifdef USE_PCG32
-  pcg_extras::seed_seq_from<std::random_device> seed;
-  pcg32 rng{seed};
-#else
-  srand(time(NULL));
-#endif
 
-  std::ofstream results_file;
-  results_file.open(filename, std::ofstream::out | std::ofstream::app);
+    #ifdef USE_HEAPSTATS
+    static unsigned long allocations{0};
+    static unsigned long deallocations{0};
+    static unsigned long allocated{0};
+    static unsigned long deallocated{0};
+    static unsigned long maximum{0};
 
-  double norm_keys_rate = (double)num_keys / 1000000.0;
+    auto reset_memory_stats = []() noexcept {
+        allocations = 0;
+        allocated = 0;
+        deallocations = 0;
+        deallocated = 0;
+        maximum = 0;
+    };
 
-  uint32_t *bucket_status = new uint32_t[anchor_set]();
+    auto print_memory_stats = [&](std::string_view label) noexcept {
+        auto alloc{allocations};
+        auto dealloc{deallocations};
+        auto asize{allocated};
+        auto dsize{deallocated};
+        auto max{maximum};
+        fmt::println("   @{}: Allocations: {}, Allocated: {}, Deallocations: {}, "
+                    "Deallocated: {}, Maximum: {}",
+                    label, alloc, asize, dealloc, dsize, max);
+        allocations = alloc;
+        deallocations = dealloc;
+        allocated = asize;
+        deallocated = dsize;
+        maximum = max;
+    };
+    #endif
 
-  for (uint32_t i = 0; i < working_set; i++) {
-      bucket_status[i] = 1;
-  }
+    /*
+     * ******************************************
+     * Benchmark routine
+     * ******************************************
+     */
 
-#ifdef USE_HEAPSTATS
-  reset_memory_stats();
-  print_memory_stats("StartBenchmark");
-#endif
+    #ifdef USE_PCG32
+    pcg_extras::seed_seq_from<std::random_device> seed;
+    pcg32 rng{seed};
+    #else
+    srand(time(NULL));
+    #endif
 
-  Algorithm engine(anchor_set, working_set);
+    std::ofstream results_file;
+    results_file.open(filename, std::ofstream::out | std::ofstream::app);
 
-#ifdef USE_HEAPSTATS
-  print_memory_stats("AfterAlgorithmInit");
-#endif
+    double norm_keys_rate = (double)num_keys / 1000000.0;
 
-  uint32_t i = 0;
-  while (i < num_removals) {
-#ifdef USE_PCG32
-    uint32_t removed = rng() % working_set;
-#else
-    uint32_t removed = rand() % working_set;
-#endif
-    if (bucket_status[removed] == 1) {
-      engine.removeBucket(removed);
-      bucket_status[removed] = 0;
-      i++;
+    uint32_t *bucket_status = new uint32_t[anchor_set]();
+
+    for (uint32_t i = 0; i < working_set; i++) {
+        bucket_status[i] = 1;
     }
-  }
 
-#ifdef USE_HEAPSTATS
-  print_memory_stats("AfterRemovals");
-#endif
+    #ifdef USE_HEAPSTATS
+    reset_memory_stats();
+    print_memory_stats("StartBenchmark");
+    #endif
 
-  volatile int64_t bucket{0};
-  auto start{clock()};
-  for (uint32_t i = 0; i < num_keys; ++i) {
-#ifdef USE_PCG32
-    bucket = engine.getBucketCRC32c(rng(), rng());
-#else
-    bucket = engine.getBucketCRC32c(rand(), rand());
-#endif
-  }
-  auto end{clock()};
+    Algorithm engine(anchor_set, working_set);
 
-#ifdef USE_HEAPSTATS
-  print_memory_stats("EndBenchmark");
-#endif
+    #ifdef USE_HEAPSTATS
+    print_memory_stats("AfterAlgorithmInit");
+    #endif
 
-  auto elapsed{static_cast<double>(end - start) / CLOCKS_PER_SEC};
-#ifdef USE_HEAPSTATS
-  auto maxheap{maximum};
-  fmt::println("{} Elapsed time is {} seconds, maximum heap allocated memory is {} bytes, sizeof({}) is {}", name, elapsed, maxheap, name, sizeof(Algorithm));
-  results_file << name << ":\tAnchor\t" << anchor_set << "\tWorking\t"
-               << working_set << "\tRemovals\t" << num_removals << "\tRate\t"
-               << norm_keys_rate / elapsed << "\tMaxHeap\t" << maxheap << "\tAlgoSizeof\t" << sizeof(Algorithm)<< "\n";
-#else
-  fmt::println("{} Elapsed time is {} seconds", name, elapsed);
-  results_file << name << ":\tAnchor\t" << anchor_set << "\tWorking\t"
-               << working_set << "\tRemovals\t" << num_removals << "\tRate\t"
-               << norm_keys_rate / elapsed << "\n";
-#endif
+    uint32_t i = 0;
+    while (i < num_removals) {
+        #ifdef USE_PCG32
+        uint32_t removed = rng() % working_set;
+        #else
+        uint32_t removed = rand() % working_set;
+        #endif
+        if (bucket_status[removed] == 1) {
+            engine.removeBucket(removed);
+            bucket_status[removed] = 0;
+            i++;
+        }
+    }
 
+    #ifdef USE_HEAPSTATS
+    print_memory_stats("AfterRemovals");
+    #endif
 
+    volatile int64_t bucket{0};
+    auto start{clock()};
+    for (uint32_t i = 0; i < num_keys; ++i) {
+        #ifdef USE_PCG32
+        bucket = engine.getBucketCRC32c(rng(), rng());
+        #else
+        bucket = engine.getBucketCRC32c(rand(), rand());
+        #endif
+    }
+    auto end{clock()};
 
-  results_file.close();
+    #ifdef USE_HEAPSTATS
+    print_memory_stats("EndBenchmark");
+    auto elapsed{static_cast<double>(end - start) / CLOCKS_PER_SEC};
+    auto maxheap{maximum};
+    fmt::println("{} Elapsed time is {} seconds, maximum heap allocated memory is {} bytes, sizeof({}) is {}", name, elapsed, maxheap, name, sizeof(Algorithm));
+    results_file << name << ":\tAnchor\t" << anchor_set << "\tWorking\t"
+                << working_set << "\tRemovals\t" << num_removals << "\tRate\t"
+                << norm_keys_rate / elapsed << "\tMaxHeap\t" << maxheap << "\tAlgoSizeof\t" << sizeof(Algorithm)<< "\n";
+    #else
+    auto elapsed{static_cast<double>(end - start) / CLOCKS_PER_SEC};
+    fmt::println("{} Elapsed time is {} seconds", name, elapsed);
+    results_file << name << ":\tAnchor\t" << anchor_set << "\tWorking\t"
+                << working_set << "\tRemovals\t" << num_removals << "\tRate\t"
+                << norm_keys_rate / elapsed << "\n";
+    #endif
 
-  delete[] bucket_status;
+    results_file.close();
 
-  return 0;
+    delete[] bucket_status;
+
+    return 0;
 }
+
 };
