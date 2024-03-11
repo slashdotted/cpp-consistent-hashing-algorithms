@@ -1,19 +1,13 @@
-/**
- * @author Amos Brocco
- * @author Roberto Vicario
- * @date 2024
-*/
-
 #include <boost/unordered/unordered_flat_map.hpp>
 #include <boost/unordered_map.hpp>
 #include <cxxopts.hpp>
+#include <fmt/core.h>
+#include <fstream>
+#include <gtl/phmap.hpp>
 #ifdef USE_PCG32
 #include "pcg_random.hpp"
 #include <random>
 #endif // USE_PCG32
-#include <fmt/core.h>
-#include <fstream>
-#include <gtl/phmap.hpp>
 #include <unordered_map>
 
 using namespace std;

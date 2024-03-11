@@ -1,7 +1,7 @@
 #include "Balance.cpp"
 #include "Monotonicity.cpp"
 #include <iostream>
-// #include "SpeedTest.cpp"
+#include "SpeedTest.cpp"
 
 using namespace std;
 
@@ -53,7 +53,7 @@ public:
     static int speed_test(const string_view name, const string &filename,
         uint32_t anchor_set, uint32_t working_set,
         uint32_t num_removals, uint32_t num_keys) {
-        // SpeedTest::bench<Algorithm>(name, filename, anchor_set, working_set, num_removals, num_keys);
+        SpeedTest::bench<Algorithm>(name, filename, anchor_set, working_set, num_removals, num_keys);
 
         return 0;
     }

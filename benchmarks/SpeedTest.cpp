@@ -1,20 +1,14 @@
-/**
- * @author Amos Brocco
- * @author Roberto Vicario
- * @date 2024
-*/
-
-    #ifdef USE_PCG32
-#include "pcg_random.hpp"
-#include <random>
-#endif
 #include <boost/unordered/unordered_flat_map.hpp>
 #include <boost/unordered_map.hpp>
 #include <cxxopts.hpp>
 #include <fmt/core.h>
 #include <fstream>
-#include <unordered_map>
 #include <gtl/phmap.hpp>
+#ifdef USE_PCG32
+#include "pcg_random.hpp"
+#include <random>
+#endif // USE_PCG32
+#include <unordered_map>
 
 using namespace std;
 
@@ -94,7 +88,7 @@ void print_memory_stats(std::string_view label) noexcept {
  * ******************************************
  */
 template <typename Algorithm>
-int bench(const std::string_view name, const std::string &filename,
+static int bench(const std::string_view name, const std::string &filename,
           uint32_t anchor_set, uint32_t working_set, uint32_t num_removals,
           uint32_t num_keys) {
 #ifdef USE_PCG32
