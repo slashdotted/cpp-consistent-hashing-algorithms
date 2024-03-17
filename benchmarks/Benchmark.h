@@ -1,3 +1,5 @@
+#include <chrono>
+
 #include "Balance.h"
 #include "Monotonicity.h"
 #include <iostream>
@@ -16,13 +18,10 @@ public:
         /**
          * Starting benchmark routine.
          */
-        cout << "# Parameters: (algorithm = " << algorithm << ", function = crc32, initNodes = " << working_set << ")\n#\n#" << endl;
-        for (const auto &iter: config["benchmarks"]) {
-            /**
-             * Running each benchmark for every algorithm.
-             */
+        cout << "# [LOG] ----- Parameters: (algorithm = " << algorithm << ", function = crc32, initNodes = " << working_set << ")\n#" << endl;
+        for (const auto &iter : config["benchmarks"]) {
             auto benchmark = iter["name"].as<string>();
-            cout << "# @" << algorithm << " >_ @" << benchmark << ": ...\n#\n#" << endl;
+            cout << "# [LOG] ----- @" << algorithm << " >_ @" << benchmark << ": ...\n#" << endl;
 
             if (benchmark == "init-time") {
                 /* code */

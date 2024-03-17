@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
          * Checking terminal usage.
         */
         if (argc != 2) {
-            cerr << "Usage: " << argv[0] << " <your_configuration>.yaml" << endl;
+            cerr << "# [ERR] Usage: " << argv[0] << " <your_configuration>.yaml" << endl;
             return 1;
         }
 
@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
             /**
              * Running each number of node for every engine.
              */
-            auto num = iter_1.as<int>();
+            auto num = 1000000; // iter_1.as<int>();
             for (const auto &iter_2: config["algorithms"]) {
                 auto algorithm = iter_2["name"].as<string>();
                 cout << "##############################" << endl;
@@ -74,19 +74,19 @@ int main(int argc, char* argv[]) {
                 cout << "##############################\n#\n#" << endl;
 
                 if (algorithm == "anchor") {
-                    // Benchmark::execute<AnchorEngine>(config, "anchor", 1000000, 1000000, 20000, 1000000);
+                    // Benchmark::execute<AnchorEngine>(config, "anchor", 1000000, num, 20000, 1000000);
                 } else if (algorithm == "dx") {
-                    Benchmark::execute<DxEngine>(config, "dx", 1000000, 1000000, 20000, 1000000);
+                    Benchmark::execute<DxEngine>(config, "dx", 1000000, num, 20000, 1000000);
                 } else if (algorithm == "jump") {
-                    // Benchmark::execute<JumpEngine>(config, "jump", 1000000, 1000000, 20000, 1000000);
+                    // Benchmark::execute<JumpEngine>(config, "jump", 1000000, num, 20000, 1000000);
                 } else if (algorithm == "maglev") {
                     /* code */
                 } else if (algorithm == "memento") {
-                    // Benchmark::execute<MementoEngine<boost::unordered_flat_map>>(config, "memento", 1000000, 1000000, 20000, 1000000);
+                    // Benchmark::execute<MementoEngine<boost::unordered_flat_map>>(config, "memento", 1000000, num, 20000, 1000000);
                 } else if (algorithm == "multi-probe") {
                     /* code */
                 } else if (algorithm == "power") {
-                    // Benchmark::execute<PowerEngine>(config, "power", 1000000, 1000000, 20000, 1000000);
+                    // Benchmark::execute<PowerEngine>(config, "power", 1000000, num, 20000, 1000000);
                 } else if (algorithm == "rendezvous") {
                     /* code */
                 } else if (algorithm == "ring") {
