@@ -40,7 +40,7 @@ set(MAIN_SOURCES
     anchor/AnchorHashQre.cpp
     anchor/AnchorHashQre.hpp
     anchor/anchorengine.h
-    benchmarks/Benchmark.cpp
+        benchmarks/Benchmark.h
     dx/DxEngine.h
     jump/jumpengine.h
     main.cpp

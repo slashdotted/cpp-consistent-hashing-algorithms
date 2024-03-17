@@ -21,60 +21,81 @@
  */
 
 #include "anchor/anchorengine.h"
-#include "benchmarks/Benchmark.cpp"
+#include "benchmarks/Benchmark.h"
 #include "dx/DxEngine.h"
 #include <iostream>
 #include "jump/jumpengine.h"
-// #include "maglev/MaglevEngine.h"
 #include "memento/mementoengine.h"
-// #include "multiprobe/MultiprobeEngine.h"
-#include "power/powerengine.h"
-// #include "multiprobe/MultiprobeEngine.h"
-// #include "ring/RingEngine.h"
 #include <yaml-cpp/yaml.h>
-
 using namespace std;
 
+/**
+ * Main function.
+ *
+ * @param argc number of command-line arguments.
+ * @param argv Array of command-line arguments.
+ * @return Integer indicating the execution status.
+ */
 int main(int argc, char* argv[]) {
     try {
+        /**
+         * Checking terminal usage.
+        */
         if (argc != 2) {
             cerr << "Usage: " << argv[0] << " <your_configuration>.yaml" << endl;
             return 1;
         }
 
         /**
-         * Loading YAML file
+         * Loading YAML file.
         */
         string filename = "../configs/" + string(argv[1]);
         YAML::Node config = YAML::LoadFile(filename);
 
         /**
-         * Running benchmark routine
+         * Running benchmark routine.
          */
         cout << "#######################################" << endl;
         cout << "########## BENCHMARK ROUTINE ##########" << endl;
-        cout << "#######################################" << endl;
+        cout << "#######################################\n#\n#" << endl;
 
-        for (const auto& algorithm : config["algorithms"]) {
-            string name = algorithm["name"].as<string>();
-            if (name == "anchor") {
-                Benchmark::runBenchmarkRoutine<AnchorEngine>("anchor", 1000000, 1000000, 20000, 1000000);
-            } else if (name == "dx") {
-                Benchmark::runBenchmarkRoutine<DxEngine>("dx", 1000000, 1000000, 20000, 1000000);
-            } else if (name == "jump") {
-                Benchmark::runBenchmarkRoutine<JumpEngine>("jump", 1000000, 1000000, 20000, 1000000);
-            } else if (name == "maglev") {
-                // Benchmark::runBenchmarkRoutine<MaglevEngine>("maglev", 1000000, 1000000, 20000, 1000000);
-            } else if (name == "memento") {
-                Benchmark::runBenchmarkRoutine<MementoEngine<boost::unordered_flat_map>>("memento", 1000000, 1000000, 20000, 1000000);
-            } else if (name == "multi-probe") {
-                // Benchmark::runBenchmarkRoutine<Multiprobe>("multi-probe", 1000000, 1000000, 20000, 1000000);
-            } else if (name == "power") {
-                Benchmark::runBenchmarkRoutine<PowerEngine>("power", 1000000, 1000000, 20000, 1000000);
-            } else if (name == "rendezvous") {
-                // Benchmark::runBenchmarkRoutine<RendezvousEngine>("rendezvous", 1000000, 1000000, 20000, 1000000);
-            } else if (name == "ring") {
-                // Benchmark::runBenchmarkRoutine<RingEngine>("ring", 1000000, 1000000, 20000, 1000000);
+        /**
+         * Starting benchmark routine.
+         */
+        for (const auto &iter_1 : config["common"]["init-nodes"]) {
+            /**
+             * Running each number of node for every engine.
+             */
+            auto num = iter_1.as<int>();
+            for (const auto &iter_2: config["algorithms"]) {
+                auto algorithm = iter_2["name"].as<string>();
+                cout << "##############################" << endl;
+                cout << "########## NEW ALGO ##########" << endl;
+                cout << "##############################\n#\n#" << endl;
+
+                if (algorithm == "anchor") {
+                    // Benchmark::execute<AnchorEngine>(config, "anchor", 1000000, 1000000, 20000, 1000000);
+                } else if (algorithm == "dx") {
+                    Benchmark::execute<DxEngine>(config, "dx", 1000000, 1000000, 20000, 1000000);
+                } else if (algorithm == "jump") {
+                    // Benchmark::execute<JumpEngine>(config, "jump", 1000000, 1000000, 20000, 1000000);
+                } else if (algorithm == "maglev") {
+                    /* code */
+                } else if (algorithm == "memento") {
+                    // Benchmark::execute<MementoEngine<boost::unordered_flat_map>>(config, "memento", 1000000, 1000000, 20000, 1000000);
+                } else if (algorithm == "multi-probe") {
+                    /* code */
+                } else if (algorithm == "power") {
+                    // Benchmark::execute<PowerEngine>(config, "power", 1000000, 1000000, 20000, 1000000);
+                } else if (algorithm == "rendezvous") {
+                    /* code */
+                } else if (algorithm == "ring") {
+                    /* code */
+                }
+
+                cout << "##############################" << endl;
+                cout << "########## END ALGO ##########" << endl;
+                cout << "##############################\n#\n#" << endl;
             }
         }
     } catch (const YAML::Exception& e) {
