@@ -1,47 +1,37 @@
-/**
- * @author Amos Brocco
- * @author Roberto Vicario
- * @date 2024
-*/
-
-#include <boost/unordered/unordered_flat_map.hpp>
-#include <boost/unordered_map.hpp>
-#include <cxxopts.hpp>
-#include <fmt/core.h>
+#include <iostream>
 #include <fstream>
-#include <gtl/phmap.hpp>
-#ifdef USE_PCG32
-#include "pcg_random.hpp"
 #include <random>
-#endif // USE_PCG32
-#include <unordered_map>
+#include <string>
+#include <string_view>
+#include <vector>
+#include <ctime>
+#include <fmt/core.h>
 
 using namespace std;
+
+#include "pcg_random.hpp" // Assuming this file exists
+
+// Replace with appropriate includes for unordered_flat_map and cxxopts
+// #include <boost/unordered/unordered_flat_map.hpp>
+// #include <cxxopts.hpp>
 
 class Balance {
 public:
     template <typename Algorithm>
-    static int bench(const string_view name, const string &filename,
-        uint32_t anchor_set, uint32_t working_set, uint32_t num_removals,
-        uint32_t num_keys) {
-    #ifdef USE_PCG32
-        pcg_extras::seed_seq_from<random_device> seed;
-        pcg32 rng{seed};
-    #else
-        srand(time(nullptr));
-    #endif
+    static int bench(const std::string_view name, const std::string& filename,
+                     uint32_t anchor_set, uint32_t working_set,
+                     uint32_t num_removals, uint32_t num_keys) {
+        std::random_device rd;
+        std::mt19937 rng(rd());
+
         Algorithm engine(anchor_set, working_set);
 
-        vector<uint32_t> anchor_absorbed_keys(anchor_set, 0);
-        vector<uint32_t> bucket_status(working_set, 1);
+        std::vector<uint32_t> anchor_absorbed_keys(anchor_set, 0);
+        std::vector<uint32_t> bucket_status(working_set, 1);
 
         uint32_t i = 0;
         while (i < num_removals) {
-    #ifdef USE_PCG32
-                uint32_t removed = rng() % working_set;
-    #else
-                uint32_t removed = rand() % working_set;
-    #endif
+            uint32_t removed = rng() % working_set;
             if (bucket_status[removed] == 1) {
                 auto rnode = engine.removeBucket(removed);
                 bucket_status[rnode] = 0;
@@ -49,39 +39,32 @@ public:
             }
         }
 
-        ofstream results_file(filename, ofstream::out | ofstream::app);
+        std::ofstream results_file(filename, std::ofstream::out | std::ofstream::app);
+        if (!results_file.is_open()) {
+            std::cerr << "Error opening file: " << filename << std::endl;
+            return -1;
+        }
 
         for (uint32_t i = 0; i < num_keys; ++i) {
-    #ifdef USE_PCG32
             anchor_absorbed_keys[engine.getBucketCRC32c(rng(), rng())] += 1;
-    #else
-            anchor_absorbed_keys[engine.getBucketCRC32c(rand(), rand())] += 1;
-    #endif
         }
 
         double mean = static_cast<double>(num_keys) / (working_set - num_removals);
         double lb = 0;
         for (uint32_t i = 0; i < anchor_set; i++) {
             if (bucket_status[i]) {
-                if (anchor_absorbed_keys[i] / mean > lb) {
-                    lb = anchor_absorbed_keys[i] / mean;
-                }
+                double ratio = anchor_absorbed_keys[i] / mean;
+                lb = std::max(lb, ratio);
             } else {
                 if (anchor_absorbed_keys[i] > 0) {
-                    fmt::println("{}: crazy bug!", name);
+                    fmt::print("{}: crazy bug!\n", name);
                 }
             }
         }
 
-    #ifdef USE_PCG32
-        fmt::println("{}: LB is {}\n", name, lb);
-        results_file << name << ": "
-                                << "Balance: " << lb << "\tPCG32\n";
-    #else
-        fmt::println("{}: LB is {}\n", name, lb);
-        results_file << name << ": "
-                                << "Balance: " << lb << "\trand()\n";
-    #endif
+        cout << "# [LOG] ----- " << "@" << name << " >_ @balance = " << lb << endl;
+        // fmt::print("{}: LB is {}\n", name, lb);
+        results_file << name << ": Balance: " << lb << "\t" << "PCG32" << std::endl;
 
         results_file.close();
 

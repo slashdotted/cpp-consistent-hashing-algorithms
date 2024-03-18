@@ -1,9 +1,10 @@
-#include <chrono>
+#include <ctime>
 
 #include "Balance.h"
 #include "Monotonicity.h"
 #include <iostream>
 #include "SpeedTest.h"
+#include "MemoryUsage.h"
 #include <yaml-cpp/yaml.h>
 using namespace std;
 
@@ -21,16 +22,14 @@ public:
         cout << "# [LOG] ----- Parameters: (algorithm = " << algorithm << ", function = crc32, initNodes = " << working_set << ")\n#" << endl;
         for (const auto &iter : config["benchmarks"]) {
             auto benchmark = iter["name"].as<string>();
-            cout << "# [LOG] ----- @" << algorithm << " >_ @" << benchmark << ": ...\n#" << endl;
-
             if (benchmark == "init-time") {
                 /* code */
             } else if (benchmark == "lookup-time") {
-                Benchmark::lookup_time<Algorithm>(algorithm, "lookup_time.log", anchor_set, working_set, num_removals, num_keys);
+                Benchmark::lookup_time<Algorithm>(algorithm, "lookup_time.log",anchor_set, working_set, num_removals, num_keys);
             } else if (benchmark == "resize-time") {
                 /* code */
             } else if (benchmark == "memory-usage") {
-                /* code */
+                Benchmark::memory_usage<Algorithm>(algorithm);
             } else if (benchmark == "balance") {
                 Benchmark::balance<Algorithm>(algorithm, "balance.log", anchor_set, working_set, num_removals, num_keys);
             } else if (benchmark == "resize-balance") {
@@ -50,6 +49,16 @@ public:
         uint32_t num_removals, uint32_t num_keys) {
         Balance::bench<Algorithm>(algorithm, filename, anchor_set, working_set, num_removals, num_keys);
         
+        return 0;
+    }
+
+    /**
+     * MEMORY_USAGE
+     */
+    template <typename Algorithm>
+    static int memory_usage(string algorithm) {
+        MemoryUsage::bench<Algorithm>(algorithm);
+
         return 0;
     }
 

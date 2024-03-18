@@ -53,6 +53,8 @@ set(MAIN_SOURCES
     # rendezvous/RendezvousEngine
     # ring/RingEngine.h
     vcpkg.json
+        benchmarks/MemoryUsage.h
+        benchmarks/MemoryUsage.h
 )
 add_executable(main ${MAIN_SOURCES})
 

@@ -20,6 +20,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <ctime>
+
 #include "anchor/anchorengine.h"
 #include "benchmarks/Benchmark.h"
 #include "dx/DxEngine.h"
@@ -42,8 +44,7 @@ int main(int argc, char* argv[]) {
          * Checking terminal usage.
         */
         if (argc != 2) {
-            cerr << "# [ERR] Usage: " << argv[0] << " <your_configuration>.yaml" << endl;
-            return 1;
+            argv[1] = "default.yaml";
         }
 
         /**
@@ -51,13 +52,6 @@ int main(int argc, char* argv[]) {
         */
         string filename = "../configs/" + string(argv[1]);
         YAML::Node config = YAML::LoadFile(filename);
-
-        /**
-         * Running benchmark routine.
-         */
-        cout << "#######################################" << endl;
-        cout << "########## BENCHMARK ROUTINE ##########" << endl;
-        cout << "#######################################\n#\n#" << endl;
 
         /**
          * Starting benchmark routine.
@@ -69,10 +63,6 @@ int main(int argc, char* argv[]) {
             auto num = 1000000; // iter_1.as<int>();
             for (const auto &iter_2: config["algorithms"]) {
                 auto algorithm = iter_2["name"].as<string>();
-                cout << "##############################" << endl;
-                cout << "########## NEW ALGO ##########" << endl;
-                cout << "##############################\n#\n#" << endl;
-
                 if (algorithm == "anchor") {
                     // Benchmark::execute<AnchorEngine>(config, "anchor", 1000000, num, 20000, 1000000);
                 } else if (algorithm == "dx") {
@@ -92,17 +82,13 @@ int main(int argc, char* argv[]) {
                 } else if (algorithm == "ring") {
                     /* code */
                 }
-
-                cout << "##############################" << endl;
-                cout << "########## END ALGO ##########" << endl;
-                cout << "##############################\n#\n#" << endl;
             }
         }
     } catch (const YAML::Exception& e) {
-        cerr << "YAML Exception: " << e.what() << endl;
+        cerr << "# [ERR] ----- YAML Exception: " << e.what() << "\n#" << endl;
         return 1;
     } catch (const exception& e) {
-        cerr << "Exception: " << e.what() << endl;
+        cerr << "# [ERR] ----- Exception: " << e.what() << "\n#" << endl;
         return 1;
     }
 
