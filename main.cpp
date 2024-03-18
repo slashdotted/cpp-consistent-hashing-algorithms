@@ -14,7 +14,8 @@
 
 using namespace std;
 
-
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "bugprone-branch-clone"
 int main(int argc, char* argv[]) {
     try {
         /**
@@ -33,6 +34,11 @@ int main(int argc, char* argv[]) {
         /**
          * Starting benchmark routine.
          */
+        cout << "# [SYS] ----- ****************************" << endl;
+        cout << "# [SYS] ----- ***** STARTING ROUTINE *****" << endl;
+        cout << "# [SYS] ----- ****************************" << endl;
+        cout << "#" << endl;
+
         // for (const auto &iter_1 : config["common"]["init-nodes"]) {
             /**
              * Running each number of node for every engine.
@@ -41,23 +47,49 @@ int main(int argc, char* argv[]) {
             for (const auto &iter_2: config["algorithms"]) {
                 auto algorithm = iter_2["name"].as<string>();
                 if (algorithm == "anchor") {
-                    // Benchmark::execute<AnchorEngine>(config, "anchor", 1000000, num, 20000, 1000000);
+                    /**
+                     * ANCHOR
+                     */
+                    Benchmark::execute<AnchorEngine>(config, "anchor", 1000000, num, 20000, 1000000);
                 } else if (algorithm == "dx") {
+                    /**
+                     * DX
+                     */
                     Benchmark::execute<DxEngine>(config, "dx", 1000000, num, 20000, 1000000);
                 } else if (algorithm == "jump") {
-                    // Benchmark::execute<JumpEngine>(config, "jump", 1000000, num, 20000, 1000000);
+                    /**
+                     * JUMP
+                     */
+                    Benchmark::execute<JumpEngine>(config, "jump", 1000000, num, 20000, 1000000);
                 } else if (algorithm == "maglev") {
+                    /**
+                     * MAGLEV
+                     */
                     /* code */
                 } else if (algorithm == "memento") {
-                    // Benchmark::execute<MementoEngine<boost::unordered_flat_map>>(config, "memento", 1000000, num, 20000, 1000000);
+                    /**
+                     * MEMENTO
+                     */
+                    Benchmark::execute<MementoEngine<boost::unordered_flat_map>>(config, "memento", 1000000, num, 20000, 1000000);
                 } else if (algorithm == "multi-probe") {
+                    /**
+                     * MULTI-PROBE
+                     */
                     /* code */
                 } else if (algorithm == "power") {
-                    // Benchmark::execute<PowerEngine>(config, "power", 1000000, num, 20000, 1000000);
+                    /**
+                     * POWER
+                     */
+                    Benchmark::execute<PowerEngine>(config, "power", 1000000, num, 20000, 1000000);
                 } else if (algorithm == "rendezvous") {
+                    /**
+                     * RENDEZVOUS
+                     */
                     /* code */
                 } else if (algorithm == "ring") {
-                    /* code */
+                    /**
+                     * RING
+                     */
                 }
             }
         // }
@@ -69,5 +101,13 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    /**
+     * Closing benchmark routine.
+     */
+    cout << "# [SYS] ----- *****************************" << endl;
+    cout << "# [SYS] ----- ***** ROUTINE COMPLETED *****" << endl;
+    cout << "# [SYS] ----- *****************************" << endl;
+
     return 0;
 }
+#pragma clang diagnostic pop

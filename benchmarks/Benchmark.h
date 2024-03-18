@@ -26,13 +26,7 @@ public:
         /**
          * Starting benchmark routine.
          */
-        cout << "#" << endl;
-        cout << "# [SYS] ----- ****************************" << endl;
-        cout << "# [SYS] ----- ***** STARTING ROUTINE *****" << endl;
-        cout << "# [SYS] ----- ****************************" << endl;
-        cout << "#" << endl;
         cout << "# [LOG] ----- Parameters: (algorithm = " << algorithm << ", function = crc32, initNodes = " << working_set << ")\n#" << endl;
-
         for (const auto &iter: config["benchmarks"]) {
             auto benchmark = iter["name"].as<string>();
             if (benchmark == "balance") {
@@ -74,12 +68,8 @@ public:
         }
 
         /**
-         * Closing benchmark routine.
+         * Closing single benchmark routine.
          */
-        cout << "#" << endl;
-        cout << "# [SYS] ----- *****************************" << endl;
-        cout << "# [SYS] ----- ***** ROUTINE COMPLETED *****" << endl;
-        cout << "# [SYS] ----- *****************************" << endl;
         cout << "#" << endl;
     }
 };
