@@ -2,14 +2,18 @@
  * @author Roberto Vicario (C) 2024
  */
 
+#include <iostream>
+#include <yaml-cpp/yaml.h>
+
 #include "anchor/anchorengine.h"
 #include "benchmarks/Benchmark.h"
 #include "dx/DxEngine.h"
-#include <iostream>
 #include "jump/jumpengine.h"
 #include "memento/mementoengine.h"
-#include <yaml-cpp/yaml.h>
+#include "power/powerengine.h"
+
 using namespace std;
+
 
 int main(int argc, char* argv[]) {
     try {
@@ -29,7 +33,7 @@ int main(int argc, char* argv[]) {
         /**
          * Starting benchmark routine.
          */
-        for (const auto &iter_1 : config["common"]["init-nodes"]) {
+        // for (const auto &iter_1 : config["common"]["init-nodes"]) {
             /**
              * Running each number of node for every engine.
              */
@@ -56,7 +60,7 @@ int main(int argc, char* argv[]) {
                     /* code */
                 }
             }
-        }
+        // }
     } catch (const YAML::Exception& e) {
         cerr << "# [ERR] ----- YAML Exception: " << e.what() << endl;
         return 1;

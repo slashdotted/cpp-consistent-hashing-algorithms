@@ -1,17 +1,13 @@
-# Configurations that will apply to every benchmark.
 common:
     output-folder: /tmp
-
     iterations:
         warmup: 5
         run: 10
-
     init-nodes: [10, 100, 1000, 10000, 100000]
-
     hash-functions:
-        - murmur3
         - crc32
         - md5
+        - murmur3
         - xx
 
 algorithms:
@@ -25,18 +21,18 @@ algorithms:
     - name: rendezvous
     - name: ring
 
-benchmarks: 
+benchmarks:
+    - name: balance
     - name: init-time
     - name: lookup-time
       args:
           distributions:
-            - uniform
-            - normal
-            - custom
-    - name: resize-time
+              - uniform
+              - normal
+              - custom
     - name: memory-usage
-    - name: balance
-    - name: resize-balance
     - name: monotonicity
       args:
           fractions: [0.1, 0.3, 0.5]
+    - name: resize-balance
+    - name: resize-time
