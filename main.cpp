@@ -1,26 +1,6 @@
 /**
- * @author Amos Brocco
- * @author Roberto Vicario
- * 
- * @copyright Amos Brocco
- * 
- * Copyright (c) 2023 Amos Brocco.
- * Adapted from cpp-anchorhash Copyright (c) 2020 anchorhash (MIT License)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, version 3.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * @author Roberto Vicario (C) 2024
  */
-
-#include <ctime>
 
 #include "anchor/anchorengine.h"
 #include "benchmarks/Benchmark.h"
@@ -31,17 +11,10 @@
 #include <yaml-cpp/yaml.h>
 using namespace std;
 
-/**
- * Main function.
- *
- * @param argc number of command-line arguments.
- * @param argv Array of command-line arguments.
- * @return Integer indicating the execution status.
- */
 int main(int argc, char* argv[]) {
     try {
         /**
-         * Checking terminal usage.
+         * Handling terminal usage.
         */
         if (argc != 2) {
             argv[1] = "default.yaml";
@@ -85,10 +58,10 @@ int main(int argc, char* argv[]) {
             }
         }
     } catch (const YAML::Exception& e) {
-        cerr << "# [ERR] ----- YAML Exception: " << e.what() << "\n#" << endl;
+        cerr << "# [ERR] ----- YAML Exception: " << e.what() << endl;
         return 1;
     } catch (const exception& e) {
-        cerr << "# [ERR] ----- Exception: " << e.what() << "\n#" << endl;
+        cerr << "# [ERR] ----- Exception: " << e.what() << endl;
         return 1;
     }
 

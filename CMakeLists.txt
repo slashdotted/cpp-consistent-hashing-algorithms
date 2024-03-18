@@ -55,6 +55,7 @@ set(MAIN_SOURCES
     vcpkg.json
         benchmarks/MemoryUsage.h
         benchmarks/MemoryUsage.h
+        benchmarks/InitTime.h
 )
 add_executable(main ${MAIN_SOURCES})
 
