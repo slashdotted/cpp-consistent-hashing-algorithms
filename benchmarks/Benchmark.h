@@ -21,8 +21,8 @@ public:
     */
     template<typename Engine>
     static void execute(YAML::Node config, string algorithm,
-                        uint32_t anchor_set, uint32_t working_set,
-                        uint32_t num_removals, uint32_t num_keys) {
+        uint32_t anchor_set, uint32_t working_set,
+        uint32_t num_removals, uint32_t num_keys) {
         /**
          * Starting benchmark routine.
          */
