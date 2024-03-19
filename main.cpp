@@ -6,7 +6,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "anchor/anchorengine.h"
-#include "benchmarks/Benchmark.h"
+#include "benchmarks/Routine.h"
 #include "dx/DxEngine.h"
 #include "jump/jumpengine.h"
 #include "memento/mementoengine.h"
@@ -14,20 +14,18 @@
 
 using namespace std;
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "bugprone-branch-clone"
 int main(int argc, char* argv[]) {
     try {
         /**
          * Handling terminal usage.
-        */
+         */
         if (argc != 2) {
             argv[1] = "default.yaml";
         }
 
         /**
          * Loading YAML file.
-        */
+         */
         string filename = "../configs/" + string(argv[1]);
         YAML::Node config = YAML::LoadFile(filename);
 
@@ -39,38 +37,37 @@ int main(int argc, char* argv[]) {
         cout << "# [SYS] ----- ****************************" << endl;
         cout << "#" << endl;
 
-        for (const auto &iter_1 : config["common"]["init-nodes"]) {
+        // for (const auto &iter_1 : config["common"]["init-nodes"]) {
             /**
              * Running each number of node for every engine.
              */
-            auto num = iter_1.as<int>();
+            auto num = 1000000; // iter_1.as<int>();
             for (const auto &iter_2: config["algorithms"]) {
                 auto algorithm = iter_2["name"].as<string>();
                 if (algorithm == "anchor") {
                     /**
                      * ANCHOR
                      */
-                    Benchmark::execute<AnchorEngine>(config, "anchor", num, num, 20000, 1000000);
+                    execute<AnchorEngine>(config, "anchor", num, num, 20000, 1000000);
                 } else if (algorithm == "dx") {
                     /**
                      * DX
                      */
-                    Benchmark::execute<DxEngine>(config, "dx", num, num, 20000, 1000000);
+                    execute<DxEngine>(config, "dx", num, num, 20000, 1000000);
                 } else if (algorithm == "jump") {
                     /**
                      * JUMP
                      */
-                    Benchmark::execute<JumpEngine>(config, "jump", num, num, 20000, 1000000);
+                    execute<JumpEngine>(config, "jump", num, num, 20000, 1000000);
                 } else if (algorithm == "maglev") {
                     /**
                      * MAGLEV
                      */
-                    /* code */
                 } else if (algorithm == "memento") {
                     /**
                      * MEMENTO
                      */
-                    Benchmark::execute<MementoEngine<boost::unordered_flat_map>>(config, "memento", num, num, 20000, 1000000);
+                    execute<MementoEngine<boost::unordered_flat_map>>(config, "memento", num, num, 20000, 1000000);
                 } else if (algorithm == "multi-probe") {
                     /**
                      * MULTI-PROBE
@@ -80,18 +77,17 @@ int main(int argc, char* argv[]) {
                     /**
                      * POWER
                      */
-                    Benchmark::execute<PowerEngine>(config, "power", num, num, 20000, 1000000);
+                    execute<PowerEngine>(config, "power", num, num, 20000, 1000000);
                 } else if (algorithm == "rendezvous") {
                     /**
                      * RENDEZVOUS
                      */
-                    /* code */
                 } else if (algorithm == "ring") {
                     /**
                      * RING
                      */
                 }
-            }
+            // }
         }
     } catch (const YAML::Exception& e) {
         cerr << "# [ERR] ----- YAML Exception: " << e.what() << endl;
@@ -110,4 +106,3 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-#pragma clang diagnostic pop

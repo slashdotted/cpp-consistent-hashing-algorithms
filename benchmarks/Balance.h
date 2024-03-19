@@ -62,7 +62,7 @@ public:
             }
         }
 
-        cout << "# [LOG] ----- " << "@" << name << " >_ @balance = " << lb << endl;
+        cout << "# [LOG] ----- " << "@" << name << "\t\t>_ balance        =\t" << lb << endl;
         // fmt::print("{}: LB is {}\n", name, lb);
         results_file << name << ": Balance: " << lb << "\t" << "PCG32" << std::endl;
 

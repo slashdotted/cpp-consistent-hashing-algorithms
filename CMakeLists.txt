@@ -45,7 +45,7 @@ set(MAIN_SOURCES
         jump/jumpengine.h
         power/powerengine.h
         ../misc/crc32c_sse42_u64.h
-        benchmarks/Benchmark.h
+        benchmarks/Routine.h
         main.cpp
 )
 add_executable(main ${MAIN_SOURCES})

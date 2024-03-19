@@ -2,13 +2,13 @@
  * @author Roberto Vicario (C) 2024
  */
 
-#ifndef CPP_CONSISTENT_HASHING_INITTIME_H
-#define CPP_CONSISTENT_HASHING_INITTIME_H
+#pragma once
 
 #include <chrono>
 #include <iostream>
-using namespace std;
+
 using namespace chrono;
+using namespace std;
 
 class InitTime {
 public:
@@ -19,11 +19,9 @@ public:
         auto end = high_resolution_clock::now();
 
         auto elapsed = duration_cast<nanoseconds>(end - start);
-        long long time = elapsed.count() / 1000000;
-        cout << "# [LOG] ----- " << "@" << algorithm << " >_ @init_time = " << time << " milliseconds" << endl;
+        long long time = elapsed.count();
+        cout << "# [LOG] ----- " << "@" << algorithm << "\t\t>_ init_time      =\t" << time << " nanoseconds" << endl;
 
         return 0;
     }
 };
-
-#endif // CPP_CONSISTENT_HASHING_INITTIME_H
