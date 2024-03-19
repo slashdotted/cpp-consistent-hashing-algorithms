@@ -73,13 +73,3 @@ static void execute(YAML::Node config, string algorithm,
      */
     cout << "#" << endl;
 }
-/*
-balance        =
-init_time      =
-lookup_time    =
-init_time      =
-memory_usage   =
-monotonicity   =
-resize_balance =
-resize_time    =
- */
