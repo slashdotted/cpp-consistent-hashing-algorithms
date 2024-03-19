@@ -1,6 +1,6 @@
 /**
  * @author Roberto Vicario (C) 2024
- */
++/
 
 #include <ctime>
 #include <iostream>

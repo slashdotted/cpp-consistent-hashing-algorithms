@@ -39,28 +39,37 @@ int main(int argc, char* argv[]) {
         cout << "# [SYS] ----- ****************************" << endl;
         cout << "#" << endl;
 
-        // for (const auto &iter_1 : config["common"]["init-nodes"]) {
+        /*
+Algorithm can be memento (for MementoHash using boost::unordered_flat_map for the removal set), mementoboost (for MementoHash using boost::unordered_map for the removal set), mementostd (for MementoHash using std::unordered_map for the removal set), mementomash (for MementoHash using a hash table similar to Java's HashMap), anchor (for AnchorHash), mementogtl (for Memento with gtl hash map), jump (for JumpHash), power (for Power Consistent Hashing)
+AnchorSet is the size of the Anchor set (a): this parameter is used only by anchor but must be set to a value at least equal to WorkingSet even with MementoHash;
+WorkingSet is the size of the initial Working set (w);
+NumRemovals is the number of nodes that should be removed (randomly, except for Jump) before starting the benchmark;
+Numkeys is the number of keys that will be queried during the benchmark;
+ResFilename is the filename containing the results of the benchmark; By default, details about the allocate memory will also be produced in the output. For example:
+         */
+
+        for (const auto &iter_1 : config["common"]["init-nodes"]) {
             /**
              * Running each number of node for every engine.
              */
-            auto num = 1000000; // iter_1.as<int>();
+            auto num = iter_1.as<int>();
             for (const auto &iter_2: config["algorithms"]) {
                 auto algorithm = iter_2["name"].as<string>();
                 if (algorithm == "anchor") {
                     /**
                      * ANCHOR
                      */
-                    Benchmark::execute<AnchorEngine>(config, "anchor", 1000000, num, 20000, 1000000);
+                    Benchmark::execute<AnchorEngine>(config, "anchor", num, num, 20000, 1000000);
                 } else if (algorithm == "dx") {
                     /**
                      * DX
                      */
-                    Benchmark::execute<DxEngine>(config, "dx", 1000000, num, 20000, 1000000);
+                    Benchmark::execute<DxEngine>(config, "dx", num, num, 20000, 1000000);
                 } else if (algorithm == "jump") {
                     /**
                      * JUMP
                      */
-                    Benchmark::execute<JumpEngine>(config, "jump", 1000000, num, 20000, 1000000);
+                    Benchmark::execute<JumpEngine>(config, "jump", num, num, 20000, 1000000);
                 } else if (algorithm == "maglev") {
                     /**
                      * MAGLEV
@@ -70,7 +79,7 @@ int main(int argc, char* argv[]) {
                     /**
                      * MEMENTO
                      */
-                    Benchmark::execute<MementoEngine<boost::unordered_flat_map>>(config, "memento", 1000000, num, 20000, 1000000);
+                    Benchmark::execute<MementoEngine<boost::unordered_flat_map>>(config, "memento", num, num, 20000, 1000000);
                 } else if (algorithm == "multi-probe") {
                     /**
                      * MULTI-PROBE
@@ -80,7 +89,7 @@ int main(int argc, char* argv[]) {
                     /**
                      * POWER
                      */
-                    Benchmark::execute<PowerEngine>(config, "power", 1000000, num, 20000, 1000000);
+                    Benchmark::execute<PowerEngine>(config, "power", num, num, 20000, 1000000);
                 } else if (algorithm == "rendezvous") {
                     /**
                      * RENDEZVOUS
@@ -92,7 +101,7 @@ int main(int argc, char* argv[]) {
                      */
                 }
             }
-        // }
+        }
     } catch (const YAML::Exception& e) {
         cerr << "# [ERR] ----- YAML Exception: " << e.what() << endl;
         return 1;
