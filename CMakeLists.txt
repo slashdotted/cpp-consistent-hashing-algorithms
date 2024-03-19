@@ -36,64 +36,55 @@ endif()
 ################################
 
 set(MAIN_SOURCES
-    ../misc/crc32c_sse42_u64.h
-    anchor/AnchorHashQre.cpp
-    anchor/AnchorHashQre.hpp
-    anchor/anchorengine.h
+        vcpkg.json
+        memento/memento.h
+        memento/mementoengine.h
+        anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp
+        anchor/anchorengine.h
+        memento/mashtable.h
+        jump/jumpengine.h
+        power/powerengine.h
+        ../misc/crc32c_sse42_u64.h
         benchmarks/Benchmark.h
-    dx/DxEngine.h
-    jump/jumpengine.h
-    main.cpp
-    # maglev/MaglevEngine.h
-    memento/mashtable.h
-    memento/memento.h
-    memento/mementoengine.h
-    # multiprobe/MultiprobeEngine.h
-    power/powerengine.h
-    # rendezvous/RendezvousEngine
-    # ring/RingEngine.h
-    vcpkg.json
-        benchmarks/MemoryUsage.h
-        benchmarks/MemoryUsage.h
-        benchmarks/InitTime.h
+        main.cpp
 )
 add_executable(main ${MAIN_SOURCES})
 
 add_executable(balance tools/balance.cpp
-    vcpkg.json
-    memento/memento.h
-    memento/mementoengine.h
-    anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp
-    anchor/anchorengine.h
-    memento/mashtable.h
-    jump/jumpengine.h
-    power/powerengine.h
-    ../misc/crc32c_sse42_u64.h
-    )
+        vcpkg.json
+        memento/memento.h
+        memento/mementoengine.h
+        anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp
+        anchor/anchorengine.h
+        memento/mashtable.h
+        jump/jumpengine.h
+        power/powerengine.h
+        ../misc/crc32c_sse42_u64.h
+)
 
 add_executable(speed_test tools/speed_test.cpp
-    vcpkg.json
-    memento/memento.h
-    memento/mementoengine.h
-    anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp
-    anchor/anchorengine.h
-    memento/mashtable.h
-    jump/jumpengine.h
-    power/powerengine.h
-    ../misc/crc32c_sse42_u64.h
-    )
+        vcpkg.json
+        memento/memento.h
+        memento/mementoengine.h
+        anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp
+        anchor/anchorengine.h
+        memento/mashtable.h
+        jump/jumpengine.h
+        power/powerengine.h
+        ../misc/crc32c_sse42_u64.h
+)
 
 add_executable(monotonicity tools/monotonicity.cpp
-    vcpkg.json
-    memento/memento.h
-    memento/mementoengine.h
-    anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp
-    anchor/anchorengine.h
-    memento/mashtable.h
-    jump/jumpengine.h
-    power/powerengine.h
-    ../misc/crc32c_sse42_u64.h
-    )
+        vcpkg.json
+        memento/memento.h
+        memento/mementoengine.h
+        anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp
+        anchor/anchorengine.h
+        memento/mashtable.h
+        jump/jumpengine.h
+        power/powerengine.h
+        ../misc/crc32c_sse42_u64.h
+)
 
 add_executable(mashtable_test tools/mashtable_test.cpp memento/mashtable.h)
 
@@ -114,21 +105,21 @@ target_link_libraries(monotonicity PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxo
 target_link_libraries(speed_test PRIVATE xxHash::xxhash fmt::fmt cxxopts::cxxopts)
 include(GNUInstallDirs)
 install(TARGETS main
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 install(TARGETS balance
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 install(TARGETS monotonicity
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 install(TARGETS speed_test
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
