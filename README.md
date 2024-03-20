@@ -6,6 +6,14 @@
 
 ## Instructions
 
+### Requirements
+
+- [CMake](https://cmake.org)
+- [vcpkg](https://vcpkg.io)
+- [Ninja](https://ninja-build.org)
+
+### Execution
+
 1. Clone the Repository:
 
     ```shell
@@ -51,17 +59,13 @@
 
 ...
 
-## Requirements
-
-...
-
 ## Licence
 
 This project is distributed under [GNU General Public License version 3](https://opensource.org/license/gpl-3-0). You can find the complete text of the license in the project repository.
 
 ## Credits
 
-...
+- The foundation of this framework draws inspiration from [java-consistent-hashing-algorithms](https://github.com/SUPSI-DTI-ISIN/java-consistent-hashing-algorithms.git), initially developed by Massimo Coluzzi from the Institute of Information Systems and Networking (ISIN) at SUPSI.
 
 ## Contacts
 
