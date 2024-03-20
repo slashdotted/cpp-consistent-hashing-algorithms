@@ -21,13 +21,13 @@ The implemented algorithms are:
 The project includes a benchmarking tool designed explicitly for consistent hashing algorithms.
 The tool allows benchmarking the following metrics in a fair and agnostic way:
 
-- **Balance**: the ability of the algorithm to spread the keys evenly across the cluster nodes.
-- **Init time**: the time the algorithm requires to initialize its internal structure.
-- **Lookup time**: the time the algorithm needs to find the node a given key belongs to.
-- **Memory usage**: the amount of memory the algorithm uses to store its internal structure.
-- **Monotonicity**: the ability of the algorithm to move the minimum amount of resources when the cluster scales.
-- **Resize balance**: the ability of the algorithm to keep its balance after adding or removing nodes.
-- **Resize time**: the time the algorithm requires to reorganize its internal structure after adding or removing nodes.
+- **Balance**: The ability of the algorithm to spread the keys evenly across the cluster nodes.
+- **Init time**: The time the algorithm requires to initialize its internal structure.
+- **Lookup time**: The time the algorithm needs to find the node a given key belongs to.
+- **Memory usage**: The amount of memory the algorithm uses to store its internal structure.
+- **Monotonicity**: The ability of the algorithm to move the minimum amount of resources when the cluster scales.
+- **Resize balance**: The ability of the algorithm to keep its balance after adding or removing nodes.
+- **Resize time**: The time the algorithm requires to reorganize its internal structure after adding or removing nodes.
 
 The format of the configuration file is described in detail in the [`configs/template.yaml`](configs/template.yaml) file.
 The tool will use the [`configs/default.yaml`](configs/default.yaml) file that represents the default configuration if no configuration file is provided.
