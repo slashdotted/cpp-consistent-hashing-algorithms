@@ -10,7 +10,7 @@
 #include <cstdint>
 #include <map>
 #include <stack>
-#include "../misc/ConsistentHash.h"
+#include "../../misc/ConsistentHash.h"
 
 class RingHash : public ConsistentHash {
 private:

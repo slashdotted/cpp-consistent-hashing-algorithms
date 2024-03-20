@@ -9,7 +9,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include "../misc/crc32c_sse42_u64.h"
+#include "../../misc/crc32c_sse42_u64.h"
 #include "MaglevHash.h"
 
 MaglevHash::MaglevHash(uint32_t w, uint32_t t): M(t), workSet(), lookupTable(new uint32_t [t]()), 

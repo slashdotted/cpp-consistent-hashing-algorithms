@@ -19,9 +19,7 @@ int main(int argc, char* argv[]) {
         /**
          * Handling terminal usage.
          */
-        if (argc != 2) {
-            argv[1] = "default.yaml";
-        }
+        const char* configFileName = (argc == 2) ? argv[1] : "default.yaml";
 
         /**
          * Loading YAML file.

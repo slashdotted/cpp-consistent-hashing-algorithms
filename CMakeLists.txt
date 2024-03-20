@@ -29,15 +29,15 @@ endif()
 
 set(MAIN_SOURCES
         vcpkg.json
-        memento/memento.h
-        memento/mementoengine.h
-        anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp
-        anchor/anchorengine.h
-        memento/mashtable.h
-        jump/jumpengine.h
-        power/powerengine.h
+        algorithms/memento/memento.h
+        algorithms/memento/mementoengine.h
+        algorithms/anchor/AnchorHashQre.cpp algorithms/anchor/AnchorHashQre.hpp
+        algorithms/anchor/anchorengine.h
+        algorithms/memento/mashtable.h
+        algorithms/jump/jumpengine.h
+        algorithms/power/powerengine.h
         ../misc/crc32c_sse42_u64.h
-        dx/DxEngine.h
+        algorithms/dx/DxEngine.h
         main.cpp
         benchmarks/Routine.h
 )
@@ -45,41 +45,41 @@ add_executable(main ${MAIN_SOURCES})
 
 add_executable(balance tools/balance.cpp
         vcpkg.json
-        memento/memento.h
-        memento/mementoengine.h
-        anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp
-        anchor/anchorengine.h
-        memento/mashtable.h
-        jump/jumpengine.h
-        power/powerengine.h
+        algorithms/memento/memento.h
+        algorithms/memento/mementoengine.h
+        algorithms/anchor/AnchorHashQre.cpp algorithms/anchor/AnchorHashQre.hpp
+        algorithms/anchor/anchorengine.h
+        algorithms/memento/mashtable.h
+        algorithms/jump/jumpengine.h
+        algorithms/power/powerengine.h
         ../misc/crc32c_sse42_u64.h
 )
 
 add_executable(speed_test tools/speed_test.cpp
         vcpkg.json
-        memento/memento.h
-        memento/mementoengine.h
-        anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp
-        anchor/anchorengine.h
-        memento/mashtable.h
-        jump/jumpengine.h
-        power/powerengine.h
+        algorithms/memento/memento.h
+        algorithms/memento/mementoengine.h
+        algorithms/anchor/AnchorHashQre.cpp algorithms/anchor/AnchorHashQre.hpp
+        algorithms/anchor/anchorengine.h
+        algorithms/memento/mashtable.h
+        algorithms/jump/jumpengine.h
+        algorithms/power/powerengine.h
         ../misc/crc32c_sse42_u64.h
 )
 
 add_executable(monotonicity tools/monotonicity.cpp
         vcpkg.json
-        memento/memento.h
-        memento/mementoengine.h
-        anchor/AnchorHashQre.cpp anchor/AnchorHashQre.hpp
-        anchor/anchorengine.h
-        memento/mashtable.h
-        jump/jumpengine.h
-        power/powerengine.h
+        algorithms/memento/memento.h
+        algorithms/memento/mementoengine.h
+        algorithms/anchor/AnchorHashQre.cpp algorithms/anchor/AnchorHashQre.hpp
+        algorithms/anchor/anchorengine.h
+        algorithms/memento/mashtable.h
+        algorithms/jump/jumpengine.h
+        algorithms/power/powerengine.h
         ../misc/crc32c_sse42_u64.h
 )
 
-add_executable(mashtable_test tools/mashtable_test.cpp memento/mashtable.h)
+add_executable(mashtable_test tools/mashtable_test.cpp algorithms/memento/mashtable.h)
 
 if(WITH_PCG32)
     target_include_directories(main PRIVATE ${PCG_INCLUDE_DIRS})

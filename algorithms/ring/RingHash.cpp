@@ -5,7 +5,7 @@
 */
 
 #include <cstdio>
-#include "../misc/crc32c_sse42_u64.h"
+#include "../../misc/crc32c_sse42_u64.h"
 #include "RingHash.h"
 
 void RingHash::insert(uint32_t nodeID) {

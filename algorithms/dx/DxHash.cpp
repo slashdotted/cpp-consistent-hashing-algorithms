@@ -5,7 +5,7 @@
 */
 
 #include "DxHash.h"
-#include "../misc/crc32c_sse42_u64.h"
+#include "../../misc/crc32c_sse42_u64.h"
 #include <cstdio>
 #include <cstdlib>
 

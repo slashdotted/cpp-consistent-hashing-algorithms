@@ -9,7 +9,7 @@
 
 #include <set>
 #include <stack>
-#include "../misc/ConsistentHash.h"
+#include "../../misc/ConsistentHash.h"
 
 class MaglevHash: public ConsistentHash {
   private:
