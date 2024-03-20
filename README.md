@@ -14,38 +14,38 @@ git clone https://github.com/robertovicario/cpp-consistent-hashing-algorithms.gi
 
 2. Navigate to the cloned repository:
 
-    ```shell
-    cd cpp-consistent-hashing-algorithms
-    ```
-   
+```shell
+cd cpp-consistent-hashing-algorithms
+```
+
 3. Run repository setup:
 
-    ```shell
-    # Ensure script has executable permissions:
-    # chmod +x repo.sh
-    ./repo.sh
-    ```
+```shell
+# Ensure script has executable permissions:
+# chmod +x repo.sh
+./repo.sh
+```
 
 4. Setup project dependencies with CMake:
 
-    ```shell
-    # Ensure script has executable permissions:
-    # chmod +x cmake.sh
-    ./cmake.sh
-    ```
+```shell
+# Ensure script has executable permissions:
+# chmod +x cmake.sh
+./cmake.sh
+```
 
 5. Build the project:
 
-    ```shell
-    cd build
-    ninja
-    ```
+```shell
+cd build
+ninja
+```
 
 6. Start the framework:
 
-    ```shell
-    ./main <configuration>.yaml
-    ```
+```shell
+./main <configuration>.yaml
+```
 
 ### YAML Configuration
 
