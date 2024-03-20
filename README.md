@@ -34,19 +34,19 @@ The tool will use the [`configs/default.yaml`](configs/default.yaml) file that r
 
 ## Instructions
 
-Clone the repository:
+1. Clone the repository:
 
 ```shell
 git clone https://github.com/robertovicario/cpp-consistent-hashing-algorithms.git
 ```
 
-Navigate to the cloned repository:
+2. Navigate to the cloned repository:
 
 ```shell
 cd cpp-consistent-hashing-algorithms
 ```
 
-Run repository setup:
+3. Run repository setup:
 
 ```shell
 # Ensure script has executable permissions:
@@ -54,22 +54,20 @@ Run repository setup:
 ./repo.sh
 ```
 
-Setup project dependencies with CMake:
+4. Setup project dependencies with CMake:
 
 ```shell
-# Ensure script has executable permissions:
-# chmod +x cmake.sh
 ./cmake.sh
 ```
 
-Build the project with Ninja:
+5. Build the project with Ninja:
 
 ```shell
 cd build
 ninja
 ```
 
-Start the framework:
+6. Start the framework:
 
 ```shell
 ./main <configuration>.yaml
