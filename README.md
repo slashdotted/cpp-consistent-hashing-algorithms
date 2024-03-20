@@ -21,7 +21,7 @@ Each implementation is divided into two classes:
 - Each `<Algorithm>Engine` class (e.g., AnchorEngine) contains an accurate implementation of the algorithm as described in the related paper. These classes do not make any consistency check to keep the performance as close as possible to what was claimed in the related papers.
 - Each `<Algoritm>Hash` class (e.g., AnchorHash) is a wrapper of the related <Algorithm>Engine class allowing every implementation to match the same interface. These classes also perform all the consistency checks needed to grant a safe execution.
 
-## Benchmarks
+### Benchmarks
 
 The project includes a benchmarking tool designed explicitly for consistent hashing algorithms.
 The tool allows benchmarking the following metrics in a fair and agnostic way:
