@@ -8,9 +8,9 @@
 
 1. Clone the Repository:
 
-    ```shell
-    git clone https://github.com/robertovicario/cpp-consistent-hashing-algorithms.git
-    ```
+```shell
+git clone https://github.com/robertovicario/cpp-consistent-hashing-algorithms.git
+```
 
 2. Navigate to the cloned repository:
 
