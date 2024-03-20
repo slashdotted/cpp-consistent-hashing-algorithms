@@ -6,14 +6,6 @@
 
 ## Instructions
 
-### Requirements
-
-- [CMake](https://cmake.org)
-- [vcpkg](https://vcpkg.io)
-- [Ninja](https://ninja-build.org)
-
-### Execution
-
 1. Clone the Repository:
 
     ```shell
