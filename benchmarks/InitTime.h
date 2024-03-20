@@ -12,13 +12,12 @@ using namespace std;
 
 template <typename Algorithm>
 int computeInitTime(string algorithm, uint32_t anchor_set, uint32_t working_set) {
-    auto start = high_resolution_clock::now();
+    auto start{clock()};
     Algorithm obj(anchor_set, working_set);
-    auto end = high_resolution_clock::now();
+    auto end{clock()};
 
-    auto elapsed = duration_cast<nanoseconds>(end - start);
-    long long time = elapsed.count();
-    cout << "# [LOG] ----- " << "@" << algorithm << "\t\t>_ init_time      =\t" << time << " nanoseconds" << endl;
+    auto time{static_cast<double>(end - start) / CLOCKS_PER_SEC};
+    cout << "# [LOG] ----- @" << algorithm << "\t\t>_ init_time      = " << time << " seconds" << endl;
 
     return 0;
 }

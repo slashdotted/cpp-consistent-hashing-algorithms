@@ -17,7 +17,7 @@
 using namespace std;
 
 template <typename Algorithm>
-int computeLookupTime(const std::string_view name, const std::string &filename,
+int computeLookupTime(const std::string_view algorithm, const std::string &filename,
       uint32_t anchor_set, uint32_t working_set, uint32_t num_removals,
       uint32_t num_keys) {
 
@@ -79,13 +79,13 @@ for (uint32_t i = 0; i < working_set; i++) {
 
 #ifdef USE_HEAPSTATS
 reset_memory_stats();
-print_memory_stats("StartBenchmark");
+// print_memory_stats("StartBenchmark");
 #endif
 
 Algorithm engine(anchor_set, working_set);
 
 #ifdef USE_HEAPSTATS
-print_memory_stats("AfterAlgorithmInit");
+// print_memory_stats("AfterAlgorithmInit");
 #endif
 
 uint32_t i = 0;
@@ -103,7 +103,7 @@ while (i < num_removals) {
 }
 
 #ifdef USE_HEAPSTATS
-print_memory_stats("AfterRemovals");
+// print_memory_stats("AfterRemovals");
 #endif
 
 volatile int64_t bucket{0};
@@ -118,11 +118,14 @@ for (uint32_t i = 0; i < num_keys; ++i) {
 auto end{clock()};
 
 #ifdef USE_HEAPSTATS
-print_memory_stats("EndBenchmark");
+// print_memory_stats("EndBenchmark");
 auto elapsed{static_cast<double>(end - start) / CLOCKS_PER_SEC};
 auto maxheap{maximum};
-fmt::println("{} Elapsed time is {} seconds, maximum heap allocated memory is {} bytes, sizeof({}) is {}", name, elapsed, maxheap, name, sizeof(Algorithm));
-results_file << name << ":\tAnchor\t" << anchor_set << "\tWorking\t"
+// fmt::println("{} Elapsed time is {} seconds, maximum heap allocated memory is {} bytes, sizeof({}) is {}", name, elapsed, maxheap, name, sizeof(Algorithm));
+
+    cout << "# [LOG] ----- @" << algorithm << "\t\t>_ lookup_time    = " << elapsed << " seconds" << endl;
+
+    results_file << algorithm << ":\tAnchor\t" << anchor_set << "\tWorking\t"
             << working_set << "\tRemovals\t" << num_removals << "\tRate\t"
             << norm_keys_rate / elapsed << "\tMaxHeap\t" << maxheap << "\tAlgoSizeof\t" << sizeof(Algorithm)<< "\n";
 #else

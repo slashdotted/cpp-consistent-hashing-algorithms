@@ -17,7 +17,7 @@ using namespace std;
 
 
 template <typename Algorithm>
-int computeBalance(const std::string_view name, const std::string& filename,
+int computeBalance(const std::string_view algorithm, const std::string& filename,
                  uint32_t anchor_set, uint32_t working_set,
                  uint32_t num_removals, uint32_t num_keys) {
     std::random_device rd;
@@ -56,14 +56,15 @@ int computeBalance(const std::string_view name, const std::string& filename,
             lb = std::max(lb, ratio);
         } else {
             if (anchor_absorbed_keys[i] > 0) {
-                fmt::print("{}: crazy bug!\n", name);
+                fmt::print("{}: crazy bug!\n", algorithm);
             }
         }
     }
 
-    cout << "# [LOG] ----- " << "@" << name << "\t\t>_ balance        =\t" << lb << endl;
+    cout << "# [LOG] ----- @" << algorithm << "\t\t>_ balance        = " << lb << endl;
+
     // fmt::print("{}: LB is {}\n", name, lb);
-    results_file << name << ": Balance: " << lb << "\t" << "PCG32" << std::endl;
+    results_file << algorithm << ": Balance: " << lb << "\t" << "PCG32" << std::endl;
 
     results_file.close();
 

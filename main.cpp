@@ -11,6 +11,7 @@
 #include "algorithms/memento/mementoengine.h"
 #include "algorithms/power/powerengine.h"
 #include "benchmarks/Routine.h"
+#include "utils/AlgorithmsASCII.h"
 
 using namespace std;
 
@@ -46,16 +47,19 @@ int main(int argc, char* argv[]) {
                     /**
                      * ANCHOR
                      */
+                    printAnchor();
                     execute<AnchorEngine>(yaml, "anchor", num, num, 20000, 1000000);
                 } else if (algorithm == "dx") {
                     /**
                      * DX
                      */
+                    printDx();
                     execute<DxEngine>(yaml, "dx", num, num, 20000, 1000000);
                 } else if (algorithm == "jump") {
                     /**
                      * JUMP
                      */
+                    printJump();
                     execute<JumpEngine>(yaml, "jump", num, num, 20000, 1000000);
                 } else if (algorithm == "maglev") {
                     /**
@@ -65,16 +69,17 @@ int main(int argc, char* argv[]) {
                     /**
                      * MEMENTO
                      */
+                    printMemento();
                     execute<MementoEngine<boost::unordered_flat_map>>(yaml, "memento", num, num, 20000, 1000000);
                 } else if (algorithm == "multi-probe") {
                     /**
                      * MULTI-PROBE
                      */
-                    /* code */
                 } else if (algorithm == "power") {
                     /**
                      * POWER
                      */
+                    printPower();
                     execute<PowerEngine>(yaml, "power", num, num, 20000, 1000000);
                 } else if (algorithm == "rendezvous") {
                     /**

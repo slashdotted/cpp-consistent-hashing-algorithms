@@ -13,10 +13,12 @@
     using namespace std;
 
     template <typename Algorithm>
-    int computeMonotonicity(const string_view name, const string &filename,
+    int computeMonotonicity(const string_view algorithm, const string &filename,
         uint32_t anchor_set, uint32_t working_set, uint32_t num_removals,
         uint32_t num_keys) {
     Algorithm engine(anchor_set, working_set);
+
+    cout << "# [LOG] ----- @" << algorithm << "\t\t>_ monotonicity   = (" << endl;
 
     uint32_t *bucket_status = new uint32_t[anchor_set]();
 
@@ -60,9 +62,6 @@
         ++i;
     }
 
-    fmt::println("Done determining initial assignment of {} unique keys",
-                num_keys);
-
     uint32_t removed{0};
     uint32_t rnode{0};
     for (;;) {
@@ -73,7 +72,8 @@
     #endif
         if (bucket_status[removed] == 1) {
         rnode = engine.removeBucket(removed);
-        fmt::println("Removed node {}", rnode);
+        cout << "              \t\tREMOVED_NODES = " << rnode << endl;
+
         if (!bucket_status[rnode]) {
             throw "Crazy bug";
         }
@@ -93,6 +93,7 @@
                     "now in bucket {} (status? old bucket {}, new bucket {})",
                     a, b, oldbucket, newbucket, bucket_status[oldbucket],
                     bucket_status[newbucket]);
+
         ++misplaced;
         }
     }
@@ -106,9 +107,9 @@
                 << "MisplacedRem: " << misplaced << "\t" << num_keys << "\t" << m
                 << "\t" << m << "\tPCG32\n";
     #else
-    fmt::println("{}: after removal misplaced keys are {}% ({} keys out of {})",
-                name, m * 100, misplaced, num_keys);
-    results_file << name << ": "
+        cout << "              \t\tMISPLACED_KEYS (AFTER REMOVAL) = " << misplaced << "/" << num_keys << endl;
+
+        results_file << algorithm << ": "
                 << "MisplacedRem: " << misplaced << "\t" << num_keys << "\t" << m
                 << "\t" << m << "\trand()\n";
     #endif
@@ -116,18 +117,20 @@
     misplaced = 0;
     auto anode = engine.addBucket();
     bucket_status[anode] = 1;
-    fmt::println("Added node {}", anode);
 
+        cout << "              \t\tADDED_NODES   = " << anode << endl;
     for (const auto &i : bucket) {
         auto oldbucket = i.second;
         auto a{i.first.first};
         auto b{i.first.second};
         auto newbucket = engine.getBucketCRC32c(a, b);
         if (oldbucket != newbucket) {
+            /*
         fmt::println("(After Add) Misplaced key {},{}: before in bucket {}, now "
                     "in bucket {} (status? old bucket {}, new bucket {})",
                     a, b, oldbucket, newbucket, bucket_status[oldbucket],
                     bucket_status[newbucket]);
+                    */
         ++misplaced;
         }
     }
@@ -142,10 +145,9 @@
                 << "MisplacedAdd: " << misplaced << "\t" << num_keys << "\t" << m
                 << "\t" << m << "\tPCG32\n";
     #else
-    fmt::println(
-        "{}: after adding back misplaced keys are {}% ({} keys out of {})", name,
-        m * 100, misplaced, num_keys);
-    results_file << name << ": "
+        cout << "              \t\tMISPLACED_KEYS (AFTER ADD)     = " << misplaced << "/" << num_keys << endl;
+
+        results_file << algorithm << ": "
                 << "MisplacedAdd: " << misplaced << "\t" << num_keys << "\t" << m
                 << "\t" << m << "\trand()\n";
     #endif
@@ -154,5 +156,8 @@
 
     delete[] bucket_status;
 
-    return 0;
+    cout << "              )" << endl;
+
+
+        return 0;
     }
