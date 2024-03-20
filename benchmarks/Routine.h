@@ -11,7 +11,9 @@
 #include "InitTime.h"
 #include "MemoryUsage.h"
 #include "Monotonicity.h"
-#include "SpeedTest.h"
+#include "LookupTime.h"
+#include "ResizeBalance.h"
+#include "ResizeTime.h"
 
 using namespace std;
 
@@ -32,39 +34,37 @@ static void execute(YAML::Node config, string algorithm,
             /**
              * BALANCE
              */
-            Balance::bench<Engine>(algorithm, "balance.log", anchor_set, working_set, num_removals, num_keys);
+            computeBalance<Engine>(algorithm, "balance.log", anchor_set, working_set, num_removals, num_keys);
         } else if (benchmark == "init-time") {
             /**
              * INIT_TIME
              */
-            InitTime::bench<Engine>(algorithm, anchor_set, working_set);
+            computeInitTime<Engine>(algorithm, anchor_set, working_set);
         } else if (benchmark == "lookup-time") {
             /**
              * LOOKUP_TIME
              */
-            // SpeedTest::bench<Engine>(algorithm, "speed_test.log", anchor_set, working_set, num_removals, num_keys);
-            cout << "# [SYS] ----- " << "@" << algorithm << "\t\t>_ lookup_time    =\t... UPDATE NEEDED" << endl;
+            computeLookupTime<Engine>(algorithm, "speed_test.log", anchor_set, working_set, num_removals, num_keys);
         } else if (benchmark == "memory-usage") {
             /**
              * MEMORY_USAGE
              */
-            MemoryUsage::bench<Engine>(algorithm, anchor_set, working_set);
+            computeMemoryUsage<Engine>(algorithm, anchor_set, working_set);
         } else if (benchmark == "monotonicity") {
             /**
              * MONOTONICITY
              */
-            // Monotonicity::bench<Engine>(algorithm, "monotonicity.log", anchor_set, working_set, num_removals, num_keys);
-            cout << "# [SYS] ----- " << "@" << algorithm << "\t\t>_ monotonicity   =\t... UPDATE NEEDED" << endl;
+            computeMonotonicity<Engine>(algorithm, "monotonicity.log", anchor_set, working_set, num_removals, num_keys);
         } else if (benchmark == "resize-balance") {
             /**
              * RESIZE_BALANCE
              */
-            cout << "# [SYS] ----- " << "@" << algorithm << "\t\t>_ resize_balance =\t... NOT IMPLEMENTED YET" << endl;
+            computeResizeBalance<Engine>(algorithm, anchor_set, working_set);
         } else if (benchmark == "resize-time") {
             /**
              * RESIZE_TIME
              */
-            cout << "# [SYS] ----- " << "@" << algorithm << "\t\t>_ resize_time    =\t... NOT IMPLEMENTED YET" << endl;
+            computeResizeTime<Engine>(algorithm, anchor_set, working_set);
         }
     }
 

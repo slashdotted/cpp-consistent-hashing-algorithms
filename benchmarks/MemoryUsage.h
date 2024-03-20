@@ -7,14 +7,11 @@
 #include <iostream>
 using namespace std;
 
-class MemoryUsage {
-public:
-    template <typename Algorithm>
-    static int bench(string algorithm, uint32_t anchor_set, uint32_t working_set) {
-        Algorithm obj(anchor_set, working_set);
-        size_t size = sizeof(obj);
-        cout << "# [LOG] ----- " << "@" << algorithm << "\t\t>_ memory_usage   =\t" << size << " bytes" << endl;
+template <typename Algorithm>
+int computeMemoryUsage(string algorithm, uint32_t anchor_set, uint32_t working_set) {
+    Algorithm obj(anchor_set, working_set);
+    size_t size = sizeof(obj);
+    cout << "# [LOG] ----- " << "@" << algorithm << "\t\t>_ memory_usage   =\t" << size << " bytes" << endl;
 
-        return 0;
-    }
-};
+    return 0;
+}

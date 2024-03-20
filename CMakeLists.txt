@@ -10,10 +10,6 @@ set(BUILD_SHARED_LIBS OFF)
 option(WITH_PCG32 "Use PCG32 random number generator" OFF)
 option(WITH_HEAPSTATS "Enable heap allocation statistics" ON)
 
-#############################
-########## PACKAGES #########
-#############################
-
 find_package(Boost REQUIRED)
 find_package(cxxopts REQUIRED)
 find_package(fmt REQUIRED)
@@ -31,10 +27,6 @@ if(WITH_HEAPSTATS)
     add_definitions(-DUSE_HEAPSTATS)
 endif()
 
-################################
-########## EXECUTABLES #########
-################################
-
 set(MAIN_SOURCES
         vcpkg.json
         memento/memento.h
@@ -45,8 +37,9 @@ set(MAIN_SOURCES
         jump/jumpengine.h
         power/powerengine.h
         ../misc/crc32c_sse42_u64.h
-        benchmarks/Routine.h
+        dx/DxEngine.h
         main.cpp
+        benchmarks/Routine.h
 )
 add_executable(main ${MAIN_SOURCES})
 
