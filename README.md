@@ -44,7 +44,7 @@
 6. Start the framework:
 
     ```shell
-    ./main <filename>.yaml
+    ./main <file_name>.yaml
     ```
 
 ### YAML Configurations

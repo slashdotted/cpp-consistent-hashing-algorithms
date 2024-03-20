@@ -5,12 +5,12 @@
 #include <iostream>
 #include <yaml-cpp/yaml.h>
 
-#include "anchor/anchorengine.h"
+#include "algorithms/anchor/anchorengine.h"
+#include "algorithms/dx/DxEngine.h"
+#include "algorithms/jump/jumpengine.h"
+#include "algorithms/memento/mementoengine.h"
+#include "algorithms/power/powerengine.h"
 #include "benchmarks/Routine.h"
-#include "dx/DxEngine.h"
-#include "jump/jumpengine.h"
-#include "memento/mementoengine.h"
-#include "power/powerengine.h"
 
 using namespace std;
 
@@ -19,13 +19,13 @@ int main(int argc, char* argv[]) {
         /**
          * Handling terminal usage.
          */
-        const char* configFileName = (argc == 2) ? argv[1] : "default.yaml";
+        string configName = (argc == 2) ? argv[1] : "default.yaml";
 
         /**
          * Loading YAML file.
          */
-        string filename = "../configs/" + string(argv[1]);
-        YAML::Node config = YAML::LoadFile(filename);
+        string fileName = "../configs/" + configName;
+        YAML::Node yaml = YAML::LoadFile(fileName);
 
         /**
          * Starting benchmark routine.
@@ -40,23 +40,23 @@ int main(int argc, char* argv[]) {
              * Running each number of node for every engine.
              */
             auto num = 1000000; // iter_1.as<int>();
-            for (const auto &iter_2: config["algorithms"]) {
+            for (const auto &iter_2: yaml["algorithms"]) {
                 auto algorithm = iter_2["name"].as<string>();
                 if (algorithm == "anchor") {
                     /**
                      * ANCHOR
                      */
-                    execute<AnchorEngine>(config, "anchor", num, num, 20000, 1000000);
+                    execute<AnchorEngine>(yaml, "anchor", num, num, 20000, 1000000);
                 } else if (algorithm == "dx") {
                     /**
                      * DX
                      */
-                    execute<DxEngine>(config, "dx", num, num, 20000, 1000000);
+                    execute<DxEngine>(yaml, "dx", num, num, 20000, 1000000);
                 } else if (algorithm == "jump") {
                     /**
                      * JUMP
                      */
-                    execute<JumpEngine>(config, "jump", num, num, 20000, 1000000);
+                    execute<JumpEngine>(yaml, "jump", num, num, 20000, 1000000);
                 } else if (algorithm == "maglev") {
                     /**
                      * MAGLEV
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
                     /**
                      * MEMENTO
                      */
-                    execute<MementoEngine<boost::unordered_flat_map>>(config, "memento", num, num, 20000, 1000000);
+                    execute<MementoEngine<boost::unordered_flat_map>>(yaml, "memento", num, num, 20000, 1000000);
                 } else if (algorithm == "multi-probe") {
                     /**
                      * MULTI-PROBE
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
                     /**
                      * POWER
                      */
-                    execute<PowerEngine>(config, "power", num, num, 20000, 1000000);
+                    execute<PowerEngine>(yaml, "power", num, num, 20000, 1000000);
                 } else if (algorithm == "rendezvous") {
                     /**
                      * RENDEZVOUS

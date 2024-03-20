@@ -17,7 +17,7 @@
 #define POWERENGINE_H
 #include <cmath>
 #include <cstdint>
-#include "../../misc/crc32c_sse42_u64.h"
+#include "../misc/crc32c_sse42_u64.h"
 #include "pcg_random.hpp"
 
 class PowerEngine final {

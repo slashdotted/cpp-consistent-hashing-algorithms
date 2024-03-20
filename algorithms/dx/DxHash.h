@@ -7,7 +7,7 @@
 #include <vector>
 #include <stack>
 // #include <boost/dynamic_bitset.hpp>
-#include "../../misc/ConsistentHash.h"
+#include "../misc/ConsistentHash.h"
 
 #ifndef DXHASH_H
 #define DXHASH_H
