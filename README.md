@@ -34,7 +34,7 @@ cd cpp-consistent-hashing-algorithms
 ./cmake.sh
 ```
 
-5. Build the project:
+5. Build the project using Ninja:
 
 ```shell
 cd build
