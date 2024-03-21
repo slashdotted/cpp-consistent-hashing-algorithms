@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ensure script has executable permissions:
-# chmod +x setup.sh
+# chmod +x cmake.sh
 
 if [ -d "build" ]; then
     rm -r build

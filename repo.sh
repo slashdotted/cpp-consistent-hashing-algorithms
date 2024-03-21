@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ensure script has executable permissions:
-# chmod +x setup.sh
+# chmod +x repo.sh
 
 git submodule update --init
 cd vcpkg || exit
