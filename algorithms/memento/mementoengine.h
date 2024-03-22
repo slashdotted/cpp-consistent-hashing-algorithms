@@ -16,7 +16,7 @@
 #ifndef MEMENTOENGINE_H
 #define MEMENTOENGINE_H
 #include "memento.h"
-#include "../misc/crc32.h"
+#include "../misc/HashFunctions.h"
 #include <string_view>
 #include <xxhash.h>
 

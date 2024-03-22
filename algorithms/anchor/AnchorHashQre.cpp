@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 #include "AnchorHashQre.hpp"
-#include "../misc/crc32.h"
+#include "../misc/HashFunctions.h"
 
 using namespace std;
 

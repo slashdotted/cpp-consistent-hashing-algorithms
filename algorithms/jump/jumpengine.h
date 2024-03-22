@@ -16,7 +16,7 @@
 #ifndef JUMPENGINE_H
 #define JUMPENGINE_H
 #include <cstdint>
-#include "../misc/crc32.h"
+#include "../misc/HashFunctions.h"
 
 class JumpEngine final {
 public:
