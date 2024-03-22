@@ -41,7 +41,7 @@ set(MAIN_SOURCES
         algorithms/memento/mashtable.h
         algorithms/memento/memento.h
         algorithms/memento/mementoengine.h
-        algorithms/misc/crc32c_sse42_u64.h
+        algorithms/misc/crc32.h
         algorithms/power/powerengine.h
         benchmarks/Routine.h
         main.cpp

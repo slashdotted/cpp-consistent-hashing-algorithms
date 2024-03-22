@@ -1,19 +1,14 @@
 /**
- * @author Roberto Vicario @ SUPSI
- * 
- * @cite https://github.com/ChaosD/DxHash.git
+ * @author Roberto Vicario (C) 2024
 */
+
+#pragma once
 
 #include <vector>
 #include <stack>
-// #include <boost/dynamic_bitset.hpp>
-#include "../misc/ConsistentHash.h"
-
-#ifndef DXHASH_H
-#define DXHASH_H
+#include "../misc/ConsistentHash.hpp"
 
 using namespace std;
-
 
 class DxHash:public ConsistentHash {
 private:
@@ -106,5 +101,3 @@ public:
 		return name;
 	}
 };
-
-#endif

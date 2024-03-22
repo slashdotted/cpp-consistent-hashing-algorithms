@@ -145,7 +145,7 @@
                 << "MisplacedAdd: " << misplaced << "\t" << num_keys << "\t" << m
                 << "\t" << m << "\tPCG32\n";
     #else
-        cout << "              \t\tMISPLACED_KEYS (AFTER ADD)     = " << misplaced << "/" << num_keys << endl;
+        cout << "              \t\tMISPLACED_KEYS (AFTER ADDING)  = " << misplaced << "/" << num_keys << endl;
 
         results_file << algorithm << ": "
                 << "MisplacedAdd: " << misplaced << "\t" << num_keys << "\t" << m
