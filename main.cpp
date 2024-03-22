@@ -37,61 +37,55 @@ int main(int argc, char* argv[]) {
         cout << "#" << endl;
         cout << "#" << endl;
 
-        // for (const auto &iter_1 : config["common"]["init-nodes"]) {
-            /**
-             * Running each number of node for every engine.
-             */
-            auto num = 1000000; // iter_1.as<int>();
-            for (const auto &iter_2: yaml["algorithms"]) {
-                auto algorithm = iter_2["name"].as<string>();
-                if (algorithm == "anchor") {
-                    /**
-                     * ANCHOR
-                     */
-                    printAnchor();
-                    execute<AnchorEngine>(yaml, "anchor", num, num, 20000, 1000000);
-                } else if (algorithm == "dx") {
-                    /**
-                     * DX
-                     */
-                    printDx();
-                    execute<DxEngine>(yaml, "dx", num, num, 20000, 1000000);
-                } else if (algorithm == "jump") {
-                    /**
-                     * JUMP
-                     */
-                    printJump();
-                    execute<JumpEngine>(yaml, "jump", num, num, 20000, 1000000);
-                } else if (algorithm == "maglev") {
-                    /**
-                     * MAGLEV
-                     */
-                } else if (algorithm == "memento") {
-                    /**
-                     * MEMENTO
-                     */
-                    printMemento();
-                    execute<MementoEngine<boost::unordered_flat_map>>(yaml, "memento", num, num, 20000, 1000000);
-                } else if (algorithm == "multi-probe") {
-                    /**
-                     * MULTI-PROBE
-                     */
-                } else if (algorithm == "power") {
-                    /**
-                     * POWER
-                     */
-                    printPower();
-                    execute<PowerEngine>(yaml, "power", num, num, 20000, 1000000);
-                } else if (algorithm == "rendezvous") {
-                    /**
-                     * RENDEZVOUS
-                     */
-                } else if (algorithm == "ring") {
-                    /**
-                     * RING
-                     */
-                }
-            // }
+        for (const auto &iter_1: yaml["algorithms"]) {
+            auto algorithm = iter_1["name"].as<string>();
+            if (algorithm == "anchor") {
+                /**
+                 * ANCHOR
+                 */
+                printAnchor();
+                execute<AnchorEngine>(yaml, "anchor", 1000000, 1000000, 20000, 1000000);
+            } else if (algorithm == "dx") {
+                /**
+                 * DX
+                 */
+                printDx();
+                execute<DxEngine>(yaml, "dx", 1000000, 1000000, 20000, 1000000);
+            } else if (algorithm == "jump") {
+                /**
+                 * JUMP
+                 */
+                printJump();
+                execute<JumpEngine>(yaml, "jump", 1000000, 1000000, 20000, 1000000);
+            } else if (algorithm == "maglev") {
+                /**
+                 * MAGLEV
+                 */
+            } else if (algorithm == "memento") {
+                /**
+                 * MEMENTO
+                 */
+                printMemento();
+                execute<MementoEngine<boost::unordered_flat_map>>(yaml, "memento", 1000000, 1000000, 20000, 1000000);
+            } else if (algorithm == "multi-probe") {
+                /**
+                 * MULTI-PROBE
+                 */
+            } else if (algorithm == "power") {
+                /**
+                 * POWER
+                 */
+                printPower();
+                execute<PowerEngine>(yaml, "power", 1000000, 1000000, 20000, 1000000);
+            } else if (algorithm == "rendezvous") {
+                /**
+                 * RENDEZVOUS
+                 */
+            } else if (algorithm == "ring") {
+                /**
+                 * RING
+                 */
+            }
         }
     } catch (const YAML::Exception& e) {
         cerr << "# [ERR] ----- YAML Exception: " << e.what() << endl;
