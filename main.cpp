@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
         cout << "# [SYS] ----- ***** STARTING ROUTINE *****" << endl;
         cout << "# [SYS] ----- ****************************" << endl;
         cout << "#" << endl;
+        cout << "#" << endl;
 
         // for (const auto &iter_1 : config["common"]["init-nodes"]) {
             /**

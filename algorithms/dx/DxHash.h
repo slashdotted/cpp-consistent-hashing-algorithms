@@ -4,9 +4,10 @@
  * @cite https://arxiv.org/pdf/2107.07930.pdf
  */
 
-#include <stdio.h>
+#include <cstdio>
 #include "../misc/ConsistentHash.hpp"
 
+/*
 class DxHash : public ConsistentHash {
 private:
     std::vector<bool> nodes;
@@ -27,3 +28,4 @@ public:
     uint32_t updateAddition();
     void updateRemoval(uint32_t index);
 };
+*/

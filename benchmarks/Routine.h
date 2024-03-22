@@ -27,7 +27,11 @@ static void execute(YAML::Node config, string algorithm,
     /**
      * Starting benchmark routine.
      */
-    cout << "# [LOG] ----- Parameters: (algorithm = " << algorithm << ", function = crc32, initNodes = " << working_set << ")\n#" << endl;
+    cout << "#" << endl;
+    cout << "# [LOG] ----- Parameters: (algorithm = " << algorithm << ", function = crc32, initNodes = " << working_set << ")" << endl;
+    cout << "#" << endl;
+    cout << "#" << endl;
+    
     for (const auto &iter: config["benchmarks"]) {
         auto benchmark = iter["name"].as<string>();
         if (benchmark == "balance") {
@@ -71,5 +75,5 @@ static void execute(YAML::Node config, string algorithm,
     /**
      * Closing single benchmark routine.
      */
-    cout << "#" << endl;
+    cout << "#\n#" << endl;
 }
