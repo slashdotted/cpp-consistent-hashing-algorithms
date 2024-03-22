@@ -18,7 +18,8 @@
         uint32_t num_keys) {
     Algorithm engine(anchor_set, working_set);
 
-    cout << "# [LOG] ----- @" << algorithm << "\t\t>_ monotonicity   = (" << endl;
+    cout << "# [LOG] ----- @" << algorithm << "\t>_ monotonicity   =" << endl;
+    cout << "              |" << endl;
 
     uint32_t *bucket_status = new uint32_t[anchor_set]();
 
@@ -72,7 +73,7 @@
     #endif
         if (bucket_status[removed] == 1) {
         rnode = engine.removeBucket(removed);
-        cout << "              \t\tREMOVED_NODES = " << rnode << endl;
+        cout << "              | \tREMOVED_NODES = " << rnode << endl;
 
         if (!bucket_status[rnode]) {
             throw "Crazy bug";
@@ -107,7 +108,7 @@
                 << "MisplacedRem: " << misplaced << "\t" << num_keys << "\t" << m
                 << "\t" << m << "\tPCG32\n";
     #else
-        cout << "              \t\tMISPLACED_KEYS (AFTER REMOVAL) = " << misplaced << "/" << num_keys << endl;
+        cout << "              | \tMISPLACED_KEYS (AFTER REMOVAL) = " << misplaced << "/" << num_keys << endl;
 
         results_file << algorithm << ": "
                 << "MisplacedRem: " << misplaced << "\t" << num_keys << "\t" << m
@@ -118,7 +119,7 @@
     auto anode = engine.addBucket();
     bucket_status[anode] = 1;
 
-        cout << "              \t\tADDED_NODES   = " << anode << endl;
+        cout << "              | \tADDED_NODES   = " << anode << endl;
     for (const auto &i : bucket) {
         auto oldbucket = i.second;
         auto a{i.first.first};
@@ -145,7 +146,7 @@
                 << "MisplacedAdd: " << misplaced << "\t" << num_keys << "\t" << m
                 << "\t" << m << "\tPCG32\n";
     #else
-        cout << "              \t\tMISPLACED_KEYS (AFTER ADDING)  = " << misplaced << "/" << num_keys << endl;
+        cout << "              | \tMISPLACED_KEYS (AFTER ADDING)  = " << misplaced << "/" << num_keys << endl;
 
         results_file << algorithm << ": "
                 << "MisplacedAdd: " << misplaced << "\t" << num_keys << "\t" << m
@@ -156,7 +157,7 @@
 
     delete[] bucket_status;
 
-    cout << "              )" << endl;
+    cout << "              |" << endl;
 
 
         return 0;

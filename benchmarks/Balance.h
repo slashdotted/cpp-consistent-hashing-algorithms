@@ -61,7 +61,7 @@ int computeBalance(const std::string_view algorithm, const std::string& filename
         }
     }
 
-    cout << "# [LOG] ----- @" << algorithm << "\t\t>_ balance        = " << lb << endl;
+    cout << "# [LOG] ----- @" << algorithm << "\t>_ balance        = " << lb << endl;
 
     // fmt::print("{}: LB is {}\n", name, lb);
     results_file << algorithm << ": Balance: " << lb << "\t" << "PCG32" << std::endl;

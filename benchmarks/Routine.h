@@ -75,5 +75,6 @@ static void execute(YAML::Node config, string algorithm,
     /**
      * Closing single benchmark routine.
      */
-    cout << "#\n#" << endl;
+    cout << "#" << endl;
+    cout << "#" << endl;
 }

@@ -123,7 +123,7 @@ auto elapsed{static_cast<double>(end - start) / CLOCKS_PER_SEC};
 auto maxheap{maximum};
 // fmt::println("{} Elapsed time is {} seconds, maximum heap allocated memory is {} bytes, sizeof({}) is {}", name, elapsed, maxheap, name, sizeof(Algorithm));
 
-    cout << "# [LOG] ----- @" << algorithm << "\t\t>_ lookup_time    = " << elapsed << " seconds" << endl;
+    cout << "# [LOG] ----- @" << algorithm << "\t>_ lookup_time    = " << elapsed << " seconds" << endl;
 
     results_file << algorithm << ":\tAnchor\t" << anchor_set << "\tWorking\t"
             << working_set << "\tRemovals\t" << num_removals << "\tRate\t"
