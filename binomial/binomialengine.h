@@ -31,9 +31,9 @@ public:
             highestOneBit = highestOneBit << 1;
         }
         // If K is the power of 2 greater than m_size
-        // the upper tree filter is K-1
+        // the upper tree filter is L=(K-1)
         m_upperTreeFilter = highestOneBit - 1;
-        // the lower tree filter is K/2
+        // the lower tree filter is L/2
         m_lowerTreeFilter = m_upperTreeFilter >> 1;
     }
 
