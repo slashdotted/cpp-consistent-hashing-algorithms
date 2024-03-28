@@ -36,20 +36,19 @@ public:
    */
     uint32_t getBucketCRC32c(uint64_t key, uint64_t seed) noexcept
     {
-        pcg32 rng;
         auto k = crc32c_sse42_u64(key, seed);
         // r1 = f (key, m) (we pass m-1 because f expects that)
-        auto r1 = f(k, m_mm1, rng);
+        auto r1 = f(k, m_mm1, m_rng);
         if (r1 < m_n) {
             return r1;
         }
         // r2 = g(key, n, m/2 − 1)
-        auto r2 = g(k, m_n, m_mHm1, rng);
+        auto r2 = g(k, m_n, m_mHm1, m_rng);
         if (r2 > m_mHm1) {
             return r2;
         }
         // f (key, m/2) (we pass m/2-1 because f expects that)
-        return f(k, m_mHm1, rng);
+        return f(k, m_mHm1, m_rng);
     }
 
     /**
@@ -149,6 +148,9 @@ private:
             }
         }
     }
+
+    /* Random number generator */
+    pcg32 m_rng;
 
     /* Number of nodes  in the cluster */
     uint32_t m_n;

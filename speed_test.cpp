@@ -19,6 +19,7 @@
 #include "memento/mementoengine.h"
 #include "jump/jumpengine.h"
 #include "power/powerengine.h"
+#include "binomial/binomialengine.h"
 #ifdef USE_PCG32
 #include "pcg_random.hpp"
 #include <random>
@@ -292,7 +293,11 @@ int main(int argc, char *argv[]) {
       return bench<PowerEngine>("PowerEngine", filename,
                                anchor_set, working_set,
                                num_removals, num_keys);
-  } else {
+  } else if (algorithm == "binomial") {
+      return bench<BinomialEngine>("BinomialEngine", filename,
+                                anchor_set, working_set,
+                                num_removals, num_keys);
+  }else {
     fmt::println("Unknown algorithm {}", algorithm);
     return 2;
   }

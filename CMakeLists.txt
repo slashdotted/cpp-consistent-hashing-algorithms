@@ -35,6 +35,7 @@ add_executable(speed_test speed_test.cpp
     memento/mashtable.h
     jump/jumpengine.h
     power/powerengine.h
+    binomial/binomialengine.h
     utils.h
     utils.cpp
     )
@@ -48,6 +49,7 @@ add_executable(balance balance.cpp
     memento/mashtable.h
     jump/jumpengine.h
     power/powerengine.h
+    binomial/binomialengine.h
     utils.h
     utils.cpp
     )
@@ -61,6 +63,7 @@ add_executable(monotonicity monotonicity.cpp
     memento/mashtable.h
     jump/jumpengine.h
     power/powerengine.h
+    binomial/binomialengine.h
     utils.h
     utils.cpp
     )

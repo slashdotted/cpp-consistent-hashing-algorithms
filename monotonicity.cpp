@@ -26,6 +26,7 @@
 #include "memento/mashtable.h"
 #include "memento/mementoengine.h"
 #include "power/powerengine.h"
+#include "binomial/binomialengine.h"
 #include <fmt/core.h>
 #include <fstream>
 #include <gtl/phmap.hpp>
@@ -274,6 +275,9 @@ int main(int argc, char *argv[]) {
   } else if (algorithm == "power") {
     return bench<PowerEngine>("PowerEngine", filename, anchor_set, working_set,
                               num_removals, num_keys);
+  } else if (algorithm == "binomial") {
+      return bench<BinomialEngine>("BinomialEngine", filename, anchor_set, working_set,
+                                num_removals, num_keys);
   } else {
     fmt::println("Unknown algorithm {}", algorithm);
     return 2;

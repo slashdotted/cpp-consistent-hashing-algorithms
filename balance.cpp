@@ -26,6 +26,7 @@
 #include "memento/mementoengine.h"
 #include "jump/jumpengine.h"
 #include "power/powerengine.h"
+#include "binomial/binomialengine.h"
 #include <fmt/core.h>
 #include <fstream>
 #include <unordered_map>
@@ -84,16 +85,19 @@ int bench(const std::string_view name, const std::string &filename,
 
   // check load balancing
   double mean = (double)num_keys / (working_set - num_removals);
-
+  double min_k = num_keys + 1;
+  double max_k = 0;
+  double var = 0;
   double lb = 0;
   for (uint32_t i = 0; i < anchor_set; i++) {
 
     if (bucket_status[i]) {
-
+        min_k = anchor_ansorbed_keys[i] < min_k ? anchor_ansorbed_keys[i] : min_k;
+        max_k = anchor_ansorbed_keys[i] > max_k ? anchor_ansorbed_keys[i] : max_k;
       if (anchor_ansorbed_keys[i] / mean > lb) {
         lb = anchor_ansorbed_keys[i] / mean;
       }
-
+      var += pow(anchor_ansorbed_keys[i]-mean, 2);
     }
 
     else {
@@ -108,11 +112,13 @@ int bench(const std::string_view name, const std::string &filename,
 #ifdef USE_PCG32
   fmt::println("{}: LB is {}\n", name, lb);
   results_file << name << ": "
-               << "Balance: " << lb << "\tPCG32\n";
+               << "Balance: " << lb << ", Max: " << max_k << ", Min: " << min_k
+               << " Av: " << mean << " Var: " << var/(num_keys -1) << "\tPCG32\n";
 #else
-  fmt::println("{}: LB is {}\n", name, lb);
+  fmt::println("{}: LB is {}, Average: {}, Max: {}, Min: {}, Var: {}\n", name, lb, mean, max_k, min_k, var/(num_keys -1));
   results_file << name << ": "
-               << "Balance: " << lb << "\trand()\n";
+               << "Balance: " << lb << ", Max: " << max_k << ", Min: " << min_k
+               << " Av: " << mean << " Var: " << var/(num_keys -1) << "\trand()\n";
 #endif
 
   ////////////////////////////////////////////////////////////////////
@@ -212,6 +218,10 @@ int main(int argc, char *argv[]) {
       return bench<PowerEngine>("PowerEngine", filename,
                                anchor_set, working_set,
                                num_removals, num_keys);
+  } else if (algorithm == "binomial") {
+      return bench<BinomialEngine>("BinomialEngine", filename,
+                                anchor_set, working_set,
+                                num_removals, num_keys);
   } else {
     fmt::println("Unknown algorithm {}", algorithm);
     return 2;
